@@ -1,0 +1,133 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<LINK REL="stylesheet" HREF="book.css" TYPE="text/css">
+<TITLE>
+Do not use weak encryption functions [APSC_DV-000160-a]
+</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<STRONG>
+Do not use weak encryption functions [APSC_DV-000160-a]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+DESCRIPTION
+</STRONG>
+<PRE>
+
+Rule reports a violation message when crypt() function is used or an encrypt()
+function is called with second parameter (edflag) equal '0'. If edflag is 0,
+block passed as first parameter is encoded. In this encryption the password
+is cryptographically weak and can be deciphered. Also crypt() is
+cryptographically weak and stronger alternatives should be preferred for the
+hashing of passwords.
+
+
+
+</PRE>
+<STRONG>
+SINCE
+</STRONG>
+<PRE>
+
+v7.2
+
+
+
+</PRE>
+<STRONG>
+BENEFITS
+</STRONG>
+<PRE>
+
+Rule detects weak encryption functions.
+
+
+
+</PRE>
+<STRONG>
+EXAMPLE
+</STRONG>
+<PRE>
+
+#include &lt;unistd.h&gt;
+
+void myCrypt(const char* key, const char *salt)
+{
+    char *hash = crypt(key, salt);    // Violation
+
+    /* ... */
+}
+
+
+
+</PRE>
+<STRONG>
+REPAIR
+</STRONG>
+<PRE>
+
+Calls to crypt() and encrypt() should be replaced with a more secure version.
+The following libraries provide good choices:
+
+* OpenSSL (e.g. SHA1 function)
+* Crypto++
+* BSAFE - RSA Security's widely deployed commercial library
+* Cryptlib (Peter Gutmann)
+
+
+
+</PRE>
+<STRONG>
+REFERENCES
+</STRONG>
+<PRE>
+
+1. <A HREF="https://buildsecurityin.us-cert.gov/daisy/bsi-rules/home/g1/728.html">https://buildsecurityin.us-cert.gov/daisy/bsi-rules/home/g1/728.html</A>
+
+2. PCI Data Security Standard (PCI DSS) Version 1.2
+   Requirement 6: Develop and maintain secure systems and applications
+
+3. 2019 CWE Top 25 Most Dangerous Software Errors
+   CWE-287: Improper Authentication
+   <A HREF="https://cwe.mitre.org/data/definitions/287.html">https://cwe.mitre.org/data/definitions/287.html</A>
+
+4. 2019 CWE Weaknesses On the Cusp
+   CWE-326: Inadequate Encryption Strength
+   <A HREF="https://cwe.mitre.org/data/definitions/326.html">https://cwe.mitre.org/data/definitions/326.html</A>
+
+5. OWASP Top 10 2017
+   A2-Broken Authentication
+   <A HREF="https://owasp.org/www-project-top-ten/2017/A2_2017-Broken_Authentication.html">https://owasp.org/www-project-top-ten/2017/A2_2017-Broken_Authentication.html</A>
+
+6. OWASP API Security Top 10-2019
+   API2-Broken User Authentication
+   <A HREF="https://github.com/OWASP/API-Security/blob/v1.4.1/2019/en/src/0xa2-broken-user-authentication.md">https://github.com/OWASP/API-Security/blob/v1.4.1/2019/en/src/0xa2-broken-user-authentication.md</A>
+
+7. OWASP Top 10-2021
+   A07:2021 – Identification and Authentication Failures
+   <A HREF="https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/">https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/</A>
+
+8. DISA Application Security and Development Security Technical Implementation Guide (STIG)
+   APSC-DV-000160: The application must implement DoD-approved encryption to protect the confidentiality of remote access sessions
+
+9. DISA Application Security and Development Security Technical Implementation Guide (STIG)
+   APSC-DV-000170: The application must implement cryptographic mechanisms to protect the integrity of remote access sessions
+
+10. DISA Application Security and Development Security Technical Implementation Guide (STIG)
+   APSC-DV-001860: The application must use mechanisms meeting the requirements of applicable federal laws, 
+   Executive Orders, directives, policies, regulations, standards, and guidance for authentication to a cryptographic module
+
+11. DISA Application Security and Development Security Technical Implementation Guide (STIG)
+    APSC-DV-002010: The application must implement NSA-approved cryptography to protect classified information in accordance 
+    with applicable federal laws, Executive Orders, directives, policies, regulations, and standards
+
+12. DISA Application Security and Development Security Technical Implementation Guide (STIG)
+    APSC-DV-002350: The application must use appropriate cryptography in order to protect stored DoD information 
+    when required by the information owner or DoD policy
+
+</PRE>
+</BODY>
+</HTML>
