@@ -18,9 +18,6 @@ package com.parasoft.findings.utils.common.util;
 
 import com.parasoft.findings.utils.common.IStringConstants;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * String - related utilities
  */
@@ -31,30 +28,6 @@ public final class StringUtil {
      */
     private StringUtil() {
         super();
-    }
-
-    private final static Map<Character, String> JAVA_ESCAPE = new HashMap<Character, String>();
-
-    static {
-        JAVA_ESCAPE.put('\0', "\\0");
-        for (int i = 0x1; i < 0x7; i++) {
-            JAVA_ESCAPE.put((char) i, "\\" + charToThreeDigitOctal((char) i)); // $NON-NLS-1$
-        }
-        JAVA_ESCAPE.put('\b', "\\b"); // $NON-NLS-1$
-        JAVA_ESCAPE.put('\t', "\\t"); // $NON-NLS-1$
-        JAVA_ESCAPE.put('\n', "\\n"); // $NON-NLS-1$
-        JAVA_ESCAPE.put((char) 0x0B, "\\" + charToThreeDigitOctal((char) 0x0B)); // $NON-NLS-1$
-        JAVA_ESCAPE.put('\f', "\\f"); // $NON-NLS-1$
-        JAVA_ESCAPE.put('\r', "\\r"); // $NON-NLS-1$
-        for (int i = 0x0E; i <= 0x1F; i++) {
-            JAVA_ESCAPE.put((char) i, "\\" + charToThreeDigitOctal((char) i)); // $NON-NLS-1$
-        }
-        JAVA_ESCAPE.put('\"', "\\\""); // $NON-NLS-1$
-        JAVA_ESCAPE.put('\\', "\\\\"); // $NON-NLS-1$
-        for (int i = 0x7F; i <= 0x9F; i++) {
-            JAVA_ESCAPE.put((char) i, "\\u" + charToFourDigitHex((char) i)); // $NON-NLS-1$
-        }
-        JAVA_ESCAPE.put((char) 0x2028, "\\u2028"); // $NON-NLS-1$
     }
 
     /**
@@ -141,47 +114,10 @@ public final class StringUtil {
      * @return <code>true</code> if given strings are equal.
      */
     public static boolean equals(String sText1, String sText2) {
-        if (sText1 == sText2) {
+        if (sText1 == sText2) { // parasoft-suppress PB.CUB.UEIC "Expected way to compare"
             return true;
         }
         return (sText1 != null) && sText1.equals(sText2);
-    }
-
-    /**
-     * Represent the numerical value of a char as a string of four hexadecimal digits.
-     *
-     * @param c The char to be represented in hexadecimal digits.
-     * @return A string of four hexadecimal digits that represents c.
-     * @post $result != null
-     * @post $result.length () == 4
-     * @post Integer.parseInt ($result, 16) >= 0
-     * @post Integer.parseInt ($result, 16) < 65536
-     */
-    private static String charToFourDigitHex(char c) {
-        StringBuilder result = new StringBuilder(Integer.toHexString(c).toUpperCase());
-        while (result.length() < 4) { // parasoft-suppress OPT.CEL "Required for correct processing."
-            result.insert(0, '0');
-        }
-        return result.toString();
-    }
-
-    /**
-     * Represent the numerical value of a char as a string of three octal digits.
-     *
-     * @param c The char to be represented in octal digits.
-     * @return A string of three octal digits that represents c.
-     * @pre c < 256
-     * @post $result != null
-     * @post $result.length () == 3
-     * @post Integer.parseInt ($result, 8) >= 0
-     * @post Integer.parseInt ($result, 8) < 256
-     */
-    private static String charToThreeDigitOctal(char c) {
-        StringBuilder result = new StringBuilder(Integer.toOctalString(c));
-        while (result.length() < 3) { // parasoft-suppress OPT.CEL "Required for correct processing."
-            result.insert(0, '0');
-        }
-        return result.toString();
     }
 
 }

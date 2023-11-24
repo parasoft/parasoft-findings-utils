@@ -84,9 +84,6 @@ public class LocationsReader extends DefaultHandler {
     }
 
     public Properties getStoredLocation(String sLocRef) {
-        if (_locations == null) {
-            return null;
-        }
         return _locations.get(sLocRef); // parasoft-suppress BD.OPT.INEFMAP "Reviewed, not modifying public methods to obtain iterable elements."
     }
 
