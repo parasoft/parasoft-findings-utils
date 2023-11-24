@@ -42,18 +42,17 @@ public class RestClient {
 
     private final HttpsExecutor.ProxyExecutor _executor;
 
-    private final int _socketTimeoutMillis = DEFAULT_READ_TIMEOUT * 1000;
-
-    private final int _socketLongTimeoutMillis = DEFAULT_READ_LONG_TIMEOUT * 1000;
-
-    private final int _connectionTimeoutMillis = DEFAULT_CONNECT_TIMEOUT * 1000;
-
-
     private static final int DEFAULT_CONNECT_TIMEOUT = 30; // 30 seconds
 
     private static final int DEFAULT_READ_TIMEOUT = 60; // 60 seconds
 
     private static final int DEFAULT_READ_LONG_TIMEOUT = 8 * 60; // 8 minutes
+
+    private static final int _socketTimeoutMillis = DEFAULT_READ_TIMEOUT * 1000;
+
+    private static final int _socketLongTimeoutMillis = DEFAULT_READ_LONG_TIMEOUT * 1000;
+
+    private static final int _connectionTimeoutMillis = DEFAULT_CONNECT_TIMEOUT * 1000;
 
     /**
      * Separator used to construct rest requests
@@ -205,7 +204,7 @@ public class RestClient {
         LONG
     }
 
-    private class ResponseContentHandlerImpl
+    private static class ResponseContentHandlerImpl
             implements ResponseHandler<ResponseContent> {
 
         private final URI _requestUri;

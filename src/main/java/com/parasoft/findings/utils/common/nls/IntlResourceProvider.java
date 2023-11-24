@@ -28,7 +28,6 @@ public class IntlResourceProvider {
     private final String[] _suffixes;
 
     private IResourceLoader[] _loaders = null;
-    private final String _extension = null;
 
     /**
      * Provides an instance which will search among classpath resources only.
@@ -72,9 +71,6 @@ public class IntlResourceProvider {
 
 
     private String[] getNameVariants(String fullName) {
-        if (_extension != null) {
-            return IntlUtil.buildVariants(fullName, _suffixes, _extension);
-        }
         return IntlUtil.buildVariants(fullName, _suffixes);
     }
 

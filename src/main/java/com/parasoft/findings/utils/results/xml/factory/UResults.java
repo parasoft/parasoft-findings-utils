@@ -35,11 +35,7 @@ public final class UResults {
      * @return the results core or <code>null</code> if not initialized
      */
     public static DefaultResultsCore getResultsCore() {
-        ResultsInitManager initManager = getInitManager();
-        if (initManager != null) {
-            return initManager.getResultsCore();
-        }
-        return null;
+        return getInitManager().getResultsCore();
     }
 
     /**

@@ -83,7 +83,7 @@ public final class XmlReportViolationsImporter {
         for (Object sKey : _properties.keySet()) {
             String sKeyString = String.valueOf(sKey);
             boolean canPrintValue = !isSensitiveSetting(sKeyString);
-            String sValue = _properties.getProperty(sKeyString);
+            String sValue = _properties.getProperty(sKeyString); // parasoft-suppress BD.EXCEPT.NP "False positive, java.lang.String.valueOf(java.lang.Object) method returns "null" string for null object."
             String sPrintedValue = canPrintValue ? sValue : anonymize(sValue);
             result.setProperty(sKeyString, sPrintedValue);
         }

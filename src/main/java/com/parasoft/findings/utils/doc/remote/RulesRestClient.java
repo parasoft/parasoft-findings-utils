@@ -53,12 +53,11 @@ public final class RulesRestClient
         RulesRestClient client = new RulesRestClient(serviceURI);
         try {
             client.getRuleInfo("requestToCheckDTPServerAvailable", "notExistingAnalyzerId");
+        } catch (NotSupportedDtpVersionException e) {
+            Logger.getLogger().info("Unable to retrieve the documentation for the rule from DTP. It is highly possible that the current version of DTP is older than the 2023.1 which is not supported.");  //$NON-NLS-1$
+            client = null;
         } catch (Exception e) {
-            if (e instanceof NotSupportedDtpVersionException) {
-                Logger.getLogger().info("Unable to retrieve the documentation for the rule from DTP. It is highly possible that the current version of DTP is older than the 2023.1 which is not supported.");  //$NON-NLS-1$
-            } else {
-                Logger.getLogger().info("DTP server is not available: " + dtpUrl); //$NON-NLS-1$
-            }
+            Logger.getLogger().info("DTP server is not available: " + dtpUrl); //$NON-NLS-1$
             client = null;
         }
         return client;
