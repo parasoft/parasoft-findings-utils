@@ -72,6 +72,12 @@
                     <include>**/*.properties</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>${project.basedir}</directory>
+                <includes>
+                    <include>LICENSE.txt</include>
+                </includes>
+            </resource>
         </resources>
         <plugins>
             <plugin>
