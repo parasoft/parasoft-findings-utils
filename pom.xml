@@ -74,8 +74,9 @@
             </resource>
             <resource>
                 <directory>${project.basedir}</directory>
+                <targetPath>META-INF</targetPath>
                 <includes>
-                    <include>LICENSE.txt</include>
+                    <include>LICENSE</include>
                 </includes>
             </resource>
         </resources>
