@@ -91,6 +91,7 @@ final class FlowAnalysisResultStorage
         }
 
         @Override
+        @SuppressWarnings("deprecation")
         protected IViolation createViolation(Map map, String sAnalyzerId, ResultLocation location) {
             List<IPathElement> descriptors = getDescriptors();
             IFlowAnalysisPathElement[] aDescriptors = (descriptors == null) ? new IFlowAnalysisPathElement[0]
@@ -116,6 +117,7 @@ final class FlowAnalysisResultStorage
         }
 
         @Override
+        @SuppressWarnings("deprecation")
         protected IPathElement createViolElemDesc(ResultLocation location, String sElemDescription, List<IPathElement> childDescriptors,
                                                   Map<String, String> properties, Map<String, String> attributesMap, List<PathElementAnnotation> annotations) {
             final String sType = attributesMap.remove(IXmlTagsAndAttributes.VIOLATION_ELEMENT_TYPE_V2_TAG);

@@ -19,6 +19,7 @@ package com.parasoft.findings.utils.results.violations;
 import java.util.Arrays;
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class FlowAnalysisViolation
         extends AbstractCodingStandardsViolation
         implements IFlowAnalysisViolation {

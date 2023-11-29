@@ -66,6 +66,7 @@ public abstract class AbstractResultReader
     private final Map<String, Object> _resultData = new HashMap<String, Object>();
 
     @Override
+    @SuppressWarnings("unchecked")
     public void startElement(String sUri, String sLocalName, String sQName, Attributes attributes)
             throws SAXException {
         if (sQName.equals(_sProcessedListName)) {
@@ -132,6 +133,7 @@ public abstract class AbstractResultReader
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void endElement(String uri, String localName, String sQName)
             throws SAXException {
         if (sQName.equals(_sProcessedListName)) { // list element end - do nothing
@@ -207,6 +209,7 @@ public abstract class AbstractResultReader
      *
      * @return the attribute map
      */
+    @SuppressWarnings("unchecked")
     protected Map<String, String> getMap() {
         return (Map<String, String>) _resultData.get(_ATTRIBUTES_KEY);
     }
@@ -302,10 +305,12 @@ public abstract class AbstractResultReader
         return _locationsReader;
     }
 
+    @SuppressWarnings("unchecked")
     protected List<IPathElement> getDescriptors() {
         return (List<IPathElement>) _resultData.get(IXmlTagsAndAttributes.VIOLATION_ELEMENT_DESC_V2_TAG);
     }
 
+    @SuppressWarnings("unchecked")
     protected Map<String, String> getProperties() {
         return (Map<String, String>) _resultData.get(IXmlTagsAndAttributes.PROPERTIES_V2_TAG);
     }
