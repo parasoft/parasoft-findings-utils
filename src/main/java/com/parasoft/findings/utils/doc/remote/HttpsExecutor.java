@@ -31,14 +31,14 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.config.Lookup;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
-import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.*;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.auth.*;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.params.HttpParams;
+import org.apache.http.params.*;
 import org.apache.http.protocol.HttpContext;
 
 import javax.net.ssl.SSLContext;
@@ -56,6 +56,7 @@ import java.security.cert.X509Certificate;
  * Difference is that we need to inject an X509TrustManager.
  * Source base: com.parasoft.sdm.api.bts.impl.jira5.util.http.HttpsExecutor
  **/
+@SuppressWarnings("deprecation")
 public final class HttpsExecutor {
     private HttpsExecutor() {
         // Just to prevent do instances

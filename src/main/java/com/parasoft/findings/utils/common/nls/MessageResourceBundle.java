@@ -163,7 +163,7 @@ public final class MessageResourceBundle {
             field.setAccessible(true);
             return;
         }
-        AccessController.doPrivileged(new PrivilegedAction() {
+        AccessController.doPrivileged(new PrivilegedAction<Object>() {
             public Object run() {
                 field.setAccessible(true);
                 return null;
@@ -180,6 +180,7 @@ public final class MessageResourceBundle {
         private static final long serialVersionUID = 1L;
 
         private final String _sBundleName;
+
         private final Map _fieldMap;
         private final boolean _bIsAccessible;
 
@@ -199,6 +200,7 @@ public final class MessageResourceBundle {
          * //javadoc-ref//@see MessageBundleProperties#put(java.lang.Object, java.lang.Object)
          */
         @Override
+        @SuppressWarnings("unchecked")
         public synchronized Object put(Object key, Object value) {
             Object object = _fieldMap.put(key, MES_ASSIGN);
             if (object == MES_ASSIGN) {
