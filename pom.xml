@@ -41,7 +41,7 @@
     <scm>
         <url>https://github.com/parasoft/parasoft-findings-utils</url>
         <connection>scm:git:https://github.com/parasoft/parasoft-findings-utils.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:parasoft/parasoft-findings-utils.git</developerConnection>
+        <developerConnection>scm:git:ssh://git@github.com/parasoft/parasoft-findings-utils.git</developerConnection>
         <tag>master</tag>
     </scm>
 
