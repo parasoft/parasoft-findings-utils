@@ -6,10 +6,10 @@ import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class NLSTest {
+public class NLSTest {
 
     @Test
-    void getEnglishString() {
+    public void testGetEnglishString() {
         Locale englishLocale = new Locale("en", "US");
         Locale.setDefault(englishLocale);
         Messages.initMessages(Messages.class);

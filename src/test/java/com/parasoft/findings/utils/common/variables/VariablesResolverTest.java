@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class VariablesResolverTest {
+public class VariablesResolverTest {
     VariablesResolver _variablesResolver = new VariablesResolver(new IVariablesProvider() {
         private final Map<String, String> _variables = new HashMap<String, String>();
         {
@@ -23,13 +23,13 @@ class VariablesResolverTest {
     });
 
     @Test
-    void performSubstitution() {
+    public void testPerformSubstitution() {
         String value = _variablesResolver.performSubstitution("${FAKE_C_DRIVER}/${FAKE_JAVA_INSTALLATION}/${FAKE_JAVA_BIN}");
         assertEquals("C:/Program Files/Java/jdk1.8.0_301/bin", value);
     }
 
     @Test
-    void performSubstitution_noVariable() {
+    public void testPerformSubstitution_noVariable() {
         String value = _variablesResolver.performSubstitution("${VARIABLE_NOT_EXISTING}");
         assertEquals("${VARIABLE_NOT_EXISTING}", value);
     }

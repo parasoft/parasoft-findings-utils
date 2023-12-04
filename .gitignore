@@ -3,3 +3,4 @@
 .project
 /target/
 .idea
+/.mvn/maven.config
