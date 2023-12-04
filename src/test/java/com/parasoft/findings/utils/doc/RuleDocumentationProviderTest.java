@@ -8,13 +8,13 @@ import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RuleDocumentationProviderTest {
+public class RuleDocumentationProviderTest {
 
     private final String dtpUrl = System.getProperty("testDtpUrl"); // Use the same key as in maven-surefire-plugin configuration.
 
     @Test
     @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
-    void getRuleDocLocationFromDtp_normal() {
+    public void testGetRuleDocLocationFromDtp_normal() {
         Properties properties = new Properties();
         properties.setProperty("dtp.url", dtpUrl);
 
@@ -29,7 +29,7 @@ class RuleDocumentationProviderTest {
 
     @Test
     @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
-    void getRuleDocLocationFromDtp_incorrectAnalyzer() {
+    public void testGetRuleDocLocationFromDtp_incorrectAnalyzer() {
         Properties properties = new Properties();
         properties.setProperty("dtp.url", dtpUrl);
 
@@ -40,7 +40,7 @@ class RuleDocumentationProviderTest {
 
     @Test
     @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
-    void getRuleDocLocationFromDtp_incorrectRuleId() {
+    public void testGetRuleDocLocationFromDtp_incorrectRuleId() {
         Properties properties = new Properties();
         properties.setProperty("dtp.url", dtpUrl);
 
@@ -50,7 +50,7 @@ class RuleDocumentationProviderTest {
     }
 
     @Test
-    void getRuleDocLocationFromDtp_emptyDtpUrl() {
+    public void testGetRuleDocLocationFromDtp_emptyDtpUrl() {
         Properties properties = new Properties();
         properties.setProperty("dtp.url", "");
 
@@ -61,7 +61,7 @@ class RuleDocumentationProviderTest {
 
 
     @Test
-    void getRuleDocLocationFromDtp_noDtpUrl() {
+    public void testGetRuleDocLocationFromDtp_noDtpUrl() {
         Properties properties = new Properties();
 
         RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
@@ -70,7 +70,7 @@ class RuleDocumentationProviderTest {
     }
 
     @Test
-    void getRuleDocLocationFromLocalDir() {
+    public void testGetRuleDocLocationFromLocalDir() {
         Properties properties = new Properties();
         properties.setProperty("report.rules", new File("src/test/resources/ruledoc").getAbsolutePath());
 
