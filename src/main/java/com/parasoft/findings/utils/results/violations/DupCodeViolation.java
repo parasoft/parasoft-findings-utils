@@ -36,8 +36,8 @@ public class DupCodeViolation
     private final IPathElement[] _aElementDescriptors;
 
     public DupCodeViolation(String sRuleId, String sAnalyzerId, ResultLocation resultLocation,
-                            String sMessage, IPathElement[] aPathElements) {
-        super(sAnalyzerId, resultLocation, sMessage);
+                            String sMessage, String sLang, IPathElement[] aPathElements) {
+        super(sAnalyzerId, sLang, resultLocation, sMessage);
         _aElementDescriptors = aPathElements;
         _sRuleId = sRuleId;
     }

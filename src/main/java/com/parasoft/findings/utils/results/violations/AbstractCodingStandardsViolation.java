@@ -33,10 +33,10 @@ public abstract class AbstractCodingStandardsViolation
      * @pre location != null
      * @pre sErrorMessage != null
      */
-    protected AbstractCodingStandardsViolation(final String sToolId,
+    protected AbstractCodingStandardsViolation(final String sToolId, final String sLanguageId,
                                                final ResultLocation location,
                                                final String sErrorMessage) {
-        super(sToolId, location, sErrorMessage);
+        super(sToolId, sLanguageId, location, sErrorMessage);
     }
 
     @Override

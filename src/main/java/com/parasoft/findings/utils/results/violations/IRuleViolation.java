@@ -35,4 +35,5 @@ public interface IRuleViolation extends IViolation {
      */
     String getNamespace();
 
+    String getLanguageId();
 }

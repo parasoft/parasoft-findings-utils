@@ -25,8 +25,8 @@ public class MetricsViolation
     private final String _sRuleId;
 
     public MetricsViolation(String sRuleId, String sAnalyzerId, ResultLocation resultLocation,
-                            String sMessage) {
-        super(sAnalyzerId, resultLocation, sMessage);
+                            String sMessage, String sLang) {
+        super(sAnalyzerId, sLang, resultLocation, sMessage);
         _sRuleId = sRuleId;
     }
 
