@@ -16,11 +16,7 @@
 
 package com.parasoft.findings.utils.doc.remote;
 
-import com.parasoft.findings.utils.common.util.StringUtil;
-
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Properties;
 
 
@@ -43,34 +39,70 @@ public final class RulesRestClient
     /**
      * @return rest client or null if service is not available
      */
-    public static RulesRestClient create(Properties settings) {
+    public static CreationResult create(Properties settings) {
         String dtpUrl = settings.getProperty(DTP_URL);
-        if (StringUtil.isEmpty(dtpUrl)) {
-            return null;
+        if (dtpUrl == null || dtpUrl.trim().length() == 0) {
+            return new CreationResult(null, ClientStatus.DTP_URL_NOT_SPECIFIED);
         }
+        dtpUrl = dtpUrl.trim();
         dtpUrl = dtpUrl.endsWith("/") ? dtpUrl : dtpUrl + "/";
         URI serviceURI = URI.create(dtpUrl + "grs/api/v1.6/rules");
         RulesRestClient client = new RulesRestClient(serviceURI);
         try {
-            client.getRuleInfo("requestToCheckDTPServerAvailable", "notExistingAnalyzerId");
+            client.validateDtpDocService();
+            return new CreationResult(client, ClientStatus.AVAILABLE);
         } catch (NotSupportedDtpVersionException e) {
             Logger.getLogger().info("Unable to retrieve the documentation for the rule from DTP. It is highly possible that the current version of DTP is older than the 2023.1 which is not supported.");  //$NON-NLS-1$
-            client = null;
+            return new CreationResult(null, ClientStatus.NOT_SUPPORTED_VERSION);
         } catch (Exception e) {
             Logger.getLogger().info("DTP server is not available: " + dtpUrl); //$NON-NLS-1$
-            client = null;
+            return new CreationResult(null, ClientStatus.NOT_AVAILABLE);
         }
-        return client;
+    }
+
+    /**
+     * @exception NotSupportedDtpVersionException if DTP version is not supported
+     * @exception DtpException if DTP doc service is not available
+     * */
+    private void validateDtpDocService() throws DtpException {
+        URIBuilder builder = getEndpointBuilder(DOC_PATH);
+        // Try to get rule info with a not existing ruleId and analyzerId pair, the expected response is 404 if DTP doc service is available
+        String ruleId = "requestToCheckDTPServerAvailable";
+        builder.addParameter("rule", ruleId); //$NON-NLS-1$ //$NON-NLS-2$
+        builder.addParameter("analyzerId", "notExistingAnalyzerId"); //$NON-NLS-1$ //$NON-NLS-2$
+
+        try {
+            URI uri = builder.build();
+            getString(uri);
+        } catch (ResponseWithContentException e) {
+            int statusCode = e.getCode();
+            if ((statusCode == NOT_AUTHORIZED_1) || (statusCode == NOT_AUTHORIZED_2)) {
+                throw new NotSupportedDtpVersionException(e);
+            }
+            if (statusCode == RULE_NOT_FOUND_2) {
+                ResponseContent content = e.getResponseContent();
+                String contentString = content.toString();
+                if (!ResponseContent.NO_CONTENT.equals(content)
+                        && contentString.contains("\"status\":404")
+                        && contentString.contains("\"message\"")
+                        && contentString.contains(ruleId)
+                        && contentString.contains("\"moreInfoUrl\"")
+                ) {
+                    return;  // DTP doc service available
+                }
+            }
+            throw new DtpException(e);
+        } catch (Exception e) {
+            throw new DtpException(e);
+        }
     }
 
     /**
      * @param sRuleId
      * @param sAnalyzerId
-     * @return info for any available version
-     * @throws DtpException
+     * @return info for any available version, null if exception happens
      */
-    public synchronized RuleInfo getRuleInfo(String sRuleId, String sAnalyzerId)
-            throws DtpException {
+    public synchronized RuleInfo getRuleInfo(String sRuleId, String sAnalyzerId) {
         return getRuleInfo(sRuleId, sAnalyzerId, null);
     }
 
@@ -78,40 +110,25 @@ public final class RulesRestClient
      * @param sRuleId
      * @param sAnalyzerId
      * @param sAnalyzerVersion
-     * @return info about given url
-     * @throws DtpException
+     * @return info about given url, null if exception happens
      */
-    public synchronized RuleInfo getRuleInfo(String sRuleId, String sAnalyzerId, String sAnalyzerVersion)
-            throws DtpException {
+    public synchronized RuleInfo getRuleInfo(String sRuleId, String sAnalyzerId, String sAnalyzerVersion) {
         URIBuilder builder = getEndpointBuilder(DOC_PATH);
-        builder.addParameter("rule", sRuleId); //$NON-NLS-1$
-        builder.addParameter("analyzerId", sAnalyzerId); //$NON-NLS-1$
+        builder.addParameter(RULE_ATTR, sRuleId); //$NON-NLS-1$
+        builder.addParameter(ANALYZER_ID_ATTR, sAnalyzerId); //$NON-NLS-1$
         if (sAnalyzerVersion != null) {
-            builder.addParameter("analyzerVersion", sAnalyzerVersion); //$NON-NLS-1$
+            builder.addParameter(ANALYZER_VERSION_ATTR, sAnalyzerVersion); //$NON-NLS-1$
         }
-
         try {
             Logger.getLogger().info("Loading info for rule " + sRuleId + " from DTP..."); //$NON-NLS-1$ //$NON-NLS-2$
             URI uri = builder.build();
             String text = getString(uri);
             JacksonObjectImpl result = new JacksonObjectImpl(text);
-            return new RuleInfo(result.getString(ID_ATTR), result.getString(ANALYZER_ID_ATTR), result.getString(ANALYZER_VERSION_ATTR),
+            return new RuleInfo(result.getString(RULE_ID_ATTR), result.getString(ANALYZER_ID_ATTR), result.getString(ANALYZER_VERSION_ATTR),
                     result.getString(DOCS_URL_ATTR));
-        } catch (ResponseWithContentException e) {
-            int statusCode = e.getCode();
-            if ((statusCode == RULE_NOT_FOUND_1) || (statusCode == RULE_NOT_FOUND_2)) {
-                return null;
-            } else if ((statusCode == NOT_AUTHORIZED_1) || (statusCode == NOT_AUTHORIZED_2)) {
-                throw new NotSupportedDtpVersionException(e);
-            } else {
-                throw new DtpException(e);
-            }
-        } catch (JSONException | IOException e) {
-            throw new DtpException(e);
-        } catch (URISyntaxException e) {
-            Logger.getLogger().error(e);
+        } catch (Exception e) {
+            return null;
         }
-        return null;
     }
 
     public static class RuleInfo {
@@ -128,9 +145,31 @@ public final class RulesRestClient
         }
     }
 
-    private static final String DOC_PATH = "doc"; //$NON-NLS-1$
+    public static class CreationResult {
+        private final RulesRestClient _client;
+        private final ClientStatus _clientStatus;
+        private CreationResult(RulesRestClient client, ClientStatus clientStatus) {
+            this._client = client;
+            this._clientStatus = clientStatus;
+        }
 
-    private static final int RULE_NOT_FOUND_1 = 400;
+        public RulesRestClient getClient() {
+            return _client;
+        }
+
+        public ClientStatus getClientStatus() {
+            return _clientStatus;
+        }
+    }
+
+    public enum ClientStatus {
+        AVAILABLE,
+        NOT_SUPPORTED_VERSION,
+        NOT_AVAILABLE,
+        DTP_URL_NOT_SPECIFIED
+    }
+
+    private static final String DOC_PATH = "doc"; //$NON-NLS-1$
 
     private static final int RULE_NOT_FOUND_2 = 404;
 
@@ -138,7 +177,9 @@ public final class RulesRestClient
 
     private static final int NOT_AUTHORIZED_2 = 403;
 
-    private static final String ID_ATTR = "ruleId"; //$NON-NLS-1$
+    private static final String RULE_ATTR = "rule"; //$NON-NLS-1$
+
+    private static final String RULE_ID_ATTR = "ruleId"; //$NON-NLS-1$
 
     private static final String ANALYZER_ID_ATTR = "analyzerId"; //$NON-NLS-1$
 

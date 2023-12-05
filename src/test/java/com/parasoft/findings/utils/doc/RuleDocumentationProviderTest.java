@@ -1,5 +1,6 @@
 package com.parasoft.findings.utils.doc;
 
+import com.parasoft.findings.utils.doc.remote.RulesRestClient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
 
@@ -11,6 +12,35 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RuleDocumentationProviderTest {
 
     private final String dtpUrl = System.getProperty("testDtpUrl"); // Use the same key as in maven-surefire-plugin configuration.
+
+    @Test
+    @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
+    void testGetDtpDocServiceStatus_normal() {
+        Properties properties = new Properties();
+        properties.setProperty("dtp.url", dtpUrl);
+        RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
+
+        assertEquals(RulesRestClient.ClientStatus.AVAILABLE, underTest.getDtpDocServiceStatus());
+    }
+
+    @Test
+    @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
+    void testGetDtpDocServiceStatus_dtpUrlNotFound() {
+        Properties properties = new Properties();
+        properties.setProperty("dtp.url", dtpUrl + "/notFundPage");
+        RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
+
+        assertEquals(RulesRestClient.ClientStatus.NOT_AVAILABLE, underTest.getDtpDocServiceStatus());
+    }
+
+    @Test
+    void testGetDtpDocServiceStatus_incorrectDtpUrl() {
+        Properties properties = new Properties();
+        properties.setProperty("dtp.url", "https://incorrectDtpUrl");
+        RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
+
+        assertEquals(RulesRestClient.ClientStatus.NOT_AVAILABLE, underTest.getDtpDocServiceStatus());
+    }
 
     @Test
     @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
