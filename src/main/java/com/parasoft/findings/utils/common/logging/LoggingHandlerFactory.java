@@ -18,18 +18,27 @@ package com.parasoft.findings.utils.common.logging;
 
 import java.util.logging.Logger;
 
-public class LoggingHandlerFactory {
+public class LoggingHandlerFactory
+        implements ILoggerHandlerFactory {
     private static final String DEFAULT_NAME = "com.parasoft"; //$NON-NLS-1$
 
-    public LoggingHandler getHandler(String sName) {
+    public ILoggerHandler getHandler(String sName) {
         return new LoggingHandler(Logger.getLogger(sName));
+    }
+
+    public ILoggerHandler getHandler() {
+        return getHandler(DEFAULT_NAME);
     }
 
     public String getDefaultName() {
         return DEFAULT_NAME;
     }
 
-    public void switchLoggingOn() {
+    public boolean isInitialized() {
+        return true;
     }
 
+    public void switchLoggingOff() { }
+
+    public void switchLoggingOn() { }
 }

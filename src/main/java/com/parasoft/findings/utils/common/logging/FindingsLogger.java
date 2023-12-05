@@ -27,7 +27,7 @@ public final class FindingsLogger {
     /**
      * The logger handler factory.
      */
-    private static LoggingHandlerFactory FACTORY = null;
+    private static ILoggerHandlerFactory FACTORY = null;
 
     /**
      * The default wrapper class name.
@@ -37,7 +37,7 @@ public final class FindingsLogger {
     /**
      * The logger handler
      */
-    private LoggingHandler _handler = null;
+    private ILoggerHandler _handler = null;
 
     /**
      * The wrapper class name.
@@ -51,7 +51,7 @@ public final class FindingsLogger {
      *
      * @param handler the handler to use.
      */
-    private FindingsLogger(LoggingHandler handler) {
+    private FindingsLogger(ILoggerHandler handler) {
         _handler = handler;
     }
 
@@ -68,7 +68,7 @@ public final class FindingsLogger {
         if (!sName.startsWith(COM_PARASOFT_PREFIX)) {
             sName = COM_PARASOFT_PREFIX + sName;
         }
-        LoggingHandler handler = null;
+        ILoggerHandler handler = null;
         if (FACTORY != null) {
             try {
                 handler = FACTORY.getHandler(sName);
@@ -152,6 +152,18 @@ public final class FindingsLogger {
         } else {
             log(object, Level.INFO, null);
         }
+    }
+
+    /**
+     * Log the message object with the <code>INFO</code> level.
+     * <code>throwable</code> and place where this log is created.
+     *
+     * @param object the object to log.
+     * @param throwable the exception to log, stack trace will be printed.
+     * @pre object != null
+     **/
+    public void info(Object object, Throwable throwable) {
+        this.log(object, Level.INFO, throwable);
     }
 
     /**
@@ -241,11 +253,11 @@ public final class FindingsLogger {
 
     /**
      * Sets current logger handlers factory. If argument factory is
-     * <code>null</code> then sets DummyHandlerFactory as current.
+     * <code>null</code> then sets LoggingHandlerFactory as current.
      *
      * @param factory the handlers factory to set
      */
-    public static void setCurrentFactory(LoggingHandlerFactory factory) {
+    public static void setCurrentFactory(ILoggerHandlerFactory factory) {
         if (factory != null) {
             FACTORY = factory;
             FACTORY.switchLoggingOn();
@@ -271,7 +283,7 @@ public final class FindingsLogger {
      * @pre level != null
      */
     public void log(String sWrapperClassName, Object object, Level level, Throwable throwable) {
-        tryLog(() -> _handler.log(level, object, throwable));
+        tryLog(() -> _handler.log(sWrapperClassName, level, object, throwable));
     }
 
     /**
@@ -287,9 +299,9 @@ public final class FindingsLogger {
      */
     public void log(String sWrapperClassName, Supplier<Object> objectSupplier, Level level, Throwable throwable) {
         if (objectSupplier == null) {
-            tryLog(() -> _handler.log(level, (Object) objectSupplier, throwable));
+            tryLog(() -> _handler.log(sWrapperClassName, level, (Object) objectSupplier, throwable));
         }
-        tryLog(() -> _handler.log(level, objectSupplier, throwable));
+        tryLog(() -> _handler.log(sWrapperClassName, level, objectSupplier, throwable));
     }
 
     private void tryLog(Runnable logMethod) {
