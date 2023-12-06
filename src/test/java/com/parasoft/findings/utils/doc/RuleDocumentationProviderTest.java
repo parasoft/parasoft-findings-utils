@@ -14,6 +14,35 @@ public class RuleDocumentationProviderTest {
 
     @Test
     @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
+    void testGetDtpDocServiceStatus_normal() {
+        Properties properties = new Properties();
+        properties.setProperty("dtp.url", dtpUrl);
+        RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
+
+        assertEquals(RuleDocumentationProvider.ClientStatus.AVAILABLE, underTest.getDtpDocServiceStatus());
+    }
+
+    @Test
+    @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
+    void testGetDtpDocServiceStatus_dtpUrlNotFound() {
+        Properties properties = new Properties();
+        properties.setProperty("dtp.url", dtpUrl + "/notFundPage");
+        RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
+
+        assertEquals(RuleDocumentationProvider.ClientStatus.NOT_AVAILABLE, underTest.getDtpDocServiceStatus());
+    }
+
+    @Test
+    void testGetDtpDocServiceStatus_incorrectDtpUrl() {
+        Properties properties = new Properties();
+        properties.setProperty("dtp.url", "https://incorrectDtpUrl");
+        RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
+
+        assertEquals(RuleDocumentationProvider.ClientStatus.NOT_AVAILABLE, underTest.getDtpDocServiceStatus());
+    }
+
+    @Test
+    @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
     public void testGetRuleDocLocationFromDtp_normal() {
         Properties properties = new Properties();
         properties.setProperty("dtp.url", dtpUrl);

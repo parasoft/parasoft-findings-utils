@@ -17,33 +17,20 @@
 
 package com.parasoft.findings.utils.doc.remote;
 
-import com.parasoft.findings.utils.common.FindingsException;
-
-public class DtpException
-        extends FindingsException {
-
+public class DtpUrlException
+        extends DtpException {
     /**
      * Automatically generated variable: serialVersionUID
      */
-    private static final long serialVersionUID = -8527128027783023492L;
+    private static final long serialVersionUID = -967998353382813778L;
 
     /**
      * Constructor.
      *
-     * @param cause the source throwable
+     * @param message the source throwable
      * @pre cause != null
      */
-    public DtpException(Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param message the message
-     * @pre cause != null
-     */
-    public DtpException(String message) {
+    public DtpUrlException(String message) {
         super(message);
     }
 
