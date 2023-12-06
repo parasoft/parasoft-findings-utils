@@ -1,6 +1,5 @@
 package com.parasoft.findings.utils.doc;
 
-import com.parasoft.findings.utils.doc.remote.RulesRestClient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
 
@@ -20,7 +19,7 @@ public class RuleDocumentationProviderTest {
         properties.setProperty("dtp.url", dtpUrl);
         RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
 
-        assertEquals(RulesRestClient.ClientStatus.AVAILABLE, underTest.getDtpDocServiceStatus());
+        assertEquals(RuleDocumentationProvider.ClientStatus.AVAILABLE, underTest.getDtpDocServiceStatus());
     }
 
     @Test
@@ -30,7 +29,7 @@ public class RuleDocumentationProviderTest {
         properties.setProperty("dtp.url", dtpUrl + "/notFundPage");
         RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
 
-        assertEquals(RulesRestClient.ClientStatus.NOT_AVAILABLE, underTest.getDtpDocServiceStatus());
+        assertEquals(RuleDocumentationProvider.ClientStatus.NOT_AVAILABLE, underTest.getDtpDocServiceStatus());
     }
 
     @Test
@@ -39,7 +38,7 @@ public class RuleDocumentationProviderTest {
         properties.setProperty("dtp.url", "https://incorrectDtpUrl");
         RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
 
-        assertEquals(RulesRestClient.ClientStatus.NOT_AVAILABLE, underTest.getDtpDocServiceStatus());
+        assertEquals(RuleDocumentationProvider.ClientStatus.NOT_AVAILABLE, underTest.getDtpDocServiceStatus());
     }
 
     @Test

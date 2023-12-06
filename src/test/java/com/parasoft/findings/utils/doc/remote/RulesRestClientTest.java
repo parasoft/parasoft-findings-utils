@@ -17,10 +17,15 @@ public class RulesRestClientTest {
     public void testCreate_normal() {
         Properties settings = new Properties();
         settings.put(DTP_URL, dtpUrl);
-        RulesRestClient.CreationResult client = RulesRestClient.create(settings);
 
-        assertNotNull(client.getClient());
-        assertEquals(RulesRestClient.ClientStatus.AVAILABLE, client.getClientStatus());
+        RulesRestClient client = null;
+        try {
+            client = RulesRestClient.create(settings);
+        } catch (DtpException e) {
+            fail("Expect success");
+        }
+
+        assertNotNull(client);
     }
 
     @Test
@@ -28,10 +33,15 @@ public class RulesRestClientTest {
     public void testCreate_normal_withSpaces() {
         Properties settings = new Properties();
         settings.put(DTP_URL, " " + dtpUrl + " ");
-        RulesRestClient.CreationResult client = RulesRestClient.create(settings);
 
-        assertNotNull(client.getClient());
-        assertEquals(RulesRestClient.ClientStatus.AVAILABLE, client.getClientStatus());
+        RulesRestClient client = null;
+        try {
+            client = RulesRestClient.create(settings);
+        } catch (DtpException e) {
+            fail("Expect success");
+        }
+
+        assertNotNull(client);
     }
 
     @Test
@@ -39,49 +49,62 @@ public class RulesRestClientTest {
     public void testCreate_dtpUrlNotFound() {
         Properties settings = new Properties();
         settings.put(DTP_URL, dtpUrl + "/notFundPage");
-        RulesRestClient.CreationResult client = RulesRestClient.create(settings);
 
-        assertNull(client.getClient());
-        assertEquals(RulesRestClient.ClientStatus.NOT_AVAILABLE, client.getClientStatus());
+        try {
+            RulesRestClient.create(settings);
+            fail("Expect exception");
+        } catch (DtpException e) {
+            assertTrue(e.getMessage().contains("status code: 404"));
+        }
     }
 
     @Test
     public void testCreate_incorrectDtpUrl() {
         Properties settings = new Properties();
         settings.put(DTP_URL, "https://incorrectDtpUrl");
-        RulesRestClient.CreationResult client = RulesRestClient.create(settings);
 
-        assertNull(client.getClient());
-        assertEquals(RulesRestClient.ClientStatus.NOT_AVAILABLE, client.getClientStatus());
+        try {
+            RulesRestClient.create(settings);
+            fail("Expect exception");
+        } catch (DtpException e) {
+            assertTrue(e.getMessage().contains("incorrectDtpUrl"));
+        }
     }
 
     @Test
     public void testCreate_emptyDtpUrl1() {
         Properties settings = new Properties();
         settings.put(DTP_URL, "  ");
-        RulesRestClient.CreationResult client = RulesRestClient.create(settings);
 
-        assertNull(client.getClient());
-        assertEquals(RulesRestClient.ClientStatus.DTP_URL_NOT_SPECIFIED, client.getClientStatus());
+        try {
+            RulesRestClient.create(settings);
+            fail("Expect exception");
+        } catch (DtpException e) {
+            assertTrue(e.getMessage().contains("Null or empty dtp.url value is specified."));
+        }
     }
 
     @Test
     public void testCreate_emptyDtpUrl2() {
         Properties settings = new Properties();
         settings.put(DTP_URL, "");
-        RulesRestClient.CreationResult client = RulesRestClient.create(settings);
-
-        assertNull(client.getClient());
-        assertEquals(RulesRestClient.ClientStatus.DTP_URL_NOT_SPECIFIED, client.getClientStatus());
+        try {
+            RulesRestClient.create(settings);
+            fail("Expect exception");
+        } catch (DtpException e) {
+            assertTrue(e.getMessage().contains("Null or empty dtp.url value is specified."));
+        }
     }
 
     @Test
     public void testCreate_noDtpUrl() {
         Properties settings = new Properties();
-        RulesRestClient.CreationResult client = RulesRestClient.create(settings);
-
-        assertNull(client.getClient());
-        assertEquals(RulesRestClient.ClientStatus.DTP_URL_NOT_SPECIFIED, client.getClientStatus());
+        try {
+            RulesRestClient.create(settings);
+            fail("Expect exception");
+        } catch (DtpException e) {
+            assertTrue(e.getMessage().contains("Null or empty dtp.url value is specified."));
+        }
     }
 
     @Test
@@ -124,10 +147,14 @@ public class RulesRestClientTest {
     public RulesRestClient createClient() {
         Properties settings = new Properties();
         settings.put(DTP_URL, dtpUrl);
-        RulesRestClient.CreationResult client = RulesRestClient.create(settings);
-        assertNotNull(client.getClient());
-        assertEquals(RulesRestClient.ClientStatus.AVAILABLE, client.getClientStatus());
-        return client.getClient();
+        RulesRestClient client = null;
+        try {
+            client = RulesRestClient.create(settings);
+        } catch (DtpException e) {
+            fail("Expect success");
+        }
+        assertNotNull(client);
+        return client;
     }
 
     boolean hasTestDtpUrlSystemProperty() {
