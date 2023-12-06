@@ -127,7 +127,7 @@ public final class StringUtil {
      * @return not null string
      * @post $result != null
      */
-    public static String getNotNull(String string) {
+    public static String getNonEmpty(String string) {
         return string == null ? "" : string;
     }
 }

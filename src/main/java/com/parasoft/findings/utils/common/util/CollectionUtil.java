@@ -48,7 +48,7 @@ public final class CollectionUtil {
     }
 
     /**
-     * Tells whether given collection if null or empty
+     * Tells whether given collection is null or empty
      * @param c collection
      * @return TRUE for null or empty collection, FALSE otherwise
      */
