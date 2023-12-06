@@ -120,4 +120,14 @@ public final class StringUtil {
         return (sText1 != null) && sText1.equals(sText2);
     }
 
+    /**
+     * Returns the same string or empty string if <code>null</code> is passed.
+     *
+     * @param string source string
+     * @return not null string
+     * @post $result != null
+     */
+    public static String getNotNull(String string) {
+        return string == null ? "" : string;
+    }
 }

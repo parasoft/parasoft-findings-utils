@@ -46,4 +46,13 @@ public final class CollectionUtil {
     public static <E> boolean hasAtLeastNElements(Collection<E> c, int n) {
         return (c != null) && (c.size() >= n);
     }
+
+    /**
+     * Tells whether given collection if null or empty
+     * @param c collection
+     * @return TRUE for null or empty collection, FALSE otherwise
+     */
+    public static boolean isEmpty(Collection<?> c) {
+        return c == null || c.isEmpty();
+    }
 }
