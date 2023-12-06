@@ -27,7 +27,7 @@ public class RuleDocumentationProvider {
             rulesRestClient = RulesRestClient.create(_settings);
             _clientStatus = ClientStatus.AVAILABLE;
         } catch (DtpUrlException e) {
-            Logger.getLogger().warn("Null or empty dtp.url value is specified.");  //$NON-NLS-1$
+            Logger.getLogger().info("Null or empty dtp.url value is specified.");  //$NON-NLS-1$
             rulesRestClient = null;
             _clientStatus = ClientStatus.DTP_URL_NOT_SPECIFIED;
         } catch (NotSupportedDtpVersionException e) {
