@@ -77,7 +77,7 @@ public final class FindingsLogger {
             }
         }
         if (handler == null) {
-            handler = new LoggingHandler(Logger.getLogger(sName));
+            handler = new DefaultLoggingHandler(Logger.getLogger(sName));
         }
 
         FindingsLogger parasoftLogger = new FindingsLogger(handler);
@@ -262,7 +262,7 @@ public final class FindingsLogger {
             FACTORY = factory;
             FACTORY.switchLoggingOn();
         } else {
-            FACTORY = new LoggingHandlerFactory();
+            FACTORY = new DefaultLoggingHandlerFactory();
         }
     }
 

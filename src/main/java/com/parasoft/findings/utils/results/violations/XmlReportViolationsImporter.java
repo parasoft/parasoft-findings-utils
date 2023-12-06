@@ -20,7 +20,6 @@ import com.parasoft.findings.utils.results.testableinput.FindingsLocationMatcher
 import com.parasoft.findings.utils.results.testableinput.ITestableInputLocationMatcher;
 import com.parasoft.findings.utils.results.xml.XmlReportReader;
 import com.parasoft.findings.utils.common.logging.FindingsLogger;
-import com.parasoft.findings.utils.common.logging.LoggingHandlerFactory;
 import com.parasoft.findings.utils.results.xml.FileImportPreferences;
 
 import java.io.File;
@@ -44,8 +43,6 @@ public final class XmlReportViolationsImporter {
      * @return import result or null if import cannot be performed.
      */
     public XmlReportViolations performImport(File file) {
-        FindingsLogger.setCurrentFactory(new LoggingHandlerFactory());
-
         if (_properties.isEmpty()) {
             Logger.getLogger().warn("Empty properties"); //$NON-NLS-1$
         }
