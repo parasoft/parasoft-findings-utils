@@ -24,6 +24,9 @@ import com.parasoft.findings.utils.common.IStringConstants;
  * Common superclass for all message bundle classes. Provides convenience methods for manipulating messages.
  */
 public abstract class NLS {
+
+    private static final String NO_MESSAGE_AVAILABLE = "No message available.";  //$NON-NLS-1$
+    private static final String MISSING_ARGUMENT = "<missing argument>";  //$NON-NLS-1$
     /**
      * Creates a new NLS instance.
      */
@@ -41,6 +44,37 @@ public abstract class NLS {
     public static void initMessages(Class<? extends NLS> clazz) {
         String resourcePath = MessageResourceBundle.getDefaultBundleName(clazz);
         MessageResourceBundle.load(resourcePath, clazz);
+    }
+
+    /**
+     * @param sMessage
+     * @param binding
+     *
+     * @return String
+     */
+    public static String bind(String sMessage, Object binding)
+    {
+        if (sMessage == null) {
+            return NO_MESSAGE_AVAILABLE;
+        }
+        StringBuilder sbResult = internalBind(sMessage, new Object[] { binding } );
+        return sbResult.toString();
+    }
+
+    /**
+     * @param sMessage
+     * @param binding1
+     * @param binding2
+     *
+     * @return String
+     */
+    public static String bind(String sMessage, Object binding1, Object binding2)
+    {
+        if (sMessage == null) {
+            return NO_MESSAGE_AVAILABLE;
+        }
+        StringBuilder sbResult = internalBind(sMessage, new Object[] { binding1, binding2 } );
+        return sbResult.toString();
     }
 
     /**
@@ -79,5 +113,66 @@ public abstract class NLS {
             return IStringConstants.EMPTY;
         }
         return sResult;
+    }
+
+    /**
+     * Perform the string substitution on the given message.
+     *
+     * @param sMessage
+     * @param aArgs
+     *
+     * @return StringBuilder
+     */
+    private static StringBuilder internalBind(String sMessage, Object[] aArgs)
+    {
+        int argsLength = aArgs.length;
+        int mesLength = sMessage.length();
+        int bufLenght = mesLength + (argsLength * 5);
+
+        StringBuilder sbResult = new StringBuilder(bufLenght);
+        for (int idxAt = 0; idxAt < mesLength; idxAt++) {
+            char chr = sMessage.charAt(idxAt);
+            switch (chr) {
+                case '{' :
+                    int idx = sMessage.indexOf('}', idxAt);
+                    if (idx == -1) {
+                        sbResult.append(chr); break;
+                    }
+                    idxAt++;
+                    if (idxAt >= mesLength) {
+                        sbResult.append(chr); break;
+                    }
+                    try {
+                        int num = Integer.parseInt(sMessage.substring(idxAt, idx));
+                        if ((num >= argsLength) || (num < 0)) {
+                            sbResult.append(MISSING_ARGUMENT);
+                        } else {
+                            sbResult.append(aArgs[num]);
+                        }
+                    } catch (NumberFormatException nfe) {
+                        throw new IllegalArgumentException(nfe);
+                    }
+                    idxAt = idx; break;
+                case '\'' :
+                    int nextIdx = idxAt + 1;
+                    if (nextIdx >= mesLength) {
+                        sbResult.append(chr); break;
+                    }
+                    char next = sMessage.charAt(nextIdx);
+                    if (next == '\'') {
+                        idxAt++;
+                        sbResult.append(chr); break;
+                    }
+                    idx = sMessage.indexOf('\'', nextIdx);
+                    if (idx == -1) {
+                        sbResult.append(chr); break;
+                    }
+                    sbResult.append(sMessage.substring(nextIdx, idx));
+                    idxAt = idx; break;
+                default :
+                    sbResult.append(chr); break;
+            }
+        }
+        return sbResult;
     }
 }

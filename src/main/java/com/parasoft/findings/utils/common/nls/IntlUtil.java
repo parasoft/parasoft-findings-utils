@@ -51,6 +51,25 @@ public final class IntlUtil {
      * The returned array contains the suffixes in order from most specific to most generic.
      * So, in the FR_fr locale, it will return { _fr_FR.<ext>, _fr.<ext>, .<ext> }
      *
+     * @param locale locale to use
+     * @param sExtension file extension
+     * @param bUseDefault when true, default suffix (without internationalization) will be added
+     * @return array containing all file suffixes to use from most specific to most general
+     *
+     * @pre locale != null
+     * @pre sExtension != null
+     * @post $result != null
+     */
+    public static String[] getIntlSuffixes(Locale locale, String sExtension, boolean bUseDefault)
+    {
+        return getIntlSuffixes(locale, null, sExtension, bUseDefault);
+    }
+
+    /**
+     * Build an array of internationalized files suffixes to search.
+     * The returned array contains the suffixes in order from most specific to most generic.
+     * So, in the FR_fr locale, it will return { _fr_FR.<ext>, _fr.<ext>, .<ext> }
+     *
      * @param locale             locale to use
      * @param asSupportedLocales
      * @param sExtension         file extension
