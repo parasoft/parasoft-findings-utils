@@ -72,10 +72,10 @@ class MetricsViolationStorage
 
         @Override
         protected IViolation createViolation(Map<String, String> map, String sAnalyzerId,
-                                             ResultLocation location) {
+                                             String sLanguageId, ResultLocation location) {
             String sRuleId = getObligatoryString(IXmlTagsAndAttributes.RULE_ATTR);
             String sErrorMessage = getObligatoryString(IXmlTagsAndAttributes.MESSAGE_V2_ATTR);
-            return new MetricsViolation(sRuleId, sAnalyzerId, location, sErrorMessage);
+            return new MetricsViolation(sRuleId, sAnalyzerId, location, sErrorMessage, sLanguageId);
         }
 
         /**

@@ -40,13 +40,13 @@ public class FlowAnalysisViolation
      * as trackedVariablesMessages will not be supported
      */
     @Deprecated
-    public FlowAnalysisViolation(String sRuleId, String sAnalyzerId,
+    public FlowAnalysisViolation(String sRuleId, String sAnalyzerId, String sLanguageId,
                                  ResultLocation resultLocation,
                                  String sMessage, String sPackage, String sCauseMessage, String sRuleImportantPointMessage,
                                  String sPointMessage,
                                  Map<String, String> trackedVariablesMessages,
                                  IFlowAnalysisPathElement[] aElementDescriptors) {
-        super(sAnalyzerId, resultLocation, sMessage);
+        super(sAnalyzerId, sLanguageId, resultLocation, sMessage);
 
         _sRuleId = sRuleId;
         _sCauseMessage = sCauseMessage;
