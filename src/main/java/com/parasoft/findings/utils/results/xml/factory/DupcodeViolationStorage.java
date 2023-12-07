@@ -97,13 +97,13 @@ class DupcodeViolationStorage
         }
 
         @Override
-        protected IViolation createViolation(Map map, String sAnalyzerId, ResultLocation location) {
+        protected IViolation createViolation(Map map, String sAnalyzerId, String sLanguageId, ResultLocation location) {
             List<IPathElement> descriptors = getDescriptors();
             IPathElement[] aDescriptors = (descriptors == null) ? new IPathElement[0] : descriptors.toArray(new IPathElement[descriptors.size()]);
 
             String sRuleId = getObligatoryString(IXmlTagsAndAttributes.RULE_ATTR);
             String sErrorMessage = getObligatoryString(IXmlTagsAndAttributes.MESSAGE_V2_ATTR);
-            return new DupCodeViolation(sRuleId, sAnalyzerId, location, sErrorMessage, aDescriptors);
+            return new DupCodeViolation(sRuleId, sAnalyzerId, location, sErrorMessage, sLanguageId, aDescriptors);
         }
 
         @Override

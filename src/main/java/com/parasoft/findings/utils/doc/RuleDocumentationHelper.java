@@ -71,14 +71,7 @@ class RuleDocumentationHelper {
             return null;
         }
 
-        RuleInfo ruleInfo = null;
-        try {
-            ruleInfo = _client.getRuleInfo(_sRuleId, _sAnalyzerId);
-        } catch (DtpException e) {
-            Logger.getLogger().error(e);
-            return null;
-        }
-
+        RuleInfo ruleInfo = _client.getRuleInfo(_sRuleId, _sAnalyzerId);
         if (ruleInfo == null) {
             Logger.getLogger().debug("Rule " + _sRuleId + " not found on DTP."); //$NON-NLS-1$ //$NON-NLS-2$
             return null;

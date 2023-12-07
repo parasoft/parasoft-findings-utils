@@ -34,6 +34,11 @@ public abstract class AbstractViolation
     private final Map<String, String> _attributes = new HashMap<String, String>();
 
     /**
+     * language
+     */
+    private final String _sLanguageId;
+
+    /**
      * The package/namespace of this violation or <tt>null</tt> if value will be computed base
      * on IModelElement or IResultLocation
      */
@@ -62,12 +67,13 @@ public abstract class AbstractViolation
      * @pre sMessage != null
      * @pre sAnalyzerId != null
      */
-    protected AbstractViolation(String sAnalyzerId, final ResultLocation location, final String sMessage) {
+    protected AbstractViolation(String sAnalyzerId, final String sLanguageId, final ResultLocation location, final String sMessage) {
         super();
         if (sMessage == null) {
             throw new IllegalArgumentException("Illegal null violation message."); //$NON-NLS-1$
         }
         _sMessage = sMessage;
+        _sLanguageId = sLanguageId;
         _sAnalyzerId = sAnalyzerId;
         _location = location;
     }
@@ -92,6 +98,10 @@ public abstract class AbstractViolation
 
     public String getNamespace() {
         return _sPackage;
+    }
+
+    public String getLanguageId() {
+        return _sLanguageId;
     }
 
     /**

@@ -92,7 +92,7 @@ final class FlowAnalysisResultStorage
 
         @Override
         @SuppressWarnings("deprecation")
-        protected IViolation createViolation(Map map, String sAnalyzerId, ResultLocation location) {
+        protected IViolation createViolation(Map map, String sAnalyzerId, String sLanguageId, ResultLocation location) {
             List<IPathElement> descriptors = getDescriptors();
             IFlowAnalysisPathElement[] aDescriptors = (descriptors == null) ? new IFlowAnalysisPathElement[0]
                     : descriptors.toArray(new IFlowAnalysisPathElement[descriptors.size()]);
@@ -107,7 +107,7 @@ final class FlowAnalysisResultStorage
             String sRuleImportantPointMessage = getString(IXmlTagsAndAttributes.FA_TAG_RULE_RIPMESSAGE_V2);
 
             String sPackage = getString(IXmlTagsAndAttributes.PACKAGE_ATTR);
-            return new FlowAnalysisViolation(sRuleId, sAnalyzerId, location, sErrorMessage, sPackage, sCauseMessage,
+            return new FlowAnalysisViolation(sRuleId, sAnalyzerId, sLanguageId, location, sErrorMessage, sPackage, sCauseMessage,
                     sRuleImportantPointMessage, sPointMessage, trackedVariablesMessages, aDescriptors);
         }
 

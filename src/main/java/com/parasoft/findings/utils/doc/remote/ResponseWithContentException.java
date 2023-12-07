@@ -56,4 +56,8 @@ public final class ResponseWithContentException
         return super.getStatusCode();
     }
 
+    public ResponseContent getResponseContent() {
+        return _content;
+    }
+
 }

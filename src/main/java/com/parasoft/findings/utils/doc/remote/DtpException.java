@@ -35,7 +35,16 @@ public class DtpException
      */
     public DtpException(Throwable cause) {
         super(cause);
+    }
 
+    /**
+     * Constructor.
+     *
+     * @param message the message
+     * @pre cause != null
+     */
+    public DtpException(String message) {
+        super(message);
     }
 
 }

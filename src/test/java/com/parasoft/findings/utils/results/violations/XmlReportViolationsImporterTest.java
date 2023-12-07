@@ -39,7 +39,8 @@ public class XmlReportViolationsImporterTest {
                 "COMMENT-02",
                 "Provide copyright information",
                 "devtest",
-                null);
+                null,
+                "cpp");
 
         MetricsViolation metricsViolation = (MetricsViolation)violations.get(12);
         validateRuleViolationAttributes(
@@ -54,7 +55,8 @@ public class XmlReportViolationsImporterTest {
                 "METRIC.NOPLIF",
                 "Physical Lines in Files",
                 "devtest",
-                null);
+                null,
+                "cpp");
 
         DupCodeViolation dupCodeViolation = (DupCodeViolation)violations.get(405);
         validateRuleViolationAttributes(
@@ -69,7 +71,8 @@ public class XmlReportViolationsImporterTest {
                 "CDD-DUPM",
                 "Avoid function duplication",
                 "devtest",
-                null);
+                null,
+                "cpp");
         assertEquals(2, dupCodeViolation.getPathElements().length);
 
         FlowAnalysisViolation flowAnalysisViolation = (FlowAnalysisViolation)violations.get(556);
@@ -85,7 +88,8 @@ public class XmlReportViolationsImporterTest {
                 "BD-TRS-DIFCS",
                 "Variable should be used in context of single critical section",
                 "devtest",
-                null);
+                null,
+                "cpp");
         assertEquals(12, flowAnalysisViolation.getPathElements().length);
     }
 
@@ -113,7 +117,8 @@ public class XmlReportViolationsImporterTest {
                 "COMMENT-02",
                 "Provide copyright information",
                 "devtest",
-                null);
+                null,
+                "cpp");
 
         MetricsViolation metricsViolation = (MetricsViolation)violations.get(12);
         validateRuleViolationAttributes(
@@ -128,7 +133,8 @@ public class XmlReportViolationsImporterTest {
                 "METRIC.NOPLIF",
                 "Physical Lines in Files",
                 "devtest",
-                null);
+                null,
+                "cpp");
 
         DupCodeViolation dupCodeViolation = (DupCodeViolation)violations.get(613);
         validateRuleViolationAttributes(
@@ -143,7 +149,8 @@ public class XmlReportViolationsImporterTest {
                 "CDD-DUPM",
                 "Avoid function duplication",
                 "devtest",
-                null);
+                null,
+                "cpp");
         assertEquals(2, dupCodeViolation.getPathElements().length);
 
         FlowAnalysisViolation flowAnalysisViolation = (FlowAnalysisViolation)violations.get(802);
@@ -159,7 +166,8 @@ public class XmlReportViolationsImporterTest {
                 "BD-TRS-DIFCS",
                 "Variable should be used in context of single critical section",
                 "devtest",
-                null);
+                null,
+                "cpp");
         assertEquals(11, flowAnalysisViolation.getPathElements().length);
     }
 
@@ -187,7 +195,8 @@ public class XmlReportViolationsImporterTest {
                 "METRICS-31",
                 "The assertion density of the code should average to a minimum of two assertions per function",
                 "devtest",
-                null);
+                null,
+                "cpp");
 
         DupCodeViolation dupCodeViolation = (DupCodeViolation)violations.get(41);
         validateRuleViolationAttributes(
@@ -202,7 +211,8 @@ public class XmlReportViolationsImporterTest {
                 "CDD-DUPC",
                 "Avoid code duplication",
                 "devtest",
-                null);
+                null,
+                "cpp");
         assertEquals(3, dupCodeViolation.getPathElements().length);
 
         FlowAnalysisViolation flowAnalysisViolation = (FlowAnalysisViolation)violations.get(1059);
@@ -218,7 +228,8 @@ public class XmlReportViolationsImporterTest {
                 "AUTOSAR-A0_1_1-a",
                 "Avoid unused values",
                 "devtest",
-                null);
+                null,
+                "cpp");
         assertEquals(1, flowAnalysisViolation.getPathElements().length);
     }
 
@@ -246,7 +257,8 @@ public class XmlReportViolationsImporterTest {
                 "METRICS-31",
                 "The assertion density of the code should average to a minimum of two assertions per function",
                 "renee",
-                null);
+                null,
+                "cpp");
 
         MetricsViolation metricsViolation = (MetricsViolation)violations.get(604);
         validateRuleViolationAttributes(
@@ -261,7 +273,8 @@ public class XmlReportViolationsImporterTest {
                 "METRIC.NOPLIF",
                 "Physical Lines in Files",
                 "renee",
-                null);
+                null,
+                "cpp");
 
         DupCodeViolation dupCodeViolation = (DupCodeViolation)violations.get(431);
         validateRuleViolationAttributes(
@@ -276,7 +289,8 @@ public class XmlReportViolationsImporterTest {
                 "CDD-DUPS",
                 "Avoid string literal duplication",
                 "renee",
-                null);
+                null,
+                "cpp");
         assertEquals(2, dupCodeViolation.getPathElements().length);
 
         FlowAnalysisViolation flowAnalysisViolation = (FlowAnalysisViolation)violations.get(162);
@@ -292,7 +306,8 @@ public class XmlReportViolationsImporterTest {
                 "AUTOSAR-A5_3_2-a",
                 "Avoid null pointer dereferencing",
                 "renee",
-                null);
+                null,
+                "cpp");
         assertEquals(3, flowAnalysisViolation.getPathElements().length);
     }
 
@@ -320,7 +335,8 @@ public class XmlReportViolationsImporterTest {
                 "FORMAT.MCH",
                 "Include a meaningful file header comment in every source file",
                 "devtest",
-                null);
+                null,
+                "java");
     }
 
     @Test
@@ -346,7 +362,8 @@ public class XmlReportViolationsImporterTest {
                 "CODSTA.ORG.UNDPN",
                 "Ensure all types have a non default package name",
                 "Roller Wang",
-                "533262ab518caaa481cb7902b588dc6251cb9326");
+                "533262ab518caaa481cb7902b588dc6251cb9326",
+                "java");
     }
 
     @Test
@@ -375,7 +392,8 @@ public class XmlReportViolationsImporterTest {
                 "BRM.SFH",
                 "Always provide appropriate file header (copyright information, etc.)",
                 "devtest",
-                null);
+                null,
+                "dotnet");
 
         RuleViolation suppressedRuleViolation = (RuleViolation)allViolations.get(893);
         validateRuleViolationAttributes(
@@ -390,7 +408,8 @@ public class XmlReportViolationsImporterTest {
                 "CS.INTER.ITT",
                 "String literals should be internationalized",
                 "devtest",
-                null);
+                null,
+                "dotnet");
 
         MetricsViolation metricsViolation = (MetricsViolation)allViolations.get(1);
         validateRuleViolationAttributes(
@@ -405,7 +424,8 @@ public class XmlReportViolationsImporterTest {
                 "METRIC.NOBLIF",
                 "Blank Lines in Files",
                 "devtest",
-                null);
+                null,
+                "dotnet");
 
         DupCodeViolation dupCodeViolation = (DupCodeViolation)allViolations.get(16);
         validateRuleViolationAttributes(
@@ -420,7 +440,8 @@ public class XmlReportViolationsImporterTest {
                 "CDD.DUPS",
                 "Avoid string literal duplication",
                 "devtest",
-                null);
+                null,
+                "dotnet");
         assertEquals(2, dupCodeViolation.getPathElements().length);
 
         FlowAnalysisViolation flowAnalysisViolation = (FlowAnalysisViolation)allViolations.get(345);
@@ -436,7 +457,8 @@ public class XmlReportViolationsImporterTest {
                 "CWE.476.NR",
                 "Avoid NullReferenceException",
                 "devtest",
-                null);
+                null,
+                "dotnet");
         assertEquals(2, flowAnalysisViolation.getPathElements().length);
     }
 
@@ -466,7 +488,8 @@ public class XmlReportViolationsImporterTest {
                 "BRM.SFH",
                 "Always provide appropriate file header (copyright information, etc.)",
                 "CD-RLIU",
-                null);
+                null,
+                "dotnet");
 
         MetricsViolation metricsViolation = (MetricsViolation)allViolations.get(1);
         validateRuleViolationAttributes(
@@ -481,7 +504,8 @@ public class XmlReportViolationsImporterTest {
                 "METRIC.NOBLIF",
                 "Blank Lines in Files",
                 "CD-RLIU",
-                null);
+                null,
+                "dotnet");
 
         DupCodeViolation dupCodeViolation = (DupCodeViolation)allViolations.get(33);
         validateRuleViolationAttributes(
@@ -496,7 +520,8 @@ public class XmlReportViolationsImporterTest {
                 "CDD.DUPC",
                 "Avoid code duplication",
                 "CD-RLIU",
-                null);
+                null,
+                "dotnet");
         assertEquals(2, dupCodeViolation.getPathElements().length);
 
         FlowAnalysisViolation flowAnalysisViolation = (FlowAnalysisViolation)allViolations.get(79);
@@ -512,7 +537,8 @@ public class XmlReportViolationsImporterTest {
                 "BD.EXCEPT.NR",
                 "Avoid NullReferenceException",
                 "CD-RLIU",
-                null);
+                null,
+                "dotnet");
         assertEquals(2, flowAnalysisViolation.getPathElements().length);
     }
 
@@ -552,7 +578,7 @@ public class XmlReportViolationsImporterTest {
                 "INTEROP.WSI",
                 "Check WS-Interoperability",
                 "liwbo",
-                null, RemoteTestableInput.class);
+                null, "web", RemoteTestableInput.class);
     }
 
     @Test
@@ -579,12 +605,12 @@ public class XmlReportViolationsImporterTest {
                 "INVC.CSS.WF",
                 "Ensure that the CSS declaration is well-formed",
                 "liwbo",
-                null, RemoteTestableInput.class);
+                null, "web", RemoteTestableInput.class);
     }
 
     private void validateRuleViolationAttributes(IRuleViolation ruleViolation, String filePath, SourceRange sourceRange,
                                                  String suppressionType, String message, int severity, String category, String categoryDescription, String ruleId,
-                                                 String ruleTitle, String author, String revision, Class... inputFileType) {
+                                                 String ruleTitle, String author, String revision, String languageId, Class... inputFileType) {
         assertEquals(suppressionType, ruleViolation.getAttribute(IXmlTagsAndAttributes.SUPPRESSION_TYPE_ATTR));
         if(inputFileType.length != 0 && inputFileType[0].equals(RemoteTestableInput.class)) {
             RemoteTestableInput fileTestableInput = (RemoteTestableInput)ruleViolation.getResultLocation().getTestableInput();
@@ -602,6 +628,7 @@ public class XmlReportViolationsImporterTest {
         assertEquals(ruleTitle, ViolationRuleUtil.getRuleTitle(ruleViolation));
         assertEquals(author, ruleViolation.getAttribute(IXmlTagsAndAttributes.AUTHOR_V2_ATTR));
         assertEquals(revision, ruleViolation.getAttribute(IXmlTagsAndAttributes.REVISION_ATTR));
+        assertEquals(languageId, ruleViolation.getLanguageId());
     }
 
     private List<IRuleViolation> filterSuppressedViolations(List<IRuleViolation> ruleViolations) {

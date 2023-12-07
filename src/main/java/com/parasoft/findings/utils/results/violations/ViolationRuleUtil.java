@@ -22,12 +22,27 @@ final public class ViolationRuleUtil {
     /**
      * The informational severity level constant
      */
-    public static int SEVERITY_LOWEST = 5;
+    public static final int SEVERITY_LOWEST = 5;
+
+    /**
+     * The informational severity level constant
+     */
+    public static final int SEVERITY_LOW = 4;
+
+    /**
+     * The informational severity level constant
+     */
+    public static final int SEVERITY_MEDIUM = 3;
+
+    /**
+     * The informational severity level constant
+     */
+    public static final int SEVERITY_HIGH = 2;
 
     /**
      * The severe violation severity level constant
      */
-    public static int SEVERITY_HIGHEST = 1;
+    public static final int SEVERITY_HIGHEST = 1;
 
     /**
      * The invalid severity constant
