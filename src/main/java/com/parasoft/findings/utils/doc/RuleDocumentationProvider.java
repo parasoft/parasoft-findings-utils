@@ -57,9 +57,20 @@ public class RuleDocumentationProvider {
     }
 
     public enum ClientStatus {
-        AVAILABLE,
-        NOT_SUPPORTED_VERSION,
-        NOT_AVAILABLE,
-        DTP_URL_NOT_SPECIFIED
+        AVAILABLE("DTP server is available"),
+        NOT_SUPPORTED_VERSION("Unable to retrieve the documentation for the rule from DTP. Please ensure that a DTP version 2023.1 or later is used"),
+        NOT_AVAILABLE("DTP server is not available"),
+        DTP_URL_NOT_SPECIFIED("DTP URL is not specified");
+
+        private final String description;
+
+        ClientStatus(String description) {
+            this.description = description;
+        }
+
+        @Override
+        public String toString() {
+            return description;
+        }
     }
 }
