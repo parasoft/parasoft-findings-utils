@@ -16,6 +16,18 @@ import static org.junit.jupiter.api.Assertions.*;
 public class XmlReportViolationsImporterTest {
 
     @Test
+    public void testPerformImport_not_existing_report() {
+        // Given
+        File reportPath = new File("src/test/resources/xml/staticanalysis/", "not_existing_report.xml");
+        Properties properties = new Properties();
+        XmlReportViolationsImporter underTest = new XmlReportViolationsImporter(properties);
+        XmlReportViolations results = underTest.performImport(reportPath);
+
+        // Then
+       assertNull(results);
+    }
+
+    @Test
     public void testPerformImport_cpptest_pro_report_202001() {
         // Given
         File reportPath = new File("src/test/resources/xml/staticanalysis/", "cpptest_pro_report_202001.xml");

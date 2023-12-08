@@ -39,7 +39,14 @@ public final class Level
     private String _sLevelName = null;
 
     /**
-     * Retuns the level name.
+     * Return the level value.
+     */
+    public int getLevel() {
+        return this._level;
+    }
+
+    /**
+     * Return the level name.
      *
      * @return The level name
      * @pre $none
@@ -141,6 +148,10 @@ public final class Level
      * Predefined OFF level.
      */
     public final static Level OFF = new Level(OFF_INT, OFF_LEVEL_LABEL);
+    /**
+     * Predefined TRACE level.
+     */
+    public static final Level TRACE = new Level(TRACE_INT, TRACE_LEVEL_LABEL);
     /**
      * Predefined TIME level.
      */
