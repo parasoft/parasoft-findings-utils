@@ -59,7 +59,7 @@ public final class IOUtils {
                 in.close();
             }
         } catch (IOException ex) {
-            Logger.getLogger().error("error while closing input stream", ex); //$NON-NLS-1$
+            Logger.getLogger().error("Error while closing input stream.", ex); //$NON-NLS-1$
         }
     }
 
@@ -76,7 +76,7 @@ public final class IOUtils {
                 out.close();
             }
         } catch (IOException ex) {
-            Logger.getLogger().error("error while closing output stream", ex); //$NON-NLS-1$
+            Logger.getLogger().error("Error while closing output stream.", ex); //$NON-NLS-1$
         }
     }
 
