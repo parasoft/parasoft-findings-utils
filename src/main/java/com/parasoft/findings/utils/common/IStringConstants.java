@@ -52,9 +52,6 @@ public interface IStringConstants {
      */
     String LINE_SEPARATOR = StringUtil.getLineSeparator();
 
-    /** "false" */
-    String FALSE = "false"; //$NON-NLS-1$
-
     /**
      * The String ".html"
      */

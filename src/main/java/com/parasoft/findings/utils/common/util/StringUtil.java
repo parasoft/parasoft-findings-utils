@@ -130,21 +130,4 @@ public final class StringUtil {
     public static String getNonEmpty(String string) {
         return string == null ? "" : string;
     }
-
-    /**
-     * Checks if given String objects are equal. Returns <code>true</code> if
-     * <code>sText1.equals(str2)</code> or both <code>sText1</code> and <code>sText2</code> are
-     * <code>null</code>; false otherwise.
-     *
-     * @param sText1 string to compare or null
-     * @param sText2 string to compare or null
-     * @return <code>true</code> if given strings are equal.
-     */
-    public static boolean equalsIgnoreCase(String sText1, String sText2)
-    {
-        if (sText1 == sText2) {
-            return true;
-        }
-        return (sText1 != null) && sText1.equalsIgnoreCase(sText2);
-    }
 }

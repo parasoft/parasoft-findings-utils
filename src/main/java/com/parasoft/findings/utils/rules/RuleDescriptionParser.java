@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-import com.parasoft.findings.utils.common.util.LocaleUtil;
 import com.parasoft.findings.utils.common.util.StringUtil;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -37,7 +36,7 @@ public class RuleDescriptionParser
 
     public RuleDescriptionParser()
     {
-        this(LocaleUtil.getLocale());
+        this(Locale.getDefault());
 
     }
 

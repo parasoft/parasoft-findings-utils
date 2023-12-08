@@ -28,8 +28,6 @@ import java.util.Map;
  **/
 public final class XMLUtil {
 
-    private static final String DISALLOW_DTD = "parasoft.disallow.dtd"; //$NON-NLS-1$
-
     /**
      * Default SAXParserFactory instance
      */
@@ -64,15 +62,6 @@ public final class XMLUtil {
             }
         }
         return _saxParserFactory;
-    }
-
-    static boolean shouldDisallowDTD()
-    {
-        String disallowDTDProperty = System.getProperty(DISALLOW_DTD);
-        if (StringUtil.isNonEmptyTrimmed(disallowDTDProperty)) {
-            return !StringUtil.equalsIgnoreCase(IStringConstants.FALSE, disallowDTDProperty.trim());
-        }
-        return true;
     }
 
     public static SAXParser createSAXParser()
@@ -112,7 +101,7 @@ public final class XMLUtil {
         }
 
         // disallow DTD
-        if (disableDTD && shouldDisallowDTD()) {
+        if (disableDTD) {
             try {
                 reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true); //$NON-NLS-1$
                 reader.setEntityResolver(new EmptyEntityResolver());

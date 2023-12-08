@@ -42,7 +42,7 @@ public final class RuleParserUtil
             in = file.openStream();
             saxParse(in, handler, options);
         } catch (FileNotFoundException e) {
-            Logger.getLogger().debug("File not found under given url " + file); //$NON-NLS-1$
+            Logger.getLogger().warn("File not found under given url " + file); //$NON-NLS-1$
         } catch (Exception e) {
             Logger.getLogger().error(e);
             throw new IOException("Error while parsing document: " + e.getMessage()); //$NON-NLS-1$
