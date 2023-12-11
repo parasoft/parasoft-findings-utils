@@ -15,11 +15,7 @@ public class RuleDocumentationProviderTest {
     @Test
     @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
     void testGetDtpDocServiceStatus_normal() {
-        Properties properties = new Properties();
-        properties.setProperty("dtp.url", dtpUrl);
-        RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
-
-        assertEquals(RuleDocumentationProvider.ClientStatus.AVAILABLE, underTest.getDtpDocServiceStatus());
+        createRDPWithAvailableClientDtpDocService();
     }
 
     @Test
@@ -44,13 +40,10 @@ public class RuleDocumentationProviderTest {
     @Test
     @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
     public void testGetRuleDocLocationFromDtp_normal() {
-        Properties properties = new Properties();
-        properties.setProperty("dtp.url", dtpUrl);
+        RuleDocumentationProvider underTest = createRDPWithAvailableClientDtpDocService();
 
         final String analyzer = "com.parasoft.xtest.cpp.analyzer.static.pattern";
         final String ruleId = "APSC_DV-000160-a";
-
-        RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
         String remoteRuleDocURL = underTest.getRuleDocLocation(analyzer, ruleId);
 
         assertTrue(remoteRuleDocURL != null && remoteRuleDocURL.contains(analyzer) && remoteRuleDocURL.contains(ruleId));
@@ -59,22 +52,20 @@ public class RuleDocumentationProviderTest {
     @Test
     @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
     public void testGetRuleDocLocationFromDtp_incorrectAnalyzer() {
-        Properties properties = new Properties();
-        properties.setProperty("dtp.url", dtpUrl);
+        RuleDocumentationProvider underTest = createRDPWithAvailableClientDtpDocService();
 
-        RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
         String remoteRuleDocURL = underTest.getRuleDocLocation("incorrectAnalyzer", "APSC_DV-000160-a");
+
         assertNull(remoteRuleDocURL);
     }
 
     @Test
     @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
     public void testGetRuleDocLocationFromDtp_incorrectRuleId() {
-        Properties properties = new Properties();
-        properties.setProperty("dtp.url", dtpUrl);
+        RuleDocumentationProvider underTest = createRDPWithAvailableClientDtpDocService();
 
-        RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
         String remoteRuleDocURL = underTest.getRuleDocLocation("com.parasoft.xtest.cpp.analyzer.static.pattern", "incorrectRuleId");
+
         assertNull(remoteRuleDocURL);
     }
 
@@ -108,7 +99,72 @@ public class RuleDocumentationProviderTest {
         assertEquals(new File("src/test/resources/ruledoc", "APSC_DV-000160-a.html").getAbsolutePath(), localRuleDocLocation);
     }
 
+    @Test
+    @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
+    public void getRemoteRuleContent_normal() {
+        RuleDocumentationProvider underTest = createRDPWithAvailableClientDtpDocService();
+
+        String dtpUrl = this.dtpUrl.endsWith("/") ? this.dtpUrl : this.dtpUrl + "/";
+        String ruleContent = underTest.getDtpRuleDocContent(dtpUrl + "grs/dtp/rulesdoc/com.parasoft.xtest.cpp.analyzer.static.pattern/10.6.2/zh_CN/APSC_DV-000160-a.html");
+
+        assertNotEquals("", ruleContent);
+        assertTrue(ruleContent.toUpperCase().contains("<HTML>") && ruleContent.contains("[APSC_DV-000160-a]"));
+    }
+
+    @Test
+    public void getRemoteRuleContent_dtpDocServiceNotAvailable() {
+        Properties properties = new Properties();
+        RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
+        assertEquals(RuleDocumentationProvider.ClientStatus.DTP_URL_NOT_SPECIFIED, underTest.getDtpDocServiceStatus());
+
+        String ruleContent = underTest.getDtpRuleDocContent("https://anyUrl");
+
+        assertEquals("", ruleContent);
+    }
+
+    @Test
+    @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
+    public void getRemoteRuleContent_notARuleDocUrl1() {
+        RuleDocumentationProvider underTest = createRDPWithAvailableClientDtpDocService();
+
+        String dtpUrl = this.dtpUrl.endsWith("/") ? this.dtpUrl : this.dtpUrl + "/";
+        // Url pattern is not "${dtpUrl}/grs/dtp/rulesdoc"
+        String ruleContent = underTest.getDtpRuleDocContent(dtpUrl + "incorrect/pattern/com.parasoft.xtest.cpp.analyzer.static.pattern/10.6.2/zh_CN/APSC_DV-000160-a.html");
+
+        assertEquals("", ruleContent);
+    }
+
+    @Test
+    @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
+    public void getRemoteRuleContent_notARuleDocUrl2() {
+        RuleDocumentationProvider underTest = createRDPWithAvailableClientDtpDocService();
+
+        // Url pattern is not "${dtpUrl}/grs/dtp/rulesdoc"
+        String ruleContent = underTest.getDtpRuleDocContent("https://incorrectDtpUrl/grs/dtp/rulesdoc/com.parasoft.xtest.cpp.analyzer.static.pattern/10.6.2/zh_CN/APSC_DV-000160-a.html");
+
+        assertEquals("", ruleContent);
+    }
+
+    @Test
+    @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
+    public void getRemoteRuleContent_urlWithSpaces() {
+        RuleDocumentationProvider underTest = createRDPWithAvailableClientDtpDocService();
+
+        String dtpUrl = this.dtpUrl.endsWith("/") ? this.dtpUrl : this.dtpUrl + "/";
+        // Url with spaces
+        String ruleContent = underTest.getDtpRuleDocContent(dtpUrl + "grs/dtp/rulesdoc/      com.parasoft.xtest.cpp.analyzer.static.pattern/10.6.2/zh_CN/APSC_DV-000160-a.html");
+        assertEquals("", ruleContent);
+    }
+
     boolean hasTestDtpUrlSystemProperty() {
         return dtpUrl != null && !dtpUrl.trim().isEmpty();
+    }
+
+    private RuleDocumentationProvider createRDPWithAvailableClientDtpDocService() {
+        Properties properties = new Properties();
+        properties.setProperty("dtp.url", dtpUrl);
+        RuleDocumentationProvider ruleDocumentationProvider = new RuleDocumentationProvider(properties);
+        assertEquals(RuleDocumentationProvider.ClientStatus.AVAILABLE, ruleDocumentationProvider.getDtpDocServiceStatus());
+        return ruleDocumentationProvider;
     }
 }

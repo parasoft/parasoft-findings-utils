@@ -16,6 +16,8 @@
 
 package com.parasoft.findings.utils.doc.remote;
 
+import com.parasoft.findings.utils.common.IStringConstants;
+
 import java.net.URI;
 import java.util.Properties;
 
@@ -25,15 +27,18 @@ import java.util.Properties;
  */
 public final class RulesRestClient
         extends RestClient {
-    public static String DTP_URL = "dtp.url";
+    public static final String DTP_URL = "dtp.url";
+    private final String dtpUrl;
+
 
     /**
      * Private constructor.
      *
-     * @param endpointURI
+     * @param dtpUrl
      */
-    private RulesRestClient(URI endpointURI) {
-        super(endpointURI);
+    private RulesRestClient(String dtpUrl) {
+        super(URI.create(dtpUrl + "grs/api/v1.6/rules"));
+        this.dtpUrl = dtpUrl;
     }
 
     /**
@@ -49,8 +54,7 @@ public final class RulesRestClient
         }
         dtpUrl = dtpUrl.trim();
         dtpUrl = dtpUrl.endsWith("/") ? dtpUrl : dtpUrl + "/";
-        URI serviceURI = URI.create(dtpUrl + "grs/api/v1.6/rules");
-        RulesRestClient client = new RulesRestClient(serviceURI);
+        RulesRestClient client = new RulesRestClient(dtpUrl);
         client.validateDtpDocService();
         return client;
     }
@@ -123,6 +127,23 @@ public final class RulesRestClient
                     result.getString(DOCS_URL_ATTR));
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    /**
+     * @param docUrl the value should be get from {@link #getRuleInfo(String, String)}
+     * @return content of given url, empty String if exception happens
+     */
+    public synchronized String getRuleContent(String docUrl) {
+        if (!docUrl.contains(this.dtpUrl + "grs/dtp/rulesdoc")) {
+            Logger.getLogger().warn("Url dose not point to a rule doc: " + docUrl); //$NON-NLS-1$
+            return IStringConstants.EMPTY;
+        }
+        try {
+            URI uri = new URI(docUrl);
+            return getString(uri);
+        } catch (Exception e) {
+            return IStringConstants.EMPTY;
         }
     }
 

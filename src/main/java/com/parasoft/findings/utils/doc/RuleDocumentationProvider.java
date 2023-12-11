@@ -1,5 +1,6 @@
 package com.parasoft.findings.utils.doc;
 
+import com.parasoft.findings.utils.common.IStringConstants;
 import com.parasoft.findings.utils.doc.remote.DtpUrlException;
 import com.parasoft.findings.utils.doc.remote.NotSupportedDtpVersionException;
 import com.parasoft.findings.utils.doc.remote.RulesRestClient;
@@ -50,6 +51,18 @@ public class RuleDocumentationProvider {
     public String getRuleDocLocation(String analyzer, String ruleId) {
         RuleDocumentationHelper ruleDocHelper = new RuleDocumentationHelper(ruleId, analyzer, _rulesRestClient, _settings);
         return ruleDocHelper.getRuleDocLocation();
+    }
+
+    /**
+     * @param docUrl the value should get from {@link #getRuleDocLocation(String, String)}
+     * @return rule doc content of url, empty string if client is not available or url does not from {@link #getRuleDocLocation(String, String)}
+     */
+    public String getDtpRuleDocContent(String docUrl) {
+        if (_clientStatus != ClientStatus.AVAILABLE) {
+            Logger.getLogger().warn(_clientStatus.toString());
+            return IStringConstants.EMPTY;
+        }
+        return _rulesRestClient.getRuleContent(docUrl);
     }
 
     public ClientStatus getDtpDocServiceStatus() {
