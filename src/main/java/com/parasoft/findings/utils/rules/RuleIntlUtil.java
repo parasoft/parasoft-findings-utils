@@ -297,11 +297,7 @@ public class RuleIntlUtil
             String key = MessageFormat.format(intlPropertyPattern, args);
             String sNewValue = _props.getProperty(key);
             if (sNewValue != null) {
-                if (element instanceof RuleDescriptionBody.BodyElement) {
-                    ((RuleDescriptionBody.BodyElement)element).addAttribute(attributeId, sNewValue);
-                } else {
-                    Logger.getLogger().warn("Unexpected type of IRuleDescriptionBody.Element"); //$NON-NLS-1$
-                }
+                element.addAttribute(attributeId, sNewValue);
             }
         }
 
@@ -312,11 +308,7 @@ public class RuleIntlUtil
             if (sKey != null) {
                 String sValue = _props.getProperty(sKey);
                 if (sValue != null) {
-                    if (paramElement instanceof RuleDescriptionBody.BodyElement) {
-                        ((RuleDescriptionBody.BodyElement)paramElement).addAttribute(IRuleConstants.VALUE_ATTR, sValue);
-                    } else {
-                        Logger.getLogger().warn("Unexpected type of IRuleDescriptionBody.Element"); //$NON-NLS-1$
-                    }
+                    paramElement.addAttribute(IRuleConstants.VALUE_ATTR, sValue);
                 }
             }
         }
