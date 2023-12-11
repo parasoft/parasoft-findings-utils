@@ -136,7 +136,7 @@ public final class RulesRestClient
      */
     public synchronized String getRuleContent(String docUrl) {
         if (!docUrl.contains(this.dtpUrl + "grs/dtp/rulesdoc")) {
-            Logger.getLogger().warn("Url dose not point to a rule doc: " + docUrl); //$NON-NLS-1$
+            Logger.getLogger().warn("The URL does not point to any rule documentation: " + docUrl); //$NON-NLS-1$
             return IStringConstants.EMPTY;
         }
         try {

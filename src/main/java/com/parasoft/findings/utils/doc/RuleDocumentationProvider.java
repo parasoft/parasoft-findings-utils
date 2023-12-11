@@ -55,7 +55,7 @@ public class RuleDocumentationProvider {
 
     /**
      * @param docUrl the value should get from {@link #getRuleDocLocation(String, String)}
-     * @return rule doc content of url, empty string if client is not available or url does not from {@link #getRuleDocLocation(String, String)}
+     * @return rule doc content of URL, empty string if client is not available or URL does not from {@link #getRuleDocLocation(String, String)}
      */
     public String getDtpRuleDocContent(String docUrl) {
         if (_clientStatus != ClientStatus.AVAILABLE) {
