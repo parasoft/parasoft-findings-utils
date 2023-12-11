@@ -30,7 +30,6 @@ public class RuleDescriptionParser
 
     private final Locale _locale;
     private final List<RuleDescription> _rules = new ArrayList<RuleDescription>();
-    private final List<CategoryDescription> _categories = new ArrayList<CategoryDescription>();
 
     private RuleParserUtil.RuleParsingOptions _options = new RuleParserUtil.RuleParsingOptions();
 
@@ -64,10 +63,8 @@ public class RuleDescriptionParser
     protected void handlerDone(RuleFileHandler handler)
     {
         Collection<RuleDescription> rules = handler.getRules();
-        Collection<CategoryDescription> categories = handler.getCategories();
 
         _rules.addAll(rules);
-        _categories.addAll(categories);
     }
 
     public List<RuleDescription> getRules()
@@ -92,7 +89,6 @@ public class RuleDescriptionParser
         private final Properties _intlHeaders;
 
         private final Map<String, RuleDescription> _rules = new HashMap<String, RuleDescription>();
-        private final List<CategoryDescription> _categories = new ArrayList<CategoryDescription>();
 
         private final Stack<CategoryDescription> _categoryStack = new Stack<CategoryDescription>();
         private RuleDescription _currentRule = null;
@@ -108,11 +104,6 @@ public class RuleDescriptionParser
         private Collection<RuleDescription> getRules()
         {
             return _rules.values();
-        }
-
-        private Collection<CategoryDescription> getCategories()
-        {
-            return _categories;
         }
 
         /**
@@ -172,10 +163,6 @@ public class RuleDescriptionParser
         private void handleCategory(Attributes attributes)
         {
             String sId = attributes.getValue(IRuleConstants.NAME_ATTR);
-            String sDesc = attributes.getValue(IRuleConstants.DESCRIPTION_ATTR);
-            if (StringUtil.isEmpty(sDesc)) {
-                sDesc = CategoryDescription.UNKNOWN_PATH;
-            }
 
             CategoryDescription parent = null;
             if (!_categoryStack.isEmpty()) {
@@ -183,14 +170,9 @@ public class RuleDescriptionParser
             }
             String sCategoryId = getFullId(parent, sId);
 
-            String sIntlDesc = _intlHeaders.getProperty(sCategoryId);
-            if (sIntlDesc != null) {
-                sDesc = sIntlDesc;
-            }
-            CategoryDescription category = new CategoryDescription(sCategoryId, sDesc, _separator);
+            CategoryDescription category = new CategoryDescription(sCategoryId);
 
             _categoryStack.push(category);
-            _categories.add(category);
         }
 
         private RuleDescription handleRule(Attributes attributes)
@@ -229,12 +211,6 @@ public class RuleDescriptionParser
                     } catch (NumberFormatException x) {
                         Logger.getLogger().warn(x);
                     }
-                } else if (IRuleConstants.SCOPE_ATTR.equals(sKey)) {
-                    rule.setScope(RuleScope.adapt(sValue));
-
-                } else if (IRuleConstants.QUICKFIX_ATTR.equals(sKey)) {
-                    rule.setQuickfix(Boolean.valueOf(sValue));
-
                 } else {
                     rule.addAttribute(sKey, sValue);
                 }

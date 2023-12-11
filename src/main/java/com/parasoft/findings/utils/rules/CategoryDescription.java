@@ -19,22 +19,15 @@ package com.parasoft.findings.utils.rules;
 public final class CategoryDescription
 {
     private final String _sCategoryId;
-    private final char _separator;
-    private String _sDescription = null;
 
     /**
      * @param sCategoryId
-     * @param sDescription
-     * @param separator
      *
      * @pre sCategoryId != null
-     * @pre sDescription != null
      */
-    public CategoryDescription(String sCategoryId, String sDescription, char separator)
+    public CategoryDescription(String sCategoryId)
     {
         _sCategoryId = sCategoryId;
-        _sDescription = sDescription;
-        _separator = separator;
     }
 
     public String getCategoryId()
@@ -48,6 +41,5 @@ public final class CategoryDescription
         return "Category: " + getCategoryId(); //$NON-NLS-1$
     }
 
-    public static final String UNKNOWN_PATH = "UNKNOWN";  //$NON-NLS-1$
     public static final String UNKNOWN_CATEGORY = "UNKNOWN";  //$NON-NLS-1$
 }

@@ -34,8 +34,6 @@ public interface IRuleConstants
     String DESCRIPTION_ATTR = "description"; //$NON-NLS-1$
     String SEVERITY_ATTR = "severity"; //$NON-NLS-1$
     String HEADER_ATTR = "header"; //$NON-NLS-1$
-    String SCOPE_ATTR = "scope"; //$NON-NLS-1$
-    String QUICKFIX_ATTR = "quickfix"; //$NON-NLS-1$
     String VALUE_ATTR = "value"; //$NON-NLS-1$
     String INDEX_ATTR = "index"; //$NON-NLS-1$
     String REF_COLUMN_INDEX_ATTR = "refColumnId"; //$NON-NLS-1$

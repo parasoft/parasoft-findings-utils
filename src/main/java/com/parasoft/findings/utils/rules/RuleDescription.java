@@ -27,13 +27,10 @@ public class RuleDescription
     private String _sHeader = null;
 
     private int _severity = -1;
-    private RuleScope _scope = RuleScope.line;
-    private boolean _bQuickfix = false;
     private char _separator = '.';
 
     private Map<String, String> _attributes = null;
     private RuleDescriptionBody _body = null;
-    private Map<String, String> _parameters = null;
 
     /**
      * Creates empty rule description
@@ -97,19 +94,6 @@ public class RuleDescription
         _severity = severity;
     }
 
-    protected void setQuickfix(boolean bQuickfix)
-    {
-        _bQuickfix = bQuickfix;
-    }
-
-    protected void setScope(RuleScope scope)
-    {
-        if (scope == null) {
-            scope = RuleScope.line;
-        }
-        _scope = scope;
-    }
-
     protected void setSeparator(char separator)
     {
         _separator = separator;
@@ -126,7 +110,6 @@ public class RuleDescription
     protected synchronized void setBody(RuleDescriptionBody body)
     {
         _body = body;
-        _parameters = null;
     }
 
     @Override
