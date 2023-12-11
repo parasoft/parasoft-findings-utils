@@ -80,4 +80,13 @@ public final class PathUtil {
         path = path.replace("//", "/"); //$NON-NLS-1$ //$NON-NLS-2$
         return path;
     }
+
+    /**
+     * Returns true if the file system is case-insensitive (currently windows or mac)
+     * @return
+     * @author birdo
+     */
+    public static boolean caseInsensitiveFileSystem () {
+        return ArchUtil.archIsWindows() || ArchUtil.archIsMacOSX();
+    }
 }
