@@ -1,0 +1,1270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rules>
+  <builtin>
+    <category name="ARRU">
+      <rule header="Do not use non-generic collection for class fields" id="DNUGCI" impl="ARRU.DNUGCI" severity="3" cqaSupported="false" />
+    </category>
+    <category name="BRM">
+      <rule header="Avoid 'protected' access for members of 'sealed' classes." id="APRIS" impl="BRM.APRIS" severity="3" cqaSupported="false" />
+      <rule header="Use 'L' instead of 'l' to express 'long' integer constants" id="LINUPPERCASE" impl="BRM.LINUPPERCASE" severity="2" cqaSupported="false" />
+      <rule header="Always provide appropriate file header (copyright information, etc.)" id="SFH" impl="BRM.SFH" severity="3" cqaSupported="false">
+        <parameters>
+          <radioGroup label="Matching method:" id="BRM.SFH.WildcardOrRegExp">
+            <radioItem value="0" label="Wildcards" defaultValue="checked" />
+            <radioItem value="1" label="Regular Expressions" />
+          </radioGroup>
+          <param id="BRM.SFH.HeaderPattern" inputType="bigtext" label="Provide regular expressions/wildcards for header lines" defaultValue="#region Copyright*" />
+          <param id="BRM.SFH.AllowHeadersOnTheBeginning" inputType="checkbox" label="Allow text on the beginning of the file." defaultValue="true" />
+          <param id="BRM.SFH.AllowHeadersAtTheEnd" inputType="checkbox" label="Allow text to be placed at the end of file." defaultValue="true" />
+          <param id="BRM.SFH.AllowHeadersAtRandomLocation" inputType="checkbox" label="Allow text to be placed at any position in file." defaultValue="false" />
+        </parameters>
+      </rule>
+      <rule header="Use spaces for tabs/indentation" id="SFT" impl="BRM.SFT" severity="3" cqaSupported="false">
+        <parameters>
+          <param id="BRM.SFT.Tabs" inputType="integer" label="Count of spaces for tab indentation" defaultValue="4" />
+        </parameters>
+      </rule>
+    </category>
+    <category name="CMUG">
+      <category name="CU">
+        <rule header="Avoid throwing exceptions from static constructors" id="ATES" impl="CMUG.CU.ATES" severity="1" cqaSupported="false" />
+        <rule header="Use a consistent naming pattern for constructor overloads" id="CNPC" impl="CMUG.CU.CNPC" severity="4" cqaSupported="false" />
+      </category>
+      <category name="EVU">
+        <rule header="Avoid never listened private events" id="ANLPE" impl="CMUG.EVU.ANLPE" severity="1" cqaSupported="false" />
+        <rule header="Avoid never raised events" id="ANRE" impl="CMUG.EVU.ANRE" severity="1" cqaSupported="false" />
+        <rule header="Consider method calls instead of private events" id="CMCIPE" impl="CMUG.EVU.CMCIPE" severity="5" cqaSupported="false" />
+        <rule header="Do not return values from events" id="DNRVFE" impl="CMUG.EVU.DNRVFE" severity="2" cqaSupported="false" />
+        <rule header="Event argument classes should extend System.EventArgs" id="ECEE" impl="CMUG.EVU.ECEE" severity="3" cqaSupported="false" />
+        <rule header="Events should accept exactly two arguments." id="ESATA" impl="CMUG.EVU.ESATA" severity="3" cqaSupported="false" />
+        <rule header="Events should provide object sender." id="ESPSO" impl="CMUG.EVU.ESPSO" severity="3" cqaSupported="false" />
+        <rule header="OnEvent methods should be protected" id="OESP" impl="CMUG.EVU.OESP" severity="3" cqaSupported="false">
+          <parameters>
+            <param id="CMUG.EVU.OESP.Prefixes" inputType="stringList" label="Method prefix" defaultValue="On;Invoke" />
+          </parameters>
+        </rule>
+        <rule header="OnEvent method should be virtual and not sealed." id="OESV" impl="CMUG.EVU.OESV" severity="3" cqaSupported="false">
+          <parameters>
+            <param id="CMUG.EVU.OESV.Prefixes" inputType="stringList" label="Method prefix" defaultValue="On;Invoke" />
+          </parameters>
+        </rule>
+        <rule header="Provide OnEvent method for every event" id="POEM" impl="CMUG.EVU.POEM" severity="3" cqaSupported="false">
+          <parameters>
+            <param id="CMUG.EVU.POEM.Prefixes" inputType="stringList" label="Method prefix" defaultValue="On;Invoke" />
+          </parameters>
+        </rule>
+        <rule header="Review never raised inherited events" id="RNRIE" impl="CMUG.EVU.RNRIE" severity="4" cqaSupported="false" />
+        <rule header="Unsubscribe from event" id="UFE" impl="CMUG.EVU.UFE" severity="2" cqaSupported="false">
+          <parameters>
+            <param id="CMUG.EVU.UFE.TypesToAnalyze" inputType="stringList" label="Analyze following observing types (wildcards supported):" defaultValue="" />
+            <param id="CMUG.EVU.UFE.TypesToObserve" inputType="stringList" label="Analyze following observable types (wildcards supported):" defaultValue="" />
+          </parameters>
+        </rule>
+        <rule header="Use generic event handlers" id="UGEH" impl="CMUG.EVU.UGEH" severity="3" cqaSupported="false">
+          <parameters>
+            <param id="CMUG.EVU.UGEH.TypeRegexes" inputType="stringList" label="Regular expressions of full delegate names to skip" defaultValue="^System\..*EventHandler$" />
+          </parameters>
+        </rule>
+      </category>
+      <category name="FU">
+        <rule header="Avoid unused private fields." id="AUPF" impl="CMUG.FU.AUPF" severity="3" cqaSupported="false" />
+        <rule header="Fields access modifiers should keep type hermetic." id="FAMTH" impl="CMUG.FU.FAMTH" severity="3" cqaSupported="false">
+          <parameters>
+            <radioGroup label="Please select one of the following options to specify how rule will validate field definitions:" id="CMUG.FU.FAMTH.Mode">
+              <radioItem value="0" label="Parasoft field definition guidelines.&#xD;&#xA;Recommended. Forbids usages of 'public', 'internal' and 'protected' fields other than 'static readonly' or 'const'." defaultValue="checked" />
+              <radioItem value="1" label="Microsoft field definition guidelines.&#xD;&#xA;Forbids usages of 'public' and 'protected' instance fields regardless if they are writable or read-only. This setting does not cover 'internal' and 'static' fields." />
+              <radioItem value="2" label="Custom guidelines." />
+            </radioGroup>
+            <group id="CMUG.FU.FAMTH.CustomGuidelinesConfigurationGroup" label="Custom guidelines settings (only if &quot;Custom guidelines&quot; option selected)" collapsible="true">
+              <group id="CMUG.FU.FAMTH.CheckAccessibilityGroup" label="Forbid defining" collapsible="false">
+                <param id="CMUG.FU.FAMTH.CheckPublic" inputType="checkbox" label="public" defaultValue="true" />
+                <param id="CMUG.FU.FAMTH.CheckInternal" inputType="checkbox" label="internal" defaultValue="true" />
+                <param id="CMUG.FU.FAMTH.CheckProtected" inputType="checkbox" label="protected" defaultValue="true" />
+              </group>
+              <group id="CMUG.FU.FAMTH.CheckFieldTypesGroup" label="fields which are:" collapsible="false">
+                <param id="CMUG.FU.FAMTH.CheckInstanceWritableClassField" inputType="checkbox" label="instance writable class members," defaultValue="false" />
+                <param id="CMUG.FU.FAMTH.CheckInstanceReadonlyClassField" inputType="checkbox" label="instance 'readonly' class members," defaultValue="false" />
+                <param id="CMUG.FU.FAMTH.CheckStaticWritableClassField" inputType="checkbox" label="'static' writable class members," defaultValue="false" />
+                <param id="CMUG.FU.FAMTH.CheckStaticReadonlyClassField" inputType="checkbox" label="'static readonly' or 'const' class members," defaultValue="false" />
+                <param id="CMUG.FU.FAMTH.CheckInstanceWritableStructField" inputType="checkbox" label="instance writable struct members," defaultValue="false" />
+                <param id="CMUG.FU.FAMTH.CheckInstanceReadonlyStructField" inputType="checkbox" label="instance 'readonly' struct members," defaultValue="false" />
+                <param id="CMUG.FU.FAMTH.CheckStaticWritableStructField" inputType="checkbox" label="'static' writable struct members," defaultValue="false" />
+                <param id="CMUG.FU.FAMTH.CheckStaticReadonlyStructField" inputType="checkbox" label="'static readonly' or 'const' struct members." defaultValue="false" />
+              </group>
+              <param id="CMUG.FU.FAMTH.CheckProtectedAsPrivateInSealed" inputType="checkbox" label="Treat 'protected' fields in 'sealed' classes as 'private'." defaultValue="true" />
+            </group>
+          </parameters>
+        </rule>
+      </category>
+      <category name="MU">
+        <rule header="Avoid parameter swapping when overriding or implementing methods." id="APSM" impl="CMUG.MU.APSM" severity="1" cqaSupported="false" />
+        <rule header="Use a consistent naming pattern for method overloads" id="CNPM" impl="CMUG.MU.CNPM" severity="4" cqaSupported="false" />
+        <rule header="Ensure that method return values are used" id="RETVAL" impl="CMUG.MU.RETVAL" severity="1" cqaSupported="false">
+          <parameters>
+            <complexParamTable id="CMUG.MU.RETVAL.whiteListMethods" reader="DotTestTable" label="Results from the following methods are allowed to be thrown away" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+              <columns>
+                <column id="COLUMN_0" label="Method declaring type regex" columnType="text" editable="true" required="true" />
+                <column id="COLUMN_1" label="Method name regex" columnType="text" editable="true" required="true" />
+              </columns>
+              <predefinedRows>
+                <row id="ROW_0">
+                  <column refColumnId="COLUMN_0" value="^System\.Text\.StringBuilder$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_1">
+                  <column refColumnId="COLUMN_0" value="^System\.Windows\.Forms\.MessageBox$" />
+                  <column refColumnId="COLUMN_1" value="^Show$" />
+                </row>
+                <row id="ROW_2">
+                  <column refColumnId="COLUMN_0" value="^System\.Windows\.Forms\.Control$" />
+                  <column refColumnId="COLUMN_1" value="^(Invoke|BeginInvoke)$" />
+                </row>
+                <row id="ROW_3">
+                  <column refColumnId="COLUMN_0" value="^System\.Windows\.Forms\.Form$" />
+                  <column refColumnId="COLUMN_1" value="^ShowDialog$" />
+                </row>
+                <row id="ROW_4">
+                  <column refColumnId="COLUMN_0" value="^Microsoft\.VisualBasic\.Interaction$" />
+                  <column refColumnId="COLUMN_1" value="^MsgBox$" />
+                </row>
+                <row id="ROW_5">
+                  <column refColumnId="COLUMN_0" value="^System\.Threading\.Monitor$" />
+                  <column refColumnId="COLUMN_1" value="^Wait$" />
+                </row>
+                <row id="ROW_6">
+                  <column refColumnId="COLUMN_0" value="^System\.Diagnostics\.Debugger$" />
+                  <column refColumnId="COLUMN_1" value="^Launch$" />
+                </row>
+                <row id="ROW_7">
+                  <column refColumnId="COLUMN_0" value="^System\.IO\.Directory$" />
+                  <column refColumnId="COLUMN_1" value="^CreateDirectory$" />
+                </row>
+                <row id="ROW_8">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\..*$" />
+                  <column refColumnId="COLUMN_1" value="^(Add|Remove|RemoveAll|TryGetValue)$" />
+                </row>
+                <row id="ROW_9">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Queue$" />
+                  <column refColumnId="COLUMN_1" value="^Dequeue$" />
+                </row>
+                <row id="ROW_10">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.Queue$" />
+                  <column refColumnId="COLUMN_1" value="^Dequeue$" />
+                </row>
+                <row id="ROW_11">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.SortedSet$" />
+                  <column refColumnId="COLUMN_1" value="^RemoveWhere$" />
+                </row>
+                <row id="ROW_12">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Stack$" />
+                  <column refColumnId="COLUMN_1" value="^Pop$" />
+                </row>
+                <row id="ROW_13">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.Stack$" />
+                  <column refColumnId="COLUMN_1" value="^Pop$" />
+                </row>
+                <row id="ROW_14">
+                  <column refColumnId="COLUMN_0" value="^System\.Reflection\..*$" />
+                  <column refColumnId="COLUMN_1" value="^Invoke$" />
+                </row>
+              </predefinedRows>
+            </complexParamTable>
+            <complexParamTable id="CMUG.MU.RETVAL.whiteListReturningType" reader="DotTestTable" label="Results of given types are allowed to be thrown away" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+              <columns>
+                <column id="COLUMN_0" label="Method declaring type regex" columnType="text" editable="true" required="true" />
+                <column id="COLUMN_1" label="Returned type regex" columnType="text" editable="true" required="true" />
+              </columns>
+              <predefinedRows>
+                <row id="ROW_0">
+                  <column refColumnId="COLUMN_0" value="^System.Xml.XmlNode$" />
+                  <column refColumnId="COLUMN_1" value="^System.Xml.XmlNode$" />
+                </row>
+              </predefinedRows>
+            </complexParamTable>
+            <radioGroup label="" id="CMUG.MU.RETVAL.modeSelection">
+              <radioItem value="0" label="Results from all other methods are not allowed to be thrown away." />
+              <radioItem value="1" label="Results from the following methods are not allowed to be thrown away." defaultValue="checked" />
+            </radioGroup>
+            <complexParamTable id="CMUG.MU.RETVAL.blackListMethods" reader="DotTestTable" label="Results from all other methods are not allowed to be thrown away." canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+              <columns>
+                <column id="COLUMN_0" label="Method declaring type regex" columnType="text" editable="true" required="true" />
+                <column id="COLUMN_1" label="Method name regex" columnType="text" editable="true" required="true" />
+              </columns>
+              <predefinedRows>
+                <row id="ROW_0">
+                  <column refColumnId="COLUMN_0" value="^System\..*$" />
+                  <column refColumnId="COLUMN_1" value="^(Get.*|Is.*|Create.*)$" />
+                </row>
+                <row id="ROW_1">
+                  <column refColumnId="COLUMN_0" value="^System\.Object$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_2">
+                  <column refColumnId="COLUMN_0" value="^System\.ValueType$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_3">
+                  <column refColumnId="COLUMN_0" value="^System\.String$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_4">
+                  <column refColumnId="COLUMN_0" value="^System\.ICloneable$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_5">
+                  <column refColumnId="COLUMN_0" value="^System\.IComparable$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_6">
+                  <column refColumnId="COLUMN_0" value="^System\.IEquatable$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_7">
+                  <column refColumnId="COLUMN_0" value="^System\.IFormattable$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_8">
+                  <column refColumnId="COLUMN_0" value="^System\.IConvertible$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_9">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.IEnumerable$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_10">
+                  <column refColumnId="COLUMN_0" value="^System\.Byte$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_11">
+                  <column refColumnId="COLUMN_0" value="^System\.SByte$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_12">
+                  <column refColumnId="COLUMN_0" value="^System\.Int16$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_13">
+                  <column refColumnId="COLUMN_0" value="^System\.Int32$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_14">
+                  <column refColumnId="COLUMN_0" value="^System\.Int64$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_15">
+                  <column refColumnId="COLUMN_0" value="^System\.UInt16$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_16">
+                  <column refColumnId="COLUMN_0" value="^System\.UInt32$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_17">
+                  <column refColumnId="COLUMN_0" value="^System\.UInt64$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_18">
+                  <column refColumnId="COLUMN_0" value="^System\.Boolean$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_19">
+                  <column refColumnId="COLUMN_0" value="^System\.Char$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_20">
+                  <column refColumnId="COLUMN_0" value="^System\.Decimal$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_21">
+                  <column refColumnId="COLUMN_0" value="^System\.Double$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_22">
+                  <column refColumnId="COLUMN_0" value="^System\.Single$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_23">
+                  <column refColumnId="COLUMN_0" value="^System\.IntPtr$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_24">
+                  <column refColumnId="COLUMN_0" value="^System\.UIntPtr$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_25">
+                  <column refColumnId="COLUMN_0" value="^System\.BitConverter$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_26">
+                  <column refColumnId="COLUMN_0" value="^System\.Buffer$" />
+                  <column refColumnId="COLUMN_1" value="^ByteLength$" />
+                </row>
+                <row id="ROW_27">
+                  <column refColumnId="COLUMN_0" value="^System\.Console$" />
+                  <column refColumnId="COLUMN_1" value="^(OpenStandard.*|Read|ReadKey|ReadLine)$" />
+                </row>
+                <row id="ROW_28">
+                  <column refColumnId="COLUMN_0" value="^System\.Convert$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_29">
+                  <column refColumnId="COLUMN_0" value="^System\.Environment$" />
+                  <column refColumnId="COLUMN_1" value="^ExpandEnvironmentVariables$" />
+                </row>
+                <row id="ROW_30">
+                  <column refColumnId="COLUMN_0" value="^System\.Math$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_31">
+                  <column refColumnId="COLUMN_0" value="^System\.Nullable$" />
+                  <column refColumnId="COLUMN_1" value="^Compare$" />
+                </row>
+                <row id="ROW_32">
+                  <column refColumnId="COLUMN_0" value="^System\.Type$" />
+                  <column refColumnId="COLUMN_1" value="^(Find.*|Make.*|ReflectionOnlyGetType)$" />
+                </row>
+                <row id="ROW_33">
+                  <column refColumnId="COLUMN_0" value="^System\.Uri$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_34">
+                  <column refColumnId="COLUMN_0" value="^System\.Array$" />
+                  <column refColumnId="COLUMN_1" value="^(AsReadOnly|BinarySearch|ConvertAll|Exists|Find|FindIndex|FindLast|IndexOf|LastIndexOf|TrueForAll)$" />
+                </row>
+                <row id="ROW_35">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections.IList$" />
+                  <column refColumnId="COLUMN_1" value="^(IndexOf|Contains)$" />
+                </row>
+                <row id="ROW_36">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections.ArrayList$" />
+                  <column refColumnId="COLUMN_1" value="^(Adapter|BinarySearch|LastIndexOf|ReadOnly|Repeat|Synchronized|ToArray)$" />
+                </row>
+                <row id="ROW_37">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Queue$" />
+                  <column refColumnId="COLUMN_1" value="^(Peek|Contains)$" />
+                </row>
+                <row id="ROW_38">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.SortedList$" />
+                  <column refColumnId="COLUMN_1" value="^(ContainsKey|ContainsValue|IndexOfKey|IndexOfValue)$" />
+                </row>
+                <row id="ROW_39">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Stack$" />
+                  <column refColumnId="COLUMN_1" value="^(Peek|ToArray)$" />
+                </row>
+                <row id="ROW_40">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Specialized.NameValueCollection$" />
+                  <column refColumnId="COLUMN_1" value="^HasKeys$" />
+                </row>
+                <row id="ROW_41">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Specialized.StringDictionary$" />
+                  <column refColumnId="COLUMN_1" value="^(ContainsKey|ContainsValue)$" />
+                </row>
+                <row id="ROW_42">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.IDictionary$" />
+                  <column refColumnId="COLUMN_1" value="^Contains$" />
+                </row>
+                <row id="ROW_43">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Hashtable$" />
+                  <column refColumnId="COLUMN_1" value="^(ContainsKey|ContainsValue)$" />
+                </row>
+                <row id="ROW_44">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.ICollection$" />
+                  <column refColumnId="COLUMN_1" value="^Contains$" />
+                </row>
+                <row id="ROW_45">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.IComparer$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_46">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.IEnumerable$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_47">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.IEqualityComparer$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_48">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.IDictionary$" />
+                  <column refColumnId="COLUMN_1" value="^ContainsKey$" />
+                </row>
+                <row id="ROW_49">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.Dictionary$" />
+                  <column refColumnId="COLUMN_1" value="^ContainsKey$" />
+                </row>
+                <row id="ROW_50">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.List$" />
+                  <column refColumnId="COLUMN_1" value="^(AsReadOnly|BinarySearch|ConvertAll|Exists|Find.*|LastIndexOf|ToArray|TrueForAll)$" />
+                </row>
+                <row id="ROW_51">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.LinkedList$" />
+                  <column refColumnId="COLUMN_1" value="^(Find|FindLast)$" />
+                </row>
+                <row id="ROW_52">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.Queue$" />
+                  <column refColumnId="COLUMN_1" value="^(Contains|Peek|ToArray)$" />
+                </row>
+                <row id="ROW_53">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.SortedDictionary$" />
+                  <column refColumnId="COLUMN_1" value="^ContainsValue$" />
+                </row>
+                <row id="ROW_54">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.SortedList$" />
+                  <column refColumnId="COLUMN_1" value="^(ContainsValue|IndexOfKey|IndexOfValue)$" />
+                </row>
+                <row id="ROW_55">
+                  <column refColumnId="COLUMN_0" value="^System\.Collections\.Generic\.Stack$" />
+                  <column refColumnId="COLUMN_1" value="^(Peek|ToArray)$" />
+                </row>
+                <row id="ROW_56">
+                  <column refColumnId="COLUMN_0" value="^System\.Text\.RegularExpressions\.Match$" />
+                  <column refColumnId="COLUMN_1" value="^(Result|Synchronized)$" />
+                </row>
+                <row id="ROW_57">
+                  <column refColumnId="COLUMN_0" value="^System\.Text\.RegularExpressions\.Regex$" />
+                  <column refColumnId="COLUMN_1" value="^(Match|Matches|Replace|Split|Unescape|Escape)$" />
+                </row>
+                <row id="ROW_58">
+                  <column refColumnId="COLUMN_0" value="^System\.IO\.BinaryReader$" />
+                  <column refColumnId="COLUMN_1" value="^(PeekChar|Read.*)$" />
+                </row>
+                <row id="ROW_59">
+                  <column refColumnId="COLUMN_0" value="^System\.IO\.Stream$" />
+                  <column refColumnId="COLUMN_1" value="^Read.*$" />
+                </row>
+                <row id="ROW_60">
+                  <column refColumnId="COLUMN_0" value="^System\.IO\.File$" />
+                  <column refColumnId="COLUMN_1" value="^(AppendText|Exists|Open|Read.*)$" />
+                </row>
+                <row id="ROW_61">
+                  <column refColumnId="COLUMN_0" value="^System\.IO\.FileInfo$" />
+                  <column refColumnId="COLUMN_1" value="^Open.*$" />
+                </row>
+                <row id="ROW_62">
+                  <column refColumnId="COLUMN_0" value="^System\.IO\.FileSystemWatcher$" />
+                  <column refColumnId="COLUMN_1" value="^WaitForChanged$" />
+                </row>
+                <row id="ROW_63">
+                  <column refColumnId="COLUMN_0" value="^System\.IO\.IsolatedStorage.INormalizeForIsolatedStorage$" />
+                  <column refColumnId="COLUMN_1" value="^Normalize$" />
+                </row>
+                <row id="ROW_64">
+                  <column refColumnId="COLUMN_0" value="^System\.IO\.Path$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_65">
+                  <column refColumnId="COLUMN_0" value="^System\.IO\.Ports.SerialPort$" />
+                  <column refColumnId="COLUMN_1" value="^Read.*$" />
+                </row>
+                <row id="ROW_66">
+                  <column refColumnId="COLUMN_0" value="^System\.IO\.TextReader$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_67">
+                  <column refColumnId="COLUMN_0" value="^System\.IO\.StringWriter$" />
+                  <column refColumnId="COLUMN_1" value="^Synchronized$" />
+                </row>
+                <row id="ROW_68">
+                  <column refColumnId="COLUMN_0" value="^System\.Threading\.HostExecutionContextManager$" />
+                  <column refColumnId="COLUMN_1" value="^Capture$" />
+                </row>
+                <row id="ROW_69">
+                  <column refColumnId="COLUMN_0" value="^System\.Threading\.Interlocked$" />
+                  <column refColumnId="COLUMN_1" value="^Read$" />
+                </row>
+                <row id="ROW_70">
+                  <column refColumnId="COLUMN_0" value="^System\.Threading\.Monitor$" />
+                  <column refColumnId="COLUMN_1" value="^TryEnter$" />
+                </row>
+                <row id="ROW_71">
+                  <column refColumnId="COLUMN_0" value="^System\.Threading\.Mutex$" />
+                  <column refColumnId="COLUMN_1" value="^OpenExisting$" />
+                </row>
+                <row id="ROW_72">
+                  <column refColumnId="COLUMN_0" value="^System\.Threading\.Overlapped$" />
+                  <column refColumnId="COLUMN_1" value="^.*$" />
+                </row>
+                <row id="ROW_73">
+                  <column refColumnId="COLUMN_0" value="^System\.Threading\.ReaderWriterLock$" />
+                  <column refColumnId="COLUMN_1" value="^(AnyWritersSince|UpgradeToWriterLock)$" />
+                </row>
+                <row id="ROW_74">
+                  <column refColumnId="COLUMN_0" value="^System\.Threading\.Semaphore$" />
+                  <column refColumnId="COLUMN_1" value="^OpenExisting$" />
+                </row>
+                <row id="ROW_75">
+                  <column refColumnId="COLUMN_0" value="^System\.Threading\.Thread$" />
+                  <column refColumnId="COLUMN_1" value="^(AllocateDataSlot|VolatileRead)$" />
+                </row>
+                <row id="ROW_76">
+                  <column refColumnId="COLUMN_0" value="^System\.TimeZone$" />
+                  <column refColumnId="COLUMN_1" value="^(ToLocalTime|ToUniversalTime)$" />
+                </row>
+              </predefinedRows>
+            </complexParamTable>
+          </parameters>
+        </rule>
+      </category>
+      <category name="PRU">
+        <rule header="Avoid unused private property accessors" id="AUPPA" impl="CMUG.PRU.AUPPA" severity="3" cqaSupported="false" />
+      </category>
+    </category>
+    <category name="CS">
+      <category name="BRM">
+        <rule header="Avoid 'is' before 'as'" id="AIBA" impl="CS.BRM.AIBA" severity="3" cqaSupported="true" />
+        <rule header="Avoid block statements with empty bodies." id="BEB" impl="CS.BRM.BEB" severity="3" cqaSupported="true" />
+        <rule header="Always enclose if and else bodies with curly braces" id="CCB" impl="CS.BRM.CCB" severity="3" cqaSupported="true" />
+        <rule header="Avoid checked, unchecked, fixed and unsafe statements with empty bodies." id="CPEB" impl="CS.BRM.CPEB" severity="2" cqaSupported="true" />
+        <rule header="Use keyword 'this' explicitly when accessing capitalized members" id="ETK" impl="CS.BRM.ETK" severity="4" cqaSupported="true">
+          <parameters>
+            <radioGroup label="Expressions" id="CS.BRM.ETK.ExpressionsOptions">
+              <radioItem value="0" label="Complex expressions only" defaultValue="checked" />
+              <radioItem value="1" label="All expressions" />
+            </radioGroup>
+            <param id="CS.BRM.ETK.IncludeMethodsCalls" inputType="checkbox" label="Include methods invocations" defaultValue="false" />
+            <param id="CS.BRM.ETK.IncludeLowercasedMembers" inputType="checkbox" label="Include lowercased members" defaultValue="false" />
+            <param id="CS.BRM.ETK.IncludePrefixedMembers" inputType="checkbox" label="Include members with _ prefix" defaultValue="false" />
+          </parameters>
+        </rule>
+        <rule header="Always enclose iteration statements bodies with curly braces." id="ICB" impl="CS.BRM.ICB" severity="3" cqaSupported="true" />
+        <rule header="Keep file and type names consistent" id="KFATNC" impl="CS.BRM.KFATNC" severity="3" cqaSupported="true">
+          <parameters>
+            <param id="CS.BRM.KFATNC.IgnoredTypesList" inputType="stringList" label="Full type names to ignore (as RegExp)" defaultValue="" />
+            <param id="CS.BRM.KFATNC.IgnoredFilesList" inputType="stringList" label="File names to ignore (as RegExp)" defaultValue="" />
+          </parameters>
+        </rule>
+        <rule header="Use preferred names for primitive types" id="PNPT" impl="CS.BRM.PNPT" severity="3" cqaSupported="false">
+          <parameters>
+            <radioGroup label="Select prefered naming for primitive types" id="CS.BRM.PNPT.UsePrimitiveTypes">
+              <radioItem value="0" label="Use keywords for primitive types" defaultValue="checked" />
+              <radioItem value="1" label="Use .NET type names for primitive types" />
+            </radioGroup>
+          </parameters>
+        </rule>
+        <rule header="Place 'default' as the last case of the 'switch' statement" id="SWDEFLAST" impl="CS.BRM.SWDEFLAST" severity="3" cqaSupported="true" />
+      </category>
+      <category name="CDD">
+        <rule header="Avoid duplicate using statements" id="DUPU" impl="CS.CDD.DUPU" severity="3" cqaSupported="true" />
+      </category>
+      <category name="EXCEPT">
+        <rule header="Avoid clearing stack trace while rethrowing exceptions" id="RETHROW" impl="CS.EXCEPT.RETHROW" severity="2" cqaSupported="false" />
+      </category>
+      <category name="INTER">
+        <rule header="String literals should be internationalized" id="ITT" impl="CS.INTER.ITT" severity="3" cqaSupported="true">
+          <parameters>
+            <param id="CS.INTER.ITT.VarNameRegEx" inputType="text" label="Ignore literals assigned to fields and variables which names match regular expression" defaultValue="^NL_" />
+            <param id="CS.INTER.ITT.ValueRegEx" inputType="text" label="Ignore literals which match regular expression" defaultValue="^[^a-zA-Z]*$" />
+            <param id="CS.INTER.ITT.IgnoreSystemIONamespaceInvocations" inputType="checkbox" label="Ignore literals which are passed to some calls of System.IO members, e.g.: Path.Combine(&quot;C:&quot;, &quot;Temp&quot;)" defaultValue="true" />
+            <param id="CS.INTER.ITT.IgnoreXmlAndUriInvocations" inputType="checkbox" label="Ignore literals which are passed to some calls of xml related classes and Uri class members, e.g.: XmlReader.Create(&quot;uri&quot;)" defaultValue="true" />
+            <param id="CS.INTER.ITT.IgnoreSystemWindowsFormsNamespaceInvocations" inputType="checkbox" label="Ignore literals which are passed to some calls of System.Windows.Forms members, e.g.: Clipboard.GetData(&quot;format&quot;)" defaultValue="true" />
+            <param id="CS.INTER.ITT.IgnoreSystemDiagnosticsProcessInvocations" inputType="checkbox" label="Ignore literals which are passed to some calls of System.Process members, e.g.: Process.GetProcesses(&quot;myProcess&quot;)" defaultValue="true" />
+            <param id="CS.INTER.ITT.IgnoreSystemEnvironmentInvocations" inputType="checkbox" label="Ignore literals which are passed to some calls of System.Environment members, e.g.: Environment.GetEnvironmentVariable(&quot;var&quot;)" defaultValue="true" />
+            <param id="CS.INTER.ITT.IgnoreSystemDataNamespaceInvocations" inputType="checkbox" label="Ignore literals which are passed to some calls of System.Data members, e.g.: connection.ChangeDatabase(&quot;database name&quot;)" defaultValue="true" />
+            <param id="CS.INTER.ITT.IgnoreReflectionMethodsInvocations" inputType="checkbox" label="Ignore literals which are passed to some calls of System.Reflection members, e.g.: typeof(int).GetMethod(&quot;Parse&quot;)" defaultValue="true" />
+            <param id="CS.INTER.ITT.IgnoreDotSeparatedStrings" inputType="checkbox" label="Ignore literals which are alphanumeric strings sparated with dots, e.g.: &quot;Foo.Bar.Baz&quot;" defaultValue="true" />
+            <param id="CS.INTER.ITT.IgnoreUnderlineSeparatedStrings" inputType="checkbox" label="Ignore literals which are alphanumeric strings sparated with uderlines, e.g.: &quot;foo_bar_baz&quot;" defaultValue="true" />
+            <complexParamTable id="CS.INTER.ITT.CallingMethods" reader="DotTestTable" label="Ignore all string literals passed to the following methods" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+              <columns>
+                <column id="COLUMN_0" label="Type fully qualified name (as a regular expression)" columnType="text" editable="true" required="true" />
+                <column id="COLUMN_1" label="Method name (as a regular expression)" columnType="text" editable="true" required="true" />
+              </columns>
+              <predefinedRows>
+                <row id="ROW_0">
+                  <column refColumnId="COLUMN_0" value="Logger$" />
+                  <column refColumnId="COLUMN_1" value=".*" />
+                </row>
+              </predefinedRows>
+            </complexParamTable>
+            <complexParamTable id="CS.INTER.ITT.ContainingClasses" reader="DotTestTable" label="Ignore all string literals defined in following classes and methods" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+              <columns>
+                <column id="COLUMN_0" label="Type fully qualified name (as a regular expression)" columnType="text" editable="true" required="true" />
+                <column id="COLUMN_1" label="Method name (as a regular expression)" columnType="text" editable="true" required="true" />
+              </columns>
+              <predefinedRows>
+                <row id="ROW_0">
+                  <column refColumnId="COLUMN_0" value="Consts$" />
+                  <column refColumnId="COLUMN_1" value=".*" />
+                </row>
+                <row id="ROW_1">
+                  <column refColumnId="COLUMN_0" value="Utils$" />
+                  <column refColumnId="COLUMN_1" value=".*" />
+                </row>
+              </predefinedRows>
+            </complexParamTable>
+          </parameters>
+        </rule>
+      </category>
+      <category name="NG">
+        <category name="VAR">
+          <rule header="Follow proper naming convention for method variables and consts." id="PNCFV" impl="CS.NG.VAR.PNCFV" severity="3" cqaSupported="true">
+            <parameters>
+              <group id="CS.NG.VAR.PNCFV.VariablesParametersGroup" label="Method local variables" collapsible="true">
+                <param id="CS.NG.VAR.PNCFV.VariablesCamelCase" inputType="checkbox" label="camelCase" defaultValue="true" />
+                <param id="CS.NG.VAR.PNCFV.VariablesUpperCase" inputType="checkbox" label="UPPER_CASE" defaultValue="false" />
+                <param id="CS.NG.VAR.PNCFV.VariablesPascalCase" inputType="checkbox" label="PascalCase" defaultValue="false" />
+                <param id="CS.NG.VAR.PNCFV.VariablesLowerCase" inputType="checkbox" label="lower_case" defaultValue="false" />
+                <param id="CS.NG.VAR.PNCFV.VariablesPrefix" inputType="text" label="Prefix" />
+                <param id="CS.NG.VAR.PNCFV.VariablesPrefixObligatory" inputType="checkbox" label="Is prefix obligatory" defaultValue="false" />
+                <param id="CS.NG.VAR.PNCFV.VariablesUseHungarianNotation" inputType="checkbox" label="Hungarian Notation" defaultValue="false" />
+              </group>
+              <group id="CS.NG.VAR.PNCFV.ConstantsParametersGroup" label="Method local constants" collapsible="true">
+                <param id="CS.NG.VAR.PNCFV.ConstantsCamelCase" inputType="checkbox" label="camelCase" defaultValue="true" />
+                <param id="CS.NG.VAR.PNCFV.ConstantsUpperCase" inputType="checkbox" label="UPPER_CASE" defaultValue="true" />
+                <param id="CS.NG.VAR.PNCFV.ConstantsPascalCase" inputType="checkbox" label="PascalCase" defaultValue="true" />
+                <param id="CS.NG.VAR.PNCFV.ConstantsLowerCase" inputType="checkbox" label="lower_case" defaultValue="false" />
+                <param id="CS.NG.VAR.PNCFV.ConstantsPrefix" inputType="text" label="Prefix" />
+                <param id="CS.NG.VAR.PNCFV.ConstantsPrefixObligatory" inputType="checkbox" label="Is prefix obligatory" defaultValue="false" />
+                <param id="CS.NG.VAR.PNCFV.ConstantsUseHungarianNotation" inputType="checkbox" label="Hungarian Notation" defaultValue="false" />
+              </group>
+              <complexParamTable id="CS.NG.VAR.PNCFV.HungarianNotation" reader="DotTestTable" label="Hungarian Notation" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+                <columns>
+                  <column id="COLUMN_0" label="Full type name" columnType="text" editable="true" required="true" />
+                  <column id="COLUMN_1" label="Notation" columnType="text" editable="true" required="true" />
+                </columns>
+                <predefinedRows>
+                  <row id="ROW_0">
+                    <column refColumnId="COLUMN_0" value="System.Boolean" />
+                    <column refColumnId="COLUMN_1" value="b" />
+                  </row>
+                  <row id="ROW_1">
+                    <column refColumnId="COLUMN_0" value="System.Byte" />
+                    <column refColumnId="COLUMN_1" value="by" />
+                  </row>
+                  <row id="ROW_2">
+                    <column refColumnId="COLUMN_0" value="System.Char" />
+                    <column refColumnId="COLUMN_1" value="c" />
+                  </row>
+                  <row id="ROW_3">
+                    <column refColumnId="COLUMN_0" value="System.UInt64" />
+                    <column refColumnId="COLUMN_1" value="dw" />
+                  </row>
+                  <row id="ROW_4">
+                    <column refColumnId="COLUMN_0" value="System.IntPtr" />
+                    <column refColumnId="COLUMN_1" value="fn" />
+                  </row>
+                  <row id="ROW_5">
+                    <column refColumnId="COLUMN_0" value="System.Int32" />
+                    <column refColumnId="COLUMN_1" value="i" />
+                  </row>
+                  <row id="ROW_6">
+                    <column refColumnId="COLUMN_0" value="System.Int64" />
+                    <column refColumnId="COLUMN_1" value="l" />
+                  </row>
+                  <row id="ROW_7">
+                    <column refColumnId="COLUMN_0" value="System.Int16" />
+                    <column refColumnId="COLUMN_1" value="n" />
+                  </row>
+                  <row id="ROW_8">
+                    <column refColumnId="COLUMN_0" value="System.String" />
+                    <column refColumnId="COLUMN_1" value="s" />
+                  </row>
+                  <row id="ROW_9">
+                    <column refColumnId="COLUMN_0" value="System.UInt32" />
+                    <column refColumnId="COLUMN_1" value="w" />
+                  </row>
+                </predefinedRows>
+              </complexParamTable>
+            </parameters>
+          </rule>
+        </category>
+      </category>
+      <category name="PB">
+        <category name="USC">
+          <rule header="Avoid unreachable code in condition" id="CC" impl="CS.PB.USC.CC" severity="3" cqaSupported="true" />
+        </category>
+        <rule header="Avoid assignment within a condition." id="AWC" impl="CS.PB.AWC" severity="1" cqaSupported="true" />
+        <rule header="Do not use bitwise operators on bool operands." id="BITBOOL" impl="CS.PB.BITBOOL" severity="2" cqaSupported="true" />
+        <rule header="Avoid confusing assignments to constructor arguments." id="CCA" impl="CS.PB.CCA" severity="2" cqaSupported="true" />
+        <rule header="Avoid try, catch, finally and using statements with empty bodies." id="EEB" impl="CS.PB.EEB" severity="1" cqaSupported="true" />
+        <rule header="Do not use floating point variables as loop indices." id="FPLI" impl="CS.PB.FPLI" severity="1" cqaSupported="true" />
+        <rule header="Avoid increment and decrement statements which have no effect" id="IDNE" impl="CS.PB.IDNE" severity="1" cqaSupported="true" />
+        <rule header="Avoid iteration statements with empty bodies." id="IEB" impl="CS.PB.IEB" severity="1" cqaSupported="true" />
+        <rule header="Use initializer variable in a condition of 'for' loop" id="IVFLC" impl="CS.PB.IVFLC" severity="2" cqaSupported="true" />
+        <rule header="Use initializer variable in 'for' loop iterator section." id="IVFLI" impl="CS.PB.IVFLI" severity="2" cqaSupported="true" />
+        <rule header="Review '?:' operator for potential misuse." id="MCO" impl="CS.PB.MCO" severity="1" cqaSupported="true" />
+        <rule header="Avoid inaccessible classes and structs." id="NACC" impl="CS.PB.NACC" severity="2" cqaSupported="true" />
+        <rule header="Do not modify 'for' loop initializer variable in 'for' loop body." id="NSIVFLB" impl="CS.PB.NSIVFLB" severity="2" cqaSupported="true" />
+        <rule header="Do not increment or decrement on the same variable over multiple nested 'for' loop statements." id="NSIVFLN" impl="CS.PB.NSIVFLN" severity="1" cqaSupported="true" />
+        <rule header="Avoid using the unary + operator" id="PUO" impl="CS.PB.PUO" severity="2" cqaSupported="true" />
+        <rule header="Return empty collection instead of null" id="REA" impl="CS.PB.REA" severity="2" cqaSupported="false">
+          <parameters>
+            <group id="CS.PB.REA.CollectionsToAnalyzeGroup" label="Collections to analyze:" collapsible="true">
+              <param id="CS.PB.REA.AnalyzeArrays" inputType="checkbox" label="Arrays" defaultValue="true" />
+              <param id="CS.PB.REA.AnalyzeCollections" inputType="checkbox" label="Common collection types" defaultValue="true" />
+              <param id="CS.PB.REA.AnalyzeIEnumerable" inputType="checkbox" label="Non-array collections implementing IEnumerable" defaultValue="false" />
+              <param id="CS.PB.REA.CustomTypes" inputType="stringList" label="Custom fully qualified types (with wildcards):" defaultValue="" />
+            </group>
+          </parameters>
+        </rule>
+        <rule header="Do not use an integer outside the range of [0, 31] as the amount of a shift" id="SHIFT" impl="CS.PB.SHIFT" severity="2" cqaSupported="false" />
+        <rule header="Do not compare value types to null" id="VTNV" impl="CS.PB.VTNV" severity="1" cqaSupported="true" />
+        <rule header="Avoid wrong indentation of blockless statements" id="WIBS" impl="CS.PB.WIBS" severity="2" cqaSupported="true" />
+      </category>
+      <category name="SEC">
+        <rule header="Do not re-create string from SecureString." id="RSFSS" impl="CS.SEC.RSFSS" severity="2" cqaSupported="true" />
+        <rule header="Use SecureString instead of String for password." id="SSFP" impl="CS.SEC.SSFP" severity="2" cqaSupported="true">
+          <parameters>
+            <param id="CS.SEC.SSFP.Pattern" inputType="text" label="Pattern of variables which should be checked:" defaultValue="^.*([Pp][a][s][s])|([P][A][S][S]).*$" />
+          </parameters>
+        </rule>
+      </category>
+      <category name="TRS">
+        <rule header="Always enclose lock statement body with curly braces." id="LCB" impl="CS.TRS.LCB" severity="3" cqaSupported="true" />
+        <rule header="Avoid lock statements with empty bodies." id="LEB" impl="CS.TRS.LEB" severity="1" cqaSupported="true" />
+      </category>
+    </category>
+    <category name="EXCEPT">
+      <rule header="Avoid throwing exceptions from exceptions constructors" id="TIEC" impl="EXCEPT.TIEC" severity="2" cqaSupported="false" />
+    </category>
+    <category name="GC">
+      <rule header="Avoid static collections which may lead to memory leakage" id="ASC" impl="GC.ASC" severity="2" cqaSupported="false" />
+      <rule header="Dispose IDisposable local variable" id="UFID" impl="GC.UFID" severity="2" cqaSupported="false">
+        <parameters>
+          <complexParamTable id="GC.UFID.ActivationMethods" reader="DotTestTable" label="Regular expressions of activating methods full type names and method names" description="Allows to declare custom activating methods, which are useful when object constructions are not equivalent to activating them" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Activating method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Activating method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="GC.UFID.FactoryMethods" reader="DotTestTable" label="Regular expressions of factory methods full type names and method names" description="Allows to declare custom factory methods, which produce new objects where caller is responsible for disposing" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Factory method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Factory method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="GC.UFID.ClosingMethods" reader="DotTestTable" label="Regular expressions of aliases of System.IDisposable.Dispose()" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Closing method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Closing method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="GC.UFID.SpecialMethods" reader="DotTestTable" label="Regular expressions of methods which are responsible for scheduling disposing the object" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Special method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Special method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+        </parameters>
+      </rule>
+    </category>
+    <category name="IFD">
+      <rule header="Avoid calling Finalize directly" id="ACFD" impl="IFD.ACFD" severity="1" cqaSupported="false" />
+      <rule header="Avoid throwing exceptions from the Dispose method implementations" id="ATED" impl="IFD.ATED" severity="1" cqaSupported="false" />
+      <rule header="Avoid throwing exceptions from finalizers" id="ATEF" impl="IFD.ATEF" severity="1" cqaSupported="false" />
+      <rule header="Call the Dispose method of the base class from the Dispose method in the derived class" id="CBDM" impl="IFD.CBDM" severity="2" cqaSupported="false" />
+      <rule header="Method 'Dispose(bool)' in method 'Dispose()' should be called with true and in finalizer with false." id="DBDTFF" impl="IFD.DBDTFF" severity="1" cqaSupported="false" />
+      <rule header="IDisposable.Dispose() implementation should call specific methods" id="DCDSF" impl="IFD.DCDSF" severity="1" cqaSupported="false" />
+      <rule header="Always call Dispose(bool) in finalizer if IDisposable is implemented" id="DCID" impl="IFD.DCID" severity="1" cqaSupported="false" />
+      <rule header="Method 'Dispose()' should not be overridable." id="DNV" impl="IFD.DNV" severity="2" cqaSupported="false" />
+      <rule header="Implement IDisposable in types which are using disposable resources" id="IDDR" impl="IFD.IDDR" severity="4" cqaSupported="true" />
+      <rule header="Implement Dispose(bool) as a virtual and unsealed method if IDisposable is implemented" id="IDWBP" impl="IFD.IDWBP" severity="3" cqaSupported="false" />
+      <rule header="Implement IDisposable when you provide a destructor (finalizer)" id="IDWF" impl="IFD.IDWF" severity="2" cqaSupported="false" />
+      <rule header="Method 'Dispose(bool)' should be private or protected" id="MDPP" impl="IFD.MDPP" severity="3" cqaSupported="false" />
+      <rule header="Provide finalizers in types which use resources" id="SRIF" impl="IFD.SRIF" severity="1" cqaSupported="false">
+        <parameters>
+          <param id="IFD.SRIF.NativeResourceTypes" inputType="stringList" label="Native resource full type names" defaultValue="System.IntPtr;System.UIntPtr;System.Runtime.InteropServices.HandleRef" />
+        </parameters>
+      </rule>
+      <rule header="Implement IDisposable in types which are using system resources" id="SRII" impl="IFD.SRII" severity="4" cqaSupported="false">
+        <parameters>
+          <param id="IFD.SRII.NativeResourceTypes" inputType="stringList" label="Native resource full type names" defaultValue="System.IntPtr;System.UIntPtr;System.Runtime.InteropServices.HandleRef" />
+        </parameters>
+      </rule>
+      <rule header="Type that implements 'IDisposable' should contain and use field with information about dispose state." id="TICUFDS" impl="IFD.TICUFDS" severity="1" cqaSupported="false">
+        <parameters>
+          <param id="IFD.TICUFDS.FieldNames" inputType="stringList" label="Allowed field/property names (wildcards are allowed, the first on this list is recommended)" defaultValue="_isDisposed;_IsDisposed;isDisposed;IsDisposed;_disposed;_Disposed;disposed;Disposed;_alreadyDisposed;_AlreadyDisposed;alreadyDisposed;AlreadyDisposed" />
+        </parameters>
+      </rule>
+      <rule header="Type that implements 'IDisposable' should implement 'Dispose(bool)' method." id="TIID" impl="IFD.TIID" severity="1" cqaSupported="false" />
+    </category>
+    <category name="NG">
+      <category name="EVN">
+        <rule header="Use the suffix 'EventHandler' for event handlers delegates names." id="EHNEEH" impl="NG.EVN.EHNEEH" severity="3" cqaSupported="false" />
+      </category>
+      <category name="FN">
+        <rule header="Follow proper naming conventions for field names" id="PNCFN" impl="NG.FN.PNCFN" severity="3" cqaSupported="false">
+          <parameters>
+            <group id="NG.FN.PNCFN.PrivateInstanceGroup" label="PrivateInstanceGroup" collapsible="true">
+              <param id="NG.FN.PNCFN.PrivateInstancePrefix" inputType="text" label="Prefix" defaultValue="_" />
+              <param id="NG.FN.PNCFN.PrivateIsPrefixObligatory" inputType="checkbox" label="Is prefix obligatory" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateInstancePascalCase" inputType="checkbox" label="PascalCase" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateInstanceCamelCase" inputType="checkbox" label="camelCase" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PrivateInstanceUpperCase" inputType="checkbox" label="UPPER_CASE" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateInstanceLowerCase" inputType="checkbox" label="lower_case" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateInstanceUseHungarianNotation" inputType="checkbox" label="Hungarian Notation" defaultValue="false" />
+            </group>
+            <group id="NG.FN.PNCFN.ProtectedInstanceGroup" label="ProtectedInstanceGroup" collapsible="true">
+              <param id="NG.FN.PNCFN.ProtectedInstancePrefix" inputType="text" label="Prefix" defaultValue="_" />
+              <param id="NG.FN.PNCFN.ProtectedIsPrefixObligatory" inputType="checkbox" label="Is prefix obligatory" defaultValue="false" />
+              <param id="NG.FN.PNCFN.ProtectedInstancePascalCase" inputType="checkbox" label="PascalCase" defaultValue="false" />
+              <param id="NG.FN.PNCFN.ProtectedInstanceCamelCase" inputType="checkbox" label="camelCase" defaultValue="true" />
+              <param id="NG.FN.PNCFN.ProtectedInstanceUpperCase" inputType="checkbox" label="UPPER_CASE" defaultValue="false" />
+              <param id="NG.FN.PNCFN.ProtectedInstanceLowerCase" inputType="checkbox" label="lower_case" defaultValue="false" />
+              <param id="NG.FN.PNCFN.ProtectedInstanceUseHungarianNotation" inputType="checkbox" label="Hungarian Notation" defaultValue="false" />
+            </group>
+            <group id="NG.FN.PNCFN.PrivateOrProtectedStaticReadwriteGroup" label="Private or Protected Static Writable Fields" collapsible="true">
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadwritePrefix" inputType="text" label="Prefix" defaultValue="_" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadwriteObligatory" inputType="checkbox" label="Is prefix obligatory" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadwritePascalCase" inputType="checkbox" label="PascalCase" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadwriteCamelCase" inputType="checkbox" label="camelCase" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadwriteUpperCase" inputType="checkbox" label="UPPER_CASE" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadwriteLowerCase" inputType="checkbox" label="lower_case" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadwriteUseHungarianNotation" inputType="checkbox" label="Hungarian Notation" defaultValue="false" />
+            </group>
+            <group id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyComplexGroup" label="Private or Protected Static Readonly Complex Fields" collapsible="true">
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyComplexPrefix" inputType="text" label="Prefix" defaultValue="" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyComplexPrefixObligatory" inputType="checkbox" label="Is prefix obligatory" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyComplexPascalCase" inputType="checkbox" label="PascalCase" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyComplexCamelCase" inputType="checkbox" label="camelCase" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyComplexUpperCase" inputType="checkbox" label="UPPER_CASE" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyComplexLowerCase" inputType="checkbox" label="lower_case" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyComplexUseHungarianNotation" inputType="checkbox" label="Hungarian Notation" defaultValue="false" />
+            </group>
+            <group id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyPrimitiveGroup" label="Private or Protected Static Readonly Primitive Fields" collapsible="true">
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyPrimitivePrefix" inputType="text" label="Prefix" defaultValue="" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyPrimitivePrefixObligatory" inputType="checkbox" label="Is prefix obligatory" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyPrimitivePascalCase" inputType="checkbox" label="PascalCase" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyPrimitiveCamelCase" inputType="checkbox" label="camelCase" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyPrimitiveUpperCase" inputType="checkbox" label="UPPER_CASE" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyPrimitiveLowerCase" inputType="checkbox" label="lower_case" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedStaticReadonlyPrimitiveUseHungarianNotation" inputType="checkbox" label="Hungarian Notation" defaultValue="false" />
+            </group>
+            <group id="NG.FN.PNCFN.PrivateOrProtectedConstGroup" label="Private or Protected Const Fields" collapsible="true">
+              <param id="NG.FN.PNCFN.PrivateOrProtectedConstPrefix" inputType="text" label="Prefix" defaultValue="" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedConstPrefixObligatory" inputType="checkbox" label="Is prefix obligatory" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedConstPascalCase" inputType="checkbox" label="PascalCase" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedConstCamelCase" inputType="checkbox" label="camelCase" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedConstUpperCase" inputType="checkbox" label="UPPER_CASE" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedConstLowerCase" inputType="checkbox" label="lower_case" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PrivateOrProtectedConstUseHungarianNotation" inputType="checkbox" label="Hungarian Notation" defaultValue="false" />
+            </group>
+            <group id="NG.FN.PNCFN.PublicOrInternalInstanceGroup" label="Public or Internal Instance Fields" collapsible="true">
+              <param id="NG.FN.PNCFN.PublicOrInternalInstancePrefix" inputType="text" label="Prefix" defaultValue="" />
+              <param id="NG.FN.PNCFN.PublicOrInternalInstancePrefixObligatory" inputType="checkbox" label="Is prefix obligatory" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PublicOrInternalInstancePascalCase" inputType="checkbox" label="PascalCase" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PublicOrInternalInstanceCamelCase" inputType="checkbox" label="camelCase" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PublicOrInternalInstanceUpperCase" inputType="checkbox" label="UPPER_CASE" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PublicOrInternalInstanceLowerCase" inputType="checkbox" label="lower_case" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PublicOrInternalInstanceUseHungarianNotation" inputType="checkbox" label="Hungarian Notation" defaultValue="false" />
+            </group>
+            <group id="NG.FN.PNCFN.PublicOrInternalStaticReadwriteGroup" label="Public or Internal Static Writable Fields" collapsible="true">
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadwritePrefix" inputType="text" label="Prefix" defaultValue="" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadwritePrefixObligatory" inputType="checkbox" label="Is prefix obligatory" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadwritePascalCase" inputType="checkbox" label="PascalCase" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadwriteCamelCase" inputType="checkbox" label="camelCase" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadwriteUpperCase" inputType="checkbox" label="UPPER_CASE" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadwriteLowerCase" inputType="checkbox" label="lower_case" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadwriteUseHungarianNotation" inputType="checkbox" label="Hungarian Notation" defaultValue="false" />
+            </group>
+            <group id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyComplexGroup" label="Public or Internal Static Readonly Complex Fields" collapsible="true">
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyComplexPrefix" inputType="text" label="Prefix" defaultValue="" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyComplexPrefixObligatory" inputType="checkbox" label="Is prefix obligatory" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyComplexPascalCase" inputType="checkbox" label="PascalCase" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyComplexCamelCase" inputType="checkbox" label="camelCase" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyComplexUpperCase" inputType="checkbox" label="UPPER_CASE" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyComplexLowerCase" inputType="checkbox" label="lower_case" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyComplexUseHungarianNotation" inputType="checkbox" label="Hungarian Notation" defaultValue="false" />
+            </group>
+            <group id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyPrimitiveGroup" label="Public or Internal Static Readonly Primitive Fields" collapsible="true">
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyPrimitivePrefix" inputType="text" label="Prefix" defaultValue="" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyPrimitiveFieldsObligatory" inputType="checkbox" label="Is prefix obligatory" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyPrimitivePascalCase" inputType="checkbox" label="PascalCase" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyPrimitiveCamelCase" inputType="checkbox" label="camelCase" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyPrimitiveUpperCase" inputType="checkbox" label="UPPER_CASE" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyPrimitiveLowerCase" inputType="checkbox" label="lower_case" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PublicOrInternalStaticReadonlyPrimitiveUseHungarianNotation" inputType="checkbox" label="Hungarian Notation" defaultValue="false" />
+            </group>
+            <group id="NG.FN.PNCFN.PublicOrInternalConstGroup" label="Public or Internal Const Fields" collapsible="true">
+              <param id="NG.FN.PNCFN.PublicOrInternalConstPrefix" inputType="text" label="Prefix" defaultValue="" />
+              <param id="NG.FN.PNCFN.PublicOrInternalConstPrefixObligatory" inputType="checkbox" label="Is prefix obligatory" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PublicOrInternalConstPascalCase" inputType="checkbox" label="PascalCase" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PublicOrInternalConstCamelCase" inputType="checkbox" label="camelCase" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PublicOrInternalConstUpperCase" inputType="checkbox" label="UPPER_CASE" defaultValue="true" />
+              <param id="NG.FN.PNCFN.PublicOrInternalConstLowerCase" inputType="checkbox" label="lower_case" defaultValue="false" />
+              <param id="NG.FN.PNCFN.PublicOrInternalConstUseHungarianNotation" inputType="checkbox" label="Hungarian Notation" defaultValue="false" />
+            </group>
+            <complexParamTable id="NG.FN.PNCFN.HungarianNotation" reader="DotTestTable" label="Hungarian Notation" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+              <columns>
+                <column id="COLUMN_0" label="Full type name" columnType="text" editable="true" required="true" />
+                <column id="COLUMN_1" label="Notation" columnType="text" editable="true" required="true" />
+              </columns>
+              <predefinedRows>
+                <row id="ROW_0">
+                  <column refColumnId="COLUMN_0" value="System.Boolean" />
+                  <column refColumnId="COLUMN_1" value="b" />
+                </row>
+                <row id="ROW_1">
+                  <column refColumnId="COLUMN_0" value="System.Byte" />
+                  <column refColumnId="COLUMN_1" value="by" />
+                </row>
+                <row id="ROW_2">
+                  <column refColumnId="COLUMN_0" value="System.Char" />
+                  <column refColumnId="COLUMN_1" value="c" />
+                </row>
+                <row id="ROW_3">
+                  <column refColumnId="COLUMN_0" value="System.UInt64" />
+                  <column refColumnId="COLUMN_1" value="dw" />
+                </row>
+                <row id="ROW_4">
+                  <column refColumnId="COLUMN_0" value="System.IntPtr" />
+                  <column refColumnId="COLUMN_1" value="fn" />
+                </row>
+                <row id="ROW_5">
+                  <column refColumnId="COLUMN_0" value="System.Int32" />
+                  <column refColumnId="COLUMN_1" value="i" />
+                </row>
+                <row id="ROW_6">
+                  <column refColumnId="COLUMN_0" value="System.Int64" />
+                  <column refColumnId="COLUMN_1" value="l" />
+                </row>
+                <row id="ROW_7">
+                  <column refColumnId="COLUMN_0" value="System.Int16" />
+                  <column refColumnId="COLUMN_1" value="n" />
+                </row>
+                <row id="ROW_8">
+                  <column refColumnId="COLUMN_0" value="System.String" />
+                  <column refColumnId="COLUMN_1" value="s" />
+                </row>
+                <row id="ROW_9">
+                  <column refColumnId="COLUMN_0" value="System.UInt32" />
+                  <column refColumnId="COLUMN_1" value="w" />
+                </row>
+              </predefinedRows>
+            </complexParamTable>
+          </parameters>
+        </rule>
+      </category>
+    </category>
+    <category name="OPU">
+      <rule header="Avoid throwing exceptions from Equals methods" id="ATEE" impl="OPU.ATEE" severity="1" cqaSupported="false" />
+      <rule header="Avoid throwing exceptions from GetHashCode methods" id="ATEGH" impl="OPU.ATEGH" severity="1" cqaSupported="false" />
+      <rule header="Avoid throwing exceptions from implicit type conversion operators" id="ATEI" impl="OPU.ATEI" severity="1" cqaSupported="false" />
+      <rule header="Avoid throwing exceptions in equality operators" id="ATEOE" impl="OPU.ATEOE" severity="1" cqaSupported="false" />
+      <rule header="Compare parameter instance of Equals(Object) method" id="CPIEQ" impl="OPU.CPIEQ" severity="3" cqaSupported="false">
+        <parameters>
+          <radioGroup label="Operands order" id="OPU.CPIEQ.OperandsOrder" description="The order should match order defined in OPU.CPTEQ rule.">
+            <radioItem value="0" label="obj parameter always as left operand, e.g.: if (object.ReferenceEquals(obj, this))" />
+            <radioItem value="1" label="obj parameter always as right operand, e.g.: if(object.ReferenceEquals(this, obj))" />
+            <radioItem value="2" label="any" defaultValue="checked" />
+          </radioGroup>
+        </parameters>
+      </rule>
+      <rule header="Override the GetHashCode method whenever you override the Equals method." id="IGHWE" impl="OPU.IGHWE" severity="1" cqaSupported="false" />
+    </category>
+    <category name="PB">
+      <category name="II">
+        <rule header="Do not leave code which throws System.NotImplementedException" id="NIE" impl="PB.II.NIE" severity="1" cqaSupported="false" />
+        <rule header="Ensure that comments do not contain task tags" id="TODO" impl="PB.II.TODO" severity="2" cqaSupported="false">
+          <parameters>
+            <param id="PB.II.TODO.Words" inputType="stringList" label="Words (case insensitive)" defaultValue="TODO;FIXME;FIX ME;XXX;NYI;Not yet implemented;Not implemented;Unimplemented;Hack;Workaround;Refact;REFACTORME;Add implementation;Refactor me" />
+            <param id="PB.II.TODO.RegularExpressions" inputType="stringList" label="Regular Expressions (case sensitive)" defaultValue="\bLATER[0-9]*\b;\bTO\ DO\:" />
+          </parameters>
+        </rule>
+      </category>
+      <rule header="Avoid infinite recursive method calls" id="AIRC" impl="PB.AIRC" severity="1" cqaSupported="false" />
+      <rule header="Use at least one method with an external effect on an object." id="ALEEU" impl="PB.ALEEU" severity="3" cqaSupported="false">
+        <parameters>
+          <param id="PB.ALEEU.SupportedCtorSignatures" inputType="stringList" label="Constructors" defaultValue="System.ActivationContext.CreatePartialActivationContext(System.ApplicationIdentity, System.String[]);System.ActivationContext.CreatePartialActivationContext(System.ApplicationIdentity);System.AppDomainManager.AppDomainManager();System.AppDomainSetup.AppDomainSetup(System.Runtime.Hosting.ActivationArguments);System.AppDomainSetup.AppDomainSetup(System.ActivationContext);System.AppDomainSetup.AppDomainSetup();System.ApplicationId.ApplicationId(System.Byte[], System.String, System.Version, System.String, System.String);System.ApplicationIdentity.ApplicationIdentity(System.String);System.OperatingSystem.OperatingSystem(System.PlatformID, System.Version);System.Random.Random();System.Version.Version();System.Version.Version(System.String);System.Version.Version(System.Int32, System.Int32);System.Version.Version(System.Int32, System.Int32, System.Int32);System.Version.Version(System.Int32, System.Int32, System.Int32, System.Int32);System.WeakReference.WeakReference(System.Object, System.Boolean);System.WeakReference.WeakReference(System.Object);System.Collections.ArrayList.ArrayList(System.Collections.ICollection);System.Collections.ArrayList.ArrayList(System.Int32);System.Collections.ArrayList.ArrayList();System.Collections.BitArray.BitArray(System.Int32);System.Collections.BitArray.BitArray(System.Int32, System.Boolean);System.Collections.BitArray.BitArray(System.Byte[]);System.Collections.BitArray.BitArray(System.Boolean[]);System.Collections.BitArray.BitArray(System.Int32[]);System.Collections.BitArray.BitArray(System.Collections.BitArray);System.Collections.CaseInsensitiveComparer.CaseInsensitiveComparer(System.Globalization.CultureInfo);System.Collections.CaseInsensitiveComparer.CaseInsensitiveComparer();System.Collections.CaseInsensitiveHashCodeProvider.CaseInsensitiveHashCodeProvider(System.Globalization.CultureInfo);System.Collections.CaseInsensitiveHashCodeProvider.CaseInsensitiveHashCodeProvider();System.Collections.Comparer.Comparer(System.Globalization.CultureInfo);System.Collections.Hashtable.Hashtable(System.Collections.IDictionary, System.Single, System.Collections.IEqualityComparer);System.Collections.Hashtable.Hashtable(System.Collections.IDictionary, System.Single, System.Collections.IHashCodeProvider, System.Collections.IComparer);System.Collections.Hashtable.Hashtable(System.Collections.IDictionary, System.Collections.IEqualityComparer);System.Collections.Hashtable.Hashtable(System.Collections.IDictionary, System.Collections.IHashCodeProvider, System.Collections.IComparer);System.Collections.Hashtable.Hashtable(System.Collections.IDictionary, System.Single);System.Collections.Hashtable.Hashtable(System.Collections.IDictionary);System.Collections.Hashtable.Hashtable(System.Int32, System.Collections.IEqualityComparer);System.Collections.Hashtable.Hashtable(System.Int32, System.Collections.IHashCodeProvider, System.Collections.IComparer);System.Collections.Hashtable.Hashtable(System.Collections.IEqualityComparer);System.Collections.Hashtable.Hashtable(System.Collections.IHashCodeProvider, System.Collections.IComparer);System.Collections.Hashtable.Hashtable(System.Int32, System.Single, System.Collections.IEqualityComparer);System.Collections.Hashtable.Hashtable(System.Int32, System.Single, System.Collections.IHashCodeProvider, System.Collections.IComparer);System.Collections.Hashtable.Hashtable(System.Int32, System.Single);System.Collections.Hashtable.Hashtable(System.Int32);System.Collections.Hashtable.Hashtable();System.Collections.Queue.Queue();System.Collections.Queue.Queue(System.Int32);System.Collections.Queue.Queue(System.Int32, System.Single);System.Collections.Queue.Queue(System.Collections.ICollection);System.Collections.SortedList.SortedList(System.Collections.IDictionary, System.Collections.IComparer);System.Collections.SortedList.SortedList(System.Collections.IDictionary);System.Collections.SortedList.SortedList(System.Collections.IComparer, System.Int32);System.Collections.SortedList.SortedList(System.Collections.IComparer);System.Collections.SortedList.SortedList(System.Int32);System.Collections.SortedList.SortedList();System.Collections.Stack.Stack(System.Collections.ICollection);System.Collections.Stack.Stack(System.Int32);System.Collections.Stack.Stack();System.Collections.Generic.Dictionary&lt;,&gt;.Dictionary(System.Collections.Generic.IDictionary&lt;,&gt;, System.Collections.Generic.IEqualityComparer&lt;&gt;);System.Collections.Generic.Dictionary&lt;,&gt;.Dictionary(System.Collections.Generic.IDictionary&lt;,&gt;);System.Collections.Generic.Dictionary&lt;,&gt;.Dictionary(System.Int32, System.Collections.Generic.IEqualityComparer&lt;&gt;);System.Collections.Generic.Dictionary&lt;,&gt;.Dictionary(System.Collections.Generic.IEqualityComparer&lt;&gt;);System.Collections.Generic.Dictionary&lt;,&gt;.Dictionary(System.Int32);System.Collections.Generic.Dictionary&lt;,&gt;.Dictionary();System.Collections.Generic.List&lt;&gt;.List(System.Collections.Generic.IEnumerable&lt;T&gt;);System.Collections.Generic.List&lt;&gt;.List(System.Int32);System.Collections.Generic.List&lt;&gt;.List();System.Collections.Specialized.HybridDictionary.HybridDictionary(System.Int32, System.Boolean);System.Collections.Specialized.HybridDictionary.HybridDictionary(System.Boolean);System.Collections.Specialized.HybridDictionary.HybridDictionary(System.Int32);System.Collections.Specialized.HybridDictionary.HybridDictionary();System.Collections.Specialized.ListDictionary.ListDictionary(System.Collections.IComparer);System.Collections.Specialized.ListDictionary.ListDictionary();System.Collections.Specialized.NameValueCollection.NameValueCollection(System.Int32, System.Collections.IHashCodeProvider, System.Collections.IComparer);System.Collections.Specialized.NameValueCollection.NameValueCollection(System.Int32, System.Collections.Specialized.NameValueCollection);System.Collections.Specialized.NameValueCollection.NameValueCollection(System.Int32, System.Collections.IEqualityComparer);System.Collections.Specialized.NameValueCollection.NameValueCollection(System.Collections.IEqualityComparer);System.Collections.Specialized.NameValueCollection.NameValueCollection(System.Int32);System.Collections.Specialized.NameValueCollection.NameValueCollection(System.Collections.IHashCodeProvider, System.Collections.IComparer);System.Collections.Specialized.NameValueCollection.NameValueCollection(System.Collections.Specialized.NameValueCollection);System.Collections.Specialized.NameValueCollection.NameValueCollection();System.Collections.Specialized.OrderedDictionary.OrderedDictionary(System.Int32, System.Collections.IEqualityComparer);System.Collections.Specialized.OrderedDictionary.OrderedDictionary(System.Collections.IEqualityComparer);System.Collections.Specialized.OrderedDictionary.OrderedDictionary(System.Int32);System.Collections.Specialized.OrderedDictionary.OrderedDictionary();System.Collections.Specialized.StringCollection.StringCollection();System.Collections.Specialized.StringDictionary.StringDictionary();System.Diagnostics.StackFrame.StackFrame(System.String, System.Int32, System.Int32);System.Diagnostics.StackFrame.StackFrame(System.String, System.Int32);System.Diagnostics.StackFrame.StackFrame(System.Int32, System.Boolean);System.Diagnostics.StackFrame.StackFrame(System.Int32);System.Diagnostics.StackFrame.StackFrame(System.Boolean);System.Diagnostics.StackFrame.StackFrame();System.Diagnostics.StackTrace.StackTrace(System.Threading.Thread, System.Boolean);System.Diagnostics.StackTrace.StackTrace(System.Diagnostics.StackFrame);System.Diagnostics.StackTrace.StackTrace(System.Exception, System.Int32, System.Boolean);System.Diagnostics.StackTrace.StackTrace(System.Exception, System.Int32);System.Diagnostics.StackTrace.StackTrace(System.Exception, System.Boolean);System.Diagnostics.StackTrace.StackTrace(System.Exception);System.Diagnostics.StackTrace.StackTrace(System.Int32, System.Boolean);System.Diagnostics.StackTrace.StackTrace(System.Int32);System.Diagnostics.StackTrace.StackTrace(System.Boolean);System.Diagnostics.StackTrace.StackTrace();System.IO.DirectoryInfo.DirectoryInfo(System.String);System.IO.DriveInfo.DriveInfo(System.String);System.IO.FileInfo.FileInfo(System.String);System.Text.ASCIIEncoding.ASCIIEncoding();System.Text.DecoderExceptionFallback.DecoderExceptionFallback();System.Text.DecoderExceptionFallbackBuffer.DecoderExceptionFallbackBuffer();System.Text.DecoderReplacementFallback.DecoderReplacementFallback(System.String);System.Text.DecoderReplacementFallback.DecoderReplacementFallback();System.Text.DecoderReplacementFallbackBuffer.DecoderReplacementFallbackBuffer(System.Text.DecoderReplacementFallback);System.Text.EncoderExceptionFallback.EncoderExceptionFallback();System.Text.EncoderExceptionFallbackBuffer.EncoderExceptionFallbackBuffer();System.Text.EncoderReplacementFallback.EncoderReplacementFallback(System.String);System.Text.EncoderReplacementFallback.EncoderReplacementFallback();System.Text.EncoderReplacementFallbackBuffer.EncoderReplacementFallbackBuffer(System.Text.EncoderReplacementFallback);System.Text.StringBuilder.StringBuilder();System.Text.StringBuilder.StringBuilder(System.Int32);System.Text.StringBuilder.StringBuilder(System.Int32, System.Int32);System.Text.StringBuilder.StringBuilder(System.String);System.Text.StringBuilder.StringBuilder(System.String, System.Int32);System.Text.StringBuilder.StringBuilder(System.String, System.Int32, System.Int32, System.Int32);System.Text.UnicodeEncoding.UnicodeEncoding(System.Boolean, System.Boolean, System.Boolean);System.Text.UnicodeEncoding.UnicodeEncoding(System.Boolean, System.Boolean);System.Text.UnicodeEncoding.UnicodeEncoding();System.Text.UTF32Encoding.UTF32Encoding(System.Boolean, System.Boolean, System.Boolean);System.Text.UTF32Encoding.UTF32Encoding(System.Boolean, System.Boolean);System.Text.UTF32Encoding.UTF32Encoding();System.Text.UTF7Encoding.UTF7Encoding(System.Boolean);System.Text.UTF7Encoding.UTF7Encoding();System.Text.UTF8Encoding.UTF8Encoding(System.Boolean, System.Boolean);System.Text.UTF8Encoding.UTF8Encoding(System.Boolean);System.Text.UTF8Encoding.UTF8Encoding();System.Reflection.AssemblyName.AssemblyName(System.String);System.Reflection.AssemblyName.AssemblyName();System.Reflection.AssemblyNameProxy.AssemblyNameProxy();System.Reflection.TypeDelegator.TypeDelegator(System.Type);System.Windows.Forms.AmbientProperties.AmbientProperties();System.Windows.Forms.ApplicationContext.ApplicationContext(System.Windows.Forms.Form);System.Windows.Forms.ApplicationContext.ApplicationContext();System.Windows.Forms.AutoCompleteStringCollection.AutoCompleteStringCollection();System.Windows.Forms.Binding.Binding(System.String, System.Object, System.String, System.Boolean, System.Windows.Forms.DataSourceUpdateMode, System.Object, System.String, System.IFormatProvider);System.Windows.Forms.Binding.Binding(System.String, System.Object, System.String, System.Boolean, System.Windows.Forms.DataSourceUpdateMode, System.Object, System.String);System.Windows.Forms.Binding.Binding(System.String, System.Object, System.String, System.Boolean, System.Windows.Forms.DataSourceUpdateMode, System.Object);System.Windows.Forms.Binding.Binding(System.String, System.Object, System.String, System.Boolean, System.Windows.Forms.DataSourceUpdateMode);System.Windows.Forms.Binding.Binding(System.String, System.Object, System.String, System.Boolean);System.Windows.Forms.Binding.Binding(System.String, System.Object, System.String);System.Windows.Forms.BindingContext.BindingContext();System.Windows.Forms.BindingNavigator.BindingNavigator(System.Boolean);System.Windows.Forms.BindingNavigator.BindingNavigator(System.Windows.Forms.BindingSource);System.Text.RegularExpressions.Regex.Regex(System.String, System.Text.RegularExpressions.RegexOptions);System.Text.RegularExpressions.Regex.Regex(System.String);System.Threading.HostExecutionContext.HostExecutionContext(System.Object);System.Threading.HostExecutionContext.HostExecutionContext();System.Threading.HostExecutionContextManager.HostExecutionContextManager();System.Threading.Mutex.Mutex();System.Threading.Mutex.Mutex(System.Boolean);System.Threading.Mutex.Mutex(System.Boolean, System.String);System.Threading.Mutex.Mutex(System.Boolean, System.String, out System.Boolean, System.Security.AccessControl.MutexSecurity);System.Threading.Mutex.Mutex(System.Boolean, System.String, out System.Boolean);System.Threading.Thread.Thread(System.Threading.ParameterizedThreadStart, System.Int32);System.Threading.Thread.Thread(System.Threading.ParameterizedThreadStart);System.Threading.Thread.Thread(System.Threading.ThreadStart, System.Int32);System.Threading.Thread.Thread(System.Threading.ThreadStart);System.Globalization.ChineseLunisolarCalendar.ChineseLunisolarCalendar();System.Globalization.CultureInfo.CultureInfo(System.Int32, System.Boolean);System.Globalization.CultureInfo.CultureInfo(System.Int32);System.Globalization.CultureInfo.CultureInfo(System.String, System.Boolean);System.Globalization.CultureInfo.CultureInfo(System.String);System.Globalization.DateTimeFormatInfo.DateTimeFormatInfo();System.Globalization.DaylightTime.DaylightTime(System.DateTime, System.DateTime, System.TimeSpan);System.Globalization.GregorianCalendar.GregorianCalendar(System.Globalization.GregorianCalendarTypes);System.Globalization.GregorianCalendar.GregorianCalendar();System.Globalization.HebrewCalendar.HebrewCalendar();System.Globalization.HijriCalendar.HijriCalendar();System.Globalization.IdnMapping.IdnMapping();System.Globalization.JapaneseCalendar.JapaneseCalendar();System.Globalization.JapaneseLunisolarCalendar.JapaneseLunisolarCalendar();System.Globalization.JulianCalendar.JulianCalendar();System.Globalization.KoreanLunisolarCalendar.KoreanLunisolarCalendar();System.Globalization.NumberFormatInfo.NumberFormatInfo();System.Globalization.PersianCalendar.PersianCalendar();System.Globalization.RegionInfo.RegionInfo(System.Int32);System.Globalization.RegionInfo.RegionInfo(System.String);System.Globalization.TaiwanCalendar.TaiwanCalendar();System.Globalization.TaiwanLunisolarCalendar.TaiwanLunisolarCalendar();System.Globalization.ThaiBuddhistCalendar.ThaiBuddhistCalendar();System.Globalization.UmAlQuraCalendar.UmAlQuraCalendar();System.Runtime.InteropServices.BStrWrapper.BStrWrapper(System.String);System.Runtime.InteropServices.CurrencyWrapper.CurrencyWrapper(System.Object);System.Runtime.InteropServices.CurrencyWrapper.CurrencyWrapper(decimal);System.Runtime.InteropServices.DefaultCharSetAttribute.DefaultCharSetAttribute(System.Runtime.InteropServices.CharSet);System.Runtime.InteropServices.DispatchWrapper.DispatchWrapper(System.Object);System.Runtime.InteropServices.ErrorWrapper.ErrorWrapper(System.Exception);System.Runtime.InteropServices.ErrorWrapper.ErrorWrapper(System.Object);System.Runtime.InteropServices.ErrorWrapper.ErrorWrapper(System.Int32);System.Runtime.InteropServices.RegistrationServices.RegistrationServices();System.Runtime.InteropServices.TypeLibConverter.TypeLibConverter();System.Runtime.InteropServices.UnknownWrapper.UnknownWrapper(System.Object);System.Runtime.InteropServices.VariantWrapper.VariantWrapper(System.Object)" />
+          <param id="PB.ALEEU.MethodsWithOutsideEffect" inputType="stringList" label="Methods" defaultValue="System.AppDomainManager.InitializeNewDomain(System.AppDomainSetup);System.Collections.ArrayList.CopyTo(System.Int32, System.Array, System.Int32, System.Int32);System.Collections.ArrayList.CopyTo(System.Array, System.Int32);System.Collections.ArrayList.CopyTo(System.Array);System.Collections.BitArray.CopyTo(System.Array, System.Int32);System.Collections.Hashtable.CopyTo(System.Array, System.Int32);System.Collections.SortedList.CopyTo(System.Array, System.Int32);System.Collections.Stack.CopyTo(System.Array, System.Int32);System.Collections.ICollection.CopyTo(System.Array, System.Int32);System.Collections.Generic.ICollection&lt;&gt;.CopyTo(System.Collections.Generic.KeyValuePair&lt;,&gt;[], System.Int32);System.Collections.Generic.List&lt;&gt;.CopyTo(T[], System.Int32);System.Collections.Generic.List&lt;&gt;.CopyTo(System.Int32, T[], System.Int32, System.Int32);System.Collections.Generic.List&lt;&gt;.CopyTo(T[]);System.Collections.ICollection.CopyTo(System.Array, System.Int32);System.Collections.Specialized.HybridDictionary.CopyTo(System.Array, System.Int32);System.Collections.Specialized.ListDictionary.CopyTo(System.Array, System.Int32);System.Collections.Specialized.NameValueCollection.CopyTo(System.Array, System.Int32);System.Collections.Specialized.OrderedDictionary.CopyTo(System.Array, System.Int32);System.Collections.Specialized.StringCollection.CopyTo(System.String[], System.Int32);System.Collections.ICollection.CopyTo(System.Array, System.Int32);System.Collections.Specialized.StringDictionary.CopyTo(System.Array, System.Int32);System.IO.DirectoryInfo.Create(System.Security.AccessControl.DirectorySecurity);System.IO.DirectoryInfo.Create();System.IO.DirectoryInfo.CreateSubdirectory(System.String, System.Security.AccessControl.DirectorySecurity);System.IO.DirectoryInfo.CreateSubdirectory(System.String);System.IO.DirectoryInfo.Delete(System.Boolean);System.IO.DirectoryInfo.Delete();System.IO.DirectoryInfo.MoveTo(System.String);System.IO.DirectoryInfo.SetAccessControl(System.Security.AccessControl.DirectorySecurity);System.IO.FileInfo.CopyTo(System.String, System.Boolean);System.IO.FileInfo.CopyTo(System.String);System.IO.FileInfo.Create();System.IO.FileInfo.Decrypt();System.IO.FileInfo.Delete();System.IO.FileInfo.Encrypt();System.IO.FileInfo.MoveTo(System.String);System.IO.FileInfo.set_Attributes(System.IO.FileAttributes);System.Windows.Forms.ApplicationContext.ExitThread();System.Windows.Forms.AutoCompleteStringCollection.CopyTo(System.String[], System.Int32);System.Collections.ICollection.CopyTo(System.Array, System.Int32);System.Threading.HostExecutionContextManager.SetHostExecutionContext(System.Threading.HostExecutionContext);System.Threading.Thread.Start(System.Object);System.Threading.Thread.Start()" />
+        </parameters>
+      </rule>
+      <rule header="Do not use value types as arguments of Monitor.Enter and Monitor.Exit" id="ALVT" impl="PB.ALVT" severity="1" cqaSupported="false" />
+      <rule header="Avoid throwing exceptions from ToString method" id="ATETS" impl="PB.ATETS" severity="1" cqaSupported="false" />
+      <rule header="Close file system resource on local variable." id="CFSRLV" impl="PB.CFSRLV" severity="1" cqaSupported="false">
+        <parameters>
+          <complexParamTable id="PB.CFSRLV.ActivationMethods" reader="DotTestTable" label="Activating methods" description="Regular expressions of full type names which are taken into account and optionally activating methods which actives these types. Activating methods are useful when object constructions are not equivalent to activating them" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Activating method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Activating method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="PB.CFSRLV.FactoryMethods" reader="DotTestTable" label="Factory methods" description="Regular expressions of factory methods full type names and method names. Allows to declare custom factory methods, which produce new objects where caller is responsible for disposing. See rule GC.UFID for details" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Factory method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Factory method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="PB.CFSRLV.ClosingMethods" reader="DotTestTable" label="Closing methods" description="Regular expressions of aliases of System.IDisposable.Dispose(). See rule GC.UFID for details" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Closing method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Closing method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="PB.CFSRLV.SpecialMethods" reader="DotTestTable" label="Special methods" description="Regular expressions of methods which are responsible for scheduling disposing the object. See rule GC.UFID for details" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Special method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Special method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+        </parameters>
+      </rule>
+      <rule header="Use TryParse method instead Parse on primitive types" id="DNUP" impl="PB.DNUP" severity="2" cqaSupported="false" />
+      <rule header="Avoid internal API usage in extensions code." id="IAU" impl="PB.IAU" severity="1" cqaSupported="false">
+        <parameters>
+          <param id="PB.IAU.ExternalApi" inputType="stringList" label="Regular expression of full type names of extensions code." defaultValue="^.*\.Extension\..*$;^.*\.Ext\..*$" />
+          <param id="PB.IAU.InternalApi" inputType="stringList" label="Regular expression of full type names of internal code." defaultValue="^.*\.Internal\..*$" />
+          <param id="PB.IAU.PublicApi" inputType="stringList" label="Regular expression of full type names public API." defaultValue="" />
+        </parameters>
+      </rule>
+      <rule header="Make sure that published API does not change." id="PAPI" impl="PB.PAPI" severity="1" cqaSupported="false">
+        <parameters>
+          <radioGroup label="Rule mode" id="PB.PAPI.Options">
+            <radioItem value="0" label="API recording mode." defaultValue="checked" />
+            <radioItem value="1" label="API validation mode." />
+          </radioGroup>
+          <param id="PB.PAPI.InternalsRegularExpressions" inputType="stringList" label="Regular expressions for specifying internal code." defaultValue=".*\.internal\..*" />
+          <param id="PB.PAPI.ExtensionsRegularExpression" inputType="stringList" label="Regular expressions for specifying extensions code." defaultValue=".*\.extension\..*;.*\.ext\..*" />
+          <param id="PB.PAPI.ApiRegularExpressions" inputType="stringList" label="Regular expressions for specifying api code." defaultValue="" />
+          <param id="PB.PAPI.RecordingPhaseXmlsSuffix" inputType="text" label="Xmls suffixes in api recording mode." defaultValue="Published.API" />
+          <param id="PB.PAPI.CreateCurrentXmls" inputType="checkbox" label="Save snapshots of current api image (Use in validation mode)." defaultValue="false" />
+          <param id="PB.PAPI.CurrentXmlsSuffix" inputType="text" label="Xmls suffixes of current api snapshot." defaultValue="Current.API" />
+          <param id="PB.PAPI.PathOfXmls" inputType="text" label="Path for storing api xmls." defaultValue="C:\ApiSnapshot" />
+        </parameters>
+      </rule>
+      <rule header="Don't use illegal regular expression." id="REG" impl="PB.REG" severity="1" cqaSupported="false" />
+      <rule header="Review possible infinite recursive method calls" id="RPIR" impl="PB.RPIR" severity="3" cqaSupported="false" />
+      <rule header="Ensure static field is initialized before it is used." id="SFAI" impl="PB.SFAI" severity="1" cqaSupported="false" />
+      <rule header="Ensure that method body used in ThreadStart/ParameterizedThreadStart is wrapped with 'try/catch'" id="TMTC" impl="PB.TMTC" severity="1" cqaSupported="false" />
+      <rule header="Do not use API of .NET framework which is not required by your application" id="UAPIRF" impl="PB.UAPIRF" severity="1" cqaSupported="false">
+        <parameters>
+          <group id="PB.UAPIRF.FrameworkSelectionGroup" label="Frameworks on which your code should execute" collapsible="true">
+            <param id="PB.UAPIRF.Framework_2_0" inputType="checkbox" label=".NET Framework 2.0" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_2_0_SP1" inputType="checkbox" label=".NET Framework 2.0 SP1" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_2_0_SP2" inputType="checkbox" label=".NET Framework 2.0 SP2" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_3_0" inputType="checkbox" label=".NET Framework 3.0" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_3_0_SP1" inputType="checkbox" label=".NET Framework 3.0 SP1" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_3_5" inputType="checkbox" label=".NET Framework 3.5" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_3_5_SP1" inputType="checkbox" label=".NET Framework 3.5 SP1" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_0_ClientProfile" inputType="checkbox" label=".NET Framework 4.0 Client Profile" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_0_Full" inputType="checkbox" label=".NET Framework 4.0 Full" defaultValue="true" />
+            <param id="PB.UAPIRF.Framework_4_0_1_ClientProfile" inputType="checkbox" label=".NET Framework 4.0.1 Client Profile" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_0_1_Full" inputType="checkbox" label=".NET Framework 4.0.1 Full" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_0_2_Full" inputType="checkbox" label=".NET Framework 4.0.2 Full" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_0_3_Full" inputType="checkbox" label=".NET Framework 4.0.3 Full" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_5" inputType="checkbox" label=".NET Framework 4.5" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_5_1" inputType="checkbox" label=".NET Framework 4.5.1" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_5_2" inputType="checkbox" label=".NET Framework 4.5.2" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_6" inputType="checkbox" label=".NET Framework 4.6" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_6_1" inputType="checkbox" label=".NET Framework 4.6.1" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_6_2" inputType="checkbox" label=".NET Framework 4.6.2" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_7" inputType="checkbox" label=".NET Framework 4.7" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_7_1" inputType="checkbox" label=".NET Framework 4.7.1" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_7_2" inputType="checkbox" label=".NET Framework 4.7.2" defaultValue="false" />
+            <param id="PB.UAPIRF.Framework_4_8" inputType="checkbox" label=".NET Framework 4.8" defaultValue="false" />
+          </group>
+          <param id="PB.UAPIRF.IgnoredAssemblies" inputType="stringList" label="References to symbols which are defined in the following assemblies are ignored:" defaultValue="" />
+        </parameters>
+      </rule>
+    </category>
+    <category name="SEC">
+      <rule header="Always cleanup before an exception filtering method is invoked" id="ACWFB" impl="SEC.ACWFB" severity="3" cqaSupported="false" />
+      <rule header="Inspect calls to dynamically load libraries" id="ADLL" impl="SEC.ADLL" severity="5" cqaSupported="false" />
+      <rule header="Avoid public instance fields that could be accessed by external classes." id="APBIF" impl="SEC.APBIF" severity="3" cqaSupported="false" />
+      <rule header="Review closing database connection." id="CDBC" impl="SEC.CDBC" severity="2" cqaSupported="false">
+        <parameters>
+          <complexParamTable id="SEC.CDBC.ActivationMethods" reader="DotTestTable" label="Activating methods" description="Regular expressions of full type names which are taken into account and optionally activating methods which actives these types. Activating methods are useful when object constructions are not equivalent to activating them" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Full type names regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Activating method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="SEC.CDBC.FactoryMethods" reader="DotTestTable" label="Factory methods" description="Regular expressions of factory methods full type names and method names. Allows to declare custom factory methods, which produce new objects where caller is responsible for disposing. See rule GC.UFID for details" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Factory method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Factory method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="SEC.CDBC.ClosingMethods" reader="DotTestTable" label="Closing methods" description="Regular expressions of aliases of System.IDisposable.Dispose(). See rule GC.UFID for details" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Closing method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Closing method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="SEC.CDBC.SpecialMethods" reader="DotTestTable" label="Special methods" description="Regular expressions of methods which are responsible for scheduling disposing the object. See rule GC.UFID for details" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Special method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Special method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+        </parameters>
+      </rule>
+      <rule header="Close database connection local variable." id="CDBCLV" impl="SEC.CDBCLV" severity="1" cqaSupported="false">
+        <parameters>
+          <complexParamTable id="SEC.CDBCLV.ActivationMethods" reader="DotTestTable" label="Activating methods" description="Regular expressions of full type names which are taken into account and optionally activating methods which actives these types. Activating methods are useful when object constructions are not equivalent to activating them" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Activating method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Activating method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="SEC.CDBCLV.FactoryMethods" reader="DotTestTable" label="Factory methods" description="Regular expressions of factory methods full type names and method names. Allows to declare custom factory methods, which produce new objects where caller is responsible for disposing. See rule GC.UFID for details" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Factory method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Factory method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="SEC.CDBCLV.ClosingMethods" reader="DotTestTable" label="Closing methods" description="Regular expressions of aliases of System.IDisposable.Dispose(). See rule GC.UFID for details" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Closing method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Closing method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="SEC.CDBCLV.SpecialMethods" reader="DotTestTable" label="Special methods" description="Regular expressions of methods which are responsible for scheduling disposing the object. See rule GC.UFID for details" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Special method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Special method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+        </parameters>
+      </rule>
+      <rule header="Review closing database resource." id="CDR" impl="SEC.CDR" severity="2" cqaSupported="false">
+        <parameters>
+          <complexParamTable id="SEC.CDR.ActivationMethods" reader="DotTestTable" label="Activating methods" description="Regular expressions of full type names which are taken into account and optionally activating methods which actives these types. Activating methods are useful when object constructions are not equivalent to activating them" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Activating method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Activating method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="SEC.CDR.FactoryMethods" reader="DotTestTable" label="Factory methods" description="Regular expressions of factory methods full type names and method names. Allows to declare custom factory methods, which produce new objects where caller is responsible for disposing. See rule GC.UFID for details" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Factory method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Factory method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="SEC.CDR.ClosingMethods" reader="DotTestTable" label="Closing methods" description="Regular expressions of aliases of System.IDisposable.Dispose(). See rule GC.UFID for details" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Closing method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Closing method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="SEC.CDR.SpecialMethods" reader="DotTestTable" label="Special methods" description="Regular expressions of methods which are responsible for scheduling disposing the object. See rule GC.UFID for details" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Special method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Special method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+        </parameters>
+      </rule>
+      <rule header="Close database resource local variable." id="CDRLV" impl="SEC.CDRLV" severity="1" cqaSupported="false">
+        <parameters>
+          <complexParamTable id="SEC.CDRLV.ActivationMethods" reader="DotTestTable" label="Activating methods" description="Regular expressions of full type names which are taken into account and optionally activating methods which actives these types. Activating methods are useful when object constructions are not equivalent to activating them" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Activating method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Activating method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="SEC.CDRLV.FactoryMethods" reader="DotTestTable" label="Activating methods" description="Regular expressions of full type names which are taken into account and optionally activating methods which actives these types. Activating methods are useful when object constructions are not equivalent to activating them" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Factory method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Factory method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="SEC.CDRLV.ClosingMethods" reader="DotTestTable" label="Activating methods" description="Regular expressions of full type names which are taken into account and optionally activating methods which actives these types. Activating methods are useful when object constructions are not equivalent to activating them" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Closing method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Closing method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="SEC.CDRLV.SpecialMethods" reader="DotTestTable" label="Activating methods" description="Regular expressions of full type names which are taken into account and optionally activating methods which actives these types. Activating methods are useful when object constructions are not equivalent to activating them" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Special method declaring type regex" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Special method name regex" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <param id="SEC.CDRLV.ExcludedTypes" inputType="stringList" label="Types to exclude from analysis (supports wildcards)" defaultValue="" />
+        </parameters>
+      </rule>
+      <rule header="Do not change the RSA/DSA KeySize property." id="DNCCKS" impl="SEC.DNCCKS" severity="1" cqaSupported="false" />
+      <rule header="Do not lock using objects obtained with typeof(ClassName) / GetType(ClassName)" id="NLT" impl="SEC.NLT" severity="3" cqaSupported="false" />
+      <rule header="Encapsulate all dangerous data sources with validation methods" id="VPPD" impl="SEC.VPPD" severity="1" cqaSupported="false">
+        <parameters>
+          <group id="SEC.VPPD.SourcesOfDangerousDataGroup" label="Sources of dangerous (tainted) data" collapsible="true">
+            <param id="SEC.VPPD.AspNet" inputType="checkbox" label="ASP.NET" defaultValue="true" />
+            <param id="SEC.VPPD.FilesAndStreams" inputType="checkbox" label="Files and streams" defaultValue="true" />
+            <param id="SEC.VPPD.PipesAndSockets" inputType="checkbox" label="Pipes and sockets" defaultValue="true" />
+            <param id="SEC.VPPD.Reflection" inputType="checkbox" label="Reflection" defaultValue="false" />
+            <param id="SEC.VPPD.Environment" inputType="checkbox" label="Environment" defaultValue="true" />
+            <param id="SEC.VPPD.Database" inputType="checkbox" label="Database" defaultValue="true" />
+            <param id="SEC.VPPD.Console" inputType="checkbox" label="Console" defaultValue="true" />
+            <param id="SEC.VPPD.GuiControls" inputType="checkbox" label="GUI controls" defaultValue="true" />
+          </group>
+          <radioGroup label="Matching method" id="SEC.VPPD.WildcardOrRegExp">
+            <radioItem value="0" label="Wildcards" defaultValue="checked" />
+            <radioItem value="1" label="Regular expressions" />
+          </radioGroup>
+          <complexParamTable id="SEC.VPPD.DangerousMethods" reader="DotTestTable" label="Additional methods which return dangerous data" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Fully qualified type name" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Method name" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+          <complexParamTable id="SEC.VPPD.ValidationMethods" reader="DotTestTable" label="Methods which validate dangerous data" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Fully qualified type name" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Method name" columnType="text" editable="true" required="true" />
+            </columns>
+            <predefinedRows>
+              <row id="ROW_0">
+                <column refColumnId="COLUMN_0" value="*" />
+                <column refColumnId="COLUMN_1" value="*Validate*" />
+              </row>
+            </predefinedRows>
+          </complexParamTable>
+          <complexParamTable id="SEC.VPPD.UncheckedCode" reader="DotTestTable" label="Methods which are not checked" canAddRow="true" canRemoveRow="true" canEditRow="true" canSetOrdering="true">
+            <columns>
+              <column id="COLUMN_0" label="Fully qualified type name" columnType="text" editable="true" required="true" />
+              <column id="COLUMN_1" label="Method name" columnType="text" editable="true" required="true" />
+            </columns>
+          </complexParamTable>
+        </parameters>
+      </rule>
+    </category>
+    <category name="SERIAL">
+      <category name="XML">
+        <rule header="Ensure that readonly property which is a collection does not expose any sensitive information" id="CSG" impl="SERIAL.XML.CSG" severity="1" cqaSupported="false" />
+        <rule header="Ensure that property of collection type implements Add method and indexer" id="CTS" impl="SERIAL.XML.CTS" severity="1" cqaSupported="false" />
+        <rule header="Always provide default parameterless constructor in xml serialized class." id="DCTOR" impl="SERIAL.XML.DCTOR" severity="2" cqaSupported="false" />
+        <rule header="Make type used in xml serialization 'public'" id="NPCS" impl="SERIAL.XML.NPCS" severity="2" cqaSupported="false" />
+      </category>
+      <rule header="Ensure base classes are marked Serializable." id="BASECLASS" impl="SERIAL.BASECLASS" severity="1" cqaSupported="false" />
+      <rule header="Ensure exception classes are marked Serializable." id="EXCEPTIONCLASS" impl="SERIAL.EXCEPTIONCLASS" severity="3" cqaSupported="false" />
+      <rule header="Always provide deserialization constructor when ISerializable interface is implemented" id="IDC" impl="SERIAL.IDC" severity="2" cqaSupported="false" />
+      <rule header="Ensure entire graph of object can be serialized." id="MEMBERFIELDS" impl="SERIAL.MEMBERFIELDS" severity="1" cqaSupported="false" />
+      <rule header="Mark ISerializable.GetObjectData with SecurityPermissionAttribute" id="MGODWSPA" impl="SERIAL.MGODWSPA" severity="1" cqaSupported="false" />
+    </category>
+    <category name="TRS">
+      <rule header="Avoid calling Thread.Abort()" id="THREADABORT" impl="TRS.THREADABORT" severity="2" cqaSupported="false" />
+      <rule header="Avoid calling Thread.Sleep()" id="THREADSLEEP" impl="TRS.THREADSLEEP" severity="2" cqaSupported="false" />
+    </category>
+    <category name="TUG">
+      <category name="DCU">
+        <rule header="Do not hide inherited fields." id="DNHF" impl="TUG.DCU.DNHF" severity="2" cqaSupported="false" />
+      </category>
+      <category name="EU">
+        <rule header="Use enumerations instead of constant or static readonly fields" id="UEISC" impl="TUG.EU.UEISC" severity="3" cqaSupported="false" />
+      </category>
+      <category name="NTU">
+        <rule header="Avoid unused nested private types" id="AUPNT" impl="TUG.NTU.AUPNT" severity="4" cqaSupported="false" />
+      </category>
+      <category name="SU">
+        <rule header="Enforce custom attribute ImmutableAtomic" id="IAS" impl="TUG.SU.IAS" severity="2" cqaSupported="false" />
+      </category>
+    </category>
+    <category name="VB">
+      <category name="BRM">
+        <rule header="Use preferred names for primitive types" id="PNPT" impl="VB.BRM.PNPT" severity="3" cqaSupported="false">
+          <parameters>
+            <radioGroup label="Select prefered naming for primitive types" id="VB.BRM.PNPT.UsePrimitiveTypes">
+              <radioItem value="0" label="Use keywords for primitive types" defaultValue="checked" />
+              <radioItem value="1" label="Use .NET type names for primitive types" />
+            </radioGroup>
+          </parameters>
+        </rule>
+      </category>
+      <category name="IFD">
+        <rule header="Call the Finalize method of the base class from the finalizer in the derived class" id="CBFM" impl="VB.IFD.CBFM" severity="2" cqaSupported="false" />
+      </category>
+    </category>
+    <category name="WPF">
+      <rule header="Avoid controls out of bounds of a grid" id="GUG" impl="WPF.GUG" severity="1" cqaSupported="false" />
+    </category>
+  </builtin>
+</rules>
