@@ -27,6 +27,7 @@ import java.util.Map;
  * Class for XML document processing.
  **/
 public final class XMLUtil {
+
     /**
      * Default SAXParserFactory instance
      */
@@ -64,13 +65,34 @@ public final class XMLUtil {
     }
 
     public static SAXParser createSAXParser()
-            throws ParserConfigurationException, SAXException {
+            throws ParserConfigurationException, SAXException
+    {
+        return createSAXParser(true, true);
+    }
+
+    public static SAXParser createSAXParser(boolean disableDTD, boolean disableExternalEntities)
+            throws ParserConfigurationException, SAXException
+    {
         SAXParser parser = getSaxParserFactory().newSAXParser();
-        configureReader(parser.getXMLReader());
+        configureReader(parser.getXMLReader(), disableDTD, disableExternalEntities);
         return parser;
     }
 
-    private static void configureReader(XMLReader reader) {
+    /**
+     * Creates an instance of XMLReader.
+     * @param disableDTD disallows DTDs
+     * @param disableExternalEntities disallows loading of external entities
+     * @return the instance of XMLReader
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     */
+    public static XMLReader createXMLReader(boolean disableDTD, boolean disableExternalEntities)
+            throws ParserConfigurationException, SAXException
+    {
+        return createSAXParser(disableDTD, disableExternalEntities).getXMLReader();
+    }
+
+    private static void configureReader(XMLReader reader, boolean disableDTD, boolean disableExternalEntities) {
         // limit entity expansion to prevent billion laughs
         try {
             reader.setProperty("http://www.oracle.com/xml/jaxp/properties/entityExpansionLimit", 100000); //$NON-NLS-1$
@@ -78,19 +100,25 @@ public final class XMLUtil {
             Logger.getLogger().warn(e);
         }
 
-        try {
-            reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true); //$NON-NLS-1$
-            reader.setEntityResolver(new EmptyEntityResolver());
-        } catch (SAXException e) {
-            Logger.getLogger().warn(e);
+        // disallow DTD
+        if (disableDTD) {
+            try {
+                reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true); //$NON-NLS-1$
+                reader.setEntityResolver(new EmptyEntityResolver());
+            } catch (SAXException e) {
+                Logger.getLogger().warn(e);
+            }
         }
 
-        try {
-            reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false); //$NON-NLS-1$
-            reader.setFeature("http://xml.org/sax/features/external-general-entities", false); //$NON-NLS-1$
-            reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false); //$NON-NLS-1$
-        } catch (SAXException e) {
-            Logger.getLogger().warn(e);
+        // disable external entities
+        if (disableExternalEntities) {
+            try {
+                reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false); //$NON-NLS-1$
+                reader.setFeature("http://xml.org/sax/features/external-general-entities", false); //$NON-NLS-1$
+                reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false); //$NON-NLS-1$
+            } catch (SAXException e) {
+                Logger.getLogger().warn(e);
+            }
         }
     }
 
