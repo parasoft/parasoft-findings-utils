@@ -14,26 +14,24 @@
  * limitations under the License.
  */
 
-package com.parasoft.findings.utils.results.violations;
 
+package com.parasoft.findings.utils.doc.remote;
 
-/**
- * Represents a rule breaking violation.
- */
-public interface IRuleViolation extends IViolation {
+public class DtpUrlException
+        extends DtpException {
     /**
-     * Gets violated rule identifier.
-     *
-     * @return the violated rule identifier
+     * Automatically generated variable: serialVersionUID
      */
-    String getRuleId();
+    private static final long serialVersionUID = -967998353382813778L;
 
     /**
-     * Gets associated violations location package / namespace for display categorization purposes. Can return null value.
+     * Constructor.
      *
-     * @return the namespace or null
+     * @param message the source throwable
+     * @pre cause != null
      */
-    String getNamespace();
+    public DtpUrlException(String message) {
+        super(message);
+    }
 
-    String getLanguageId();
 }

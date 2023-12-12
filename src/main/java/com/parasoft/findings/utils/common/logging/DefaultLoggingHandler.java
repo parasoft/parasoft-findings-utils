@@ -20,7 +20,9 @@ import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 
-public class LoggingHandler {
+public class DefaultLoggingHandler
+        implements ILoggerHandler {
+    private static final String LOGGING_HANDLER_NAME = "Parasoft Findings Logging Handler";  //$NON-NLS-1$
     private final Logger _logger;
 
     /**
@@ -28,11 +30,19 @@ public class LoggingHandler {
      *
      * @param logger the logger
      */
-    public LoggingHandler(Logger logger) {
+    public DefaultLoggingHandler(Logger logger) {
         _logger = logger;
     }
 
-    public void log(Level level, Object object, Throwable throwable) {
+    public String getName() {
+        String sLoggerName = _logger.getName();
+        if (sLoggerName == null) {
+            sLoggerName = LOGGING_HANDLER_NAME;
+        }
+        return sLoggerName;
+    }
+
+    public void log(String sWrapperClassName, Level level, Object object, Throwable throwable) {
         final Throwable t = new Throwable();
         StackTraceElement[] stackTrace = t.getStackTrace();
         final StackTraceElement methodCaller = getMethodCaller(stackTrace);
@@ -41,7 +51,7 @@ public class LoggingHandler {
         _logger.logp(convertLevel(level, java.util.logging.Level.INFO), methodCaller.getClassName(), methodCaller.getMethodName(), sMessage, throwable);
     }
 
-    public void log(Level level, Supplier<Object> objectSupplier, Throwable throwable) {
+    public void log(String sWrapperClassName, Level level, Supplier<Object> objectSupplier, Throwable throwable) {
         final Throwable t = new Throwable();
         StackTraceElement[] stackTrace = t.getStackTrace();
         final StackTraceElement methodCaller = getMethodCaller(stackTrace);

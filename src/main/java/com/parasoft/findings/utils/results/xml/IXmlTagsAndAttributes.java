@@ -46,6 +46,7 @@ public interface IXmlTagsAndAttributes {
     String TOOL_NAME_V2_ATTR = "toolName"; //$NON-NLS-1$
     String TOOL_VERSION_V1_ATTR = "tool_version"; //$NON-NLS-1$
     String TOOL_VERSION_V2_ATTR = "toolVer"; //$NON-NLS-1$
+    String LANGUAGE_ATTR = "lang"; //$NON-NLS-1$
     String TEST_CONFIG_ATTR = "config"; //$NON-NLS-1$
     String SEVERITY_SHORT_ATTR = "sev"; //$NON-NLS-1$
     String SOURCE_RANGE_V2_ATTR = "srcRng"; //$NON-NLS-1$

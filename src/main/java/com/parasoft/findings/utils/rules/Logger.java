@@ -14,26 +14,34 @@
  * limitations under the License.
  */
 
-package com.parasoft.findings.utils.results.violations;
+package com.parasoft.findings.utils.rules;
 
+import com.parasoft.findings.utils.common.logging.FindingsLogger;
 
 /**
- * Represents a rule breaking violation.
+ * The logger for this package.
  */
-public interface IRuleViolation extends IViolation {
+final class Logger
+{
     /**
-     * Gets violated rule identifier.
+     * Provides logger for this package.
+     * @return the logger instance
      *
-     * @return the violated rule identifier
+     * @post $result != null
      */
-    String getRuleId();
+    public static FindingsLogger getLogger()
+    {
+        return LOGGER;
+    }
 
     /**
-     * Gets associated violations location package / namespace for display categorization purposes. Can return null value.
-     *
-     * @return the namespace or null
+     * Just to prevent instantiation.
      */
-    String getNamespace();
+    private Logger()
+    {
+        super();
+    }
 
-    String getLanguageId();
-}
+    private final static FindingsLogger LOGGER = FindingsLogger.getLogger(Logger.class);
+
+} // class Logger

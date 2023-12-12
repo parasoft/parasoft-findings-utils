@@ -14,26 +14,31 @@
  * limitations under the License.
  */
 
-package com.parasoft.findings.utils.results.violations;
+package com.parasoft.findings.utils.common.util;
 
+import java.io.File;
 
 /**
- * Represents a rule breaking violation.
+ *
+ * Methods that can detect various architectures
+ *
  */
-public interface IRuleViolation extends IViolation {
-    /**
-     * Gets violated rule identifier.
-     *
-     * @return the violated rule identifier
-     */
-    String getRuleId();
+public final class ArchUtil {
+
+    public final static String OS_NAME = "os.name"; //$NON-NLS-1$
+
+    private ArchUtil () {}
+
+    public static boolean archIsWindows () {
+        return File.pathSeparatorChar == ';';
+    }
 
     /**
-     * Gets associated violations location package / namespace for display categorization purposes. Can return null value.
-     *
-     * @return the namespace or null
+     * Check if currently running on Mac OS X.
+     * @return <code>true</code> if running on Mac OS X, else <code>false</code>
      */
-    String getNamespace();
+    public static boolean archIsMacOSX() {
 
-    String getLanguageId();
+        return "Mac OS X".equals(System.getProperty(OS_NAME)); //$NON-NLS-1$
+    }
 }

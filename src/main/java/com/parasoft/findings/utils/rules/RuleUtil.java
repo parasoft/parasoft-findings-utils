@@ -14,26 +14,28 @@
  * limitations under the License.
  */
 
-package com.parasoft.findings.utils.results.violations;
+package com.parasoft.findings.utils.rules;
 
+public final class RuleUtil
+{
+    private RuleUtil() {}
 
-/**
- * Represents a rule breaking violation.
- */
-public interface IRuleViolation extends IViolation {
-    /**
-     * Gets violated rule identifier.
-     *
-     * @return the violated rule identifier
-     */
-    String getRuleId();
 
     /**
-     * Gets associated violations location package / namespace for display categorization purposes. Can return null value.
-     *
-     * @return the namespace or null
+     * @param sId rule or category id
+     * @param separator
+     * @return id or null if there is no parent in give id
      */
-    String getNamespace();
+    public static String getParentId(String sId, char separator)
+    {
+        if (sId == null) {
+            return null;
+        }
+        int index = sId.lastIndexOf(separator);
+        if (index <= 0) {
+            return null;
+        }
+        return sId.substring(0, index);
+    }
 
-    String getLanguageId();
 }

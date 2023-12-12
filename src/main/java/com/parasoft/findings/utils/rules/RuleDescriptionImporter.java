@@ -14,26 +14,20 @@
  * limitations under the License.
  */
 
-package com.parasoft.findings.utils.results.violations;
+package com.parasoft.findings.utils.rules;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
 
-/**
- * Represents a rule breaking violation.
- */
-public interface IRuleViolation extends IViolation {
-    /**
-     * Gets violated rule identifier.
-     *
-     * @return the violated rule identifier
-     */
-    String getRuleId();
-
-    /**
-     * Gets associated violations location package / namespace for display categorization purposes. Can return null value.
-     *
-     * @return the namespace or null
-     */
-    String getNamespace();
-
-    String getLanguageId();
+@SuppressWarnings("unused")
+public class RuleDescriptionImporter
+{
+    public List<RuleDescription> performImport(File rulesFile) throws IOException {
+        URL url = rulesFile.toURI().toURL();
+        RuleDescriptionParser parser = new RuleDescriptionParser();
+        parser.parseFile(url);
+        return parser.getRules();
+    }
 }

@@ -86,6 +86,8 @@ public abstract class AbstractViolationReader
             return null;
         }
 
+        String sLanguageId = getString(IXmlTagsAndAttributes.LANGUAGE_ATTR);
+
         ResultLocation location = null;
         try {
             location = getLocation();
@@ -95,7 +97,7 @@ public abstract class AbstractViolationReader
         if (location == null) {
             return null;
         }
-        final IViolation violation = createViolation(map, _sAnalyzerId, location);
+        final IViolation violation = createViolation(map, _sAnalyzerId, sLanguageId, location);
         if (violation == null) {
             return null;
         }
@@ -267,7 +269,7 @@ public abstract class AbstractViolationReader
      */
     protected abstract String getElementTagQName();
 
-    protected abstract IViolation createViolation(Map<String, String> map, String sAnalyzerId, ResultLocation location);
+    protected abstract IViolation createViolation(Map<String, String> map, String sAnalyzerId, String sLanguageId, ResultLocation location);
 
     /**
      * Utility method to parse long value, which avoid NumberFormatException. If exception

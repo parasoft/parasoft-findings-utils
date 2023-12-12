@@ -14,22 +14,32 @@
  * limitations under the License.
  */
 
-package com.parasoft.findings.utils.common.logging;
+package com.parasoft.findings.utils.rules;
 
-import java.util.logging.Logger;
+public final class CategoryDescription
+{
+    private final String _sCategoryId;
 
-public class LoggingHandlerFactory {
-    private static final String DEFAULT_NAME = "com.parasoft"; //$NON-NLS-1$
-
-    public LoggingHandler getHandler(String sName) {
-        return new LoggingHandler(Logger.getLogger(sName));
+    /**
+     * @param sCategoryId
+     *
+     * @pre sCategoryId != null
+     */
+    public CategoryDescription(String sCategoryId)
+    {
+        _sCategoryId = sCategoryId;
     }
 
-    public String getDefaultName() {
-        return DEFAULT_NAME;
+    public String getCategoryId()
+    {
+        return _sCategoryId;
     }
 
-    public void switchLoggingOn() {
+    @Override
+    public String toString()
+    {
+        return "Category: " + getCategoryId(); //$NON-NLS-1$
     }
 
+    public static final String UNKNOWN_CATEGORY = "UNKNOWN";  //$NON-NLS-1$
 }

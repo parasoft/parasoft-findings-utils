@@ -22,9 +22,9 @@ public class RuleViolation
         implements IRuleViolation {
     private final String _sRuleId;
 
-    public RuleViolation(String sAnalyzerId, ResultLocation location,
+    public RuleViolation(String sAnalyzerId, String sLanguageId, ResultLocation location,
                          String sMessage, String sRuleId, String sPackage) {
-        super(sAnalyzerId, location, sMessage);
+        super(sAnalyzerId, sLanguageId, location, sMessage);
         _sRuleId = sRuleId;
         setPackage(sPackage);
     }
