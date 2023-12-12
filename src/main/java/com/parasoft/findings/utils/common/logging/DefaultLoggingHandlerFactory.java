@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 public class DefaultLoggingHandlerFactory
         implements ILoggerHandlerFactory {
-    private static final String DEFAULT_NAME = "com.parasoft"; //$NON-NLS-1$
+    private static final String DEFAULT_NAME = "com.parasoft.findings"; //$NON-NLS-1$
 
     public ILoggerHandler getHandler(String sName) {
         return new DefaultLoggingHandler(Logger.getLogger(sName));

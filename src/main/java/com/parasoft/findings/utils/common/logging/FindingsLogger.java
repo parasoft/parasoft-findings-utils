@@ -438,7 +438,7 @@ public final class FindingsLogger {
     /**
      * Standard logging prefix for our code.
      */
-    private final static String COM_PARASOFT_PREFIX = "com.parasoft."; //$NON-NLS-1$
+    private final static String COM_PARASOFT_PREFIX = "com.parasoft.findings."; //$NON-NLS-1$
 
     /**
      * Default line separator
