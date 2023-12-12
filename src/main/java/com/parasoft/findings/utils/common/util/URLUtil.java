@@ -116,7 +116,7 @@ public final class URLUtil {
         try {
             return URLDecoder.decode(url.getFile(), StandardCharsets.UTF_8.name());
         } catch (Throwable thr) {
-            Logger.getLogger().error("An exception is thrown durind decode URL. The uncoded path will be returned", thr); //$NON-NLS-1$
+            Logger.getLogger().error("An exception is thrown during decode URL. The uncoded path will be returned", thr); //$NON-NLS-1$
             return url.getFile();
         }
     }

@@ -33,7 +33,7 @@ public final class ObjectUtil {
      *
      * @param obj1 object 1 or <code>null</code>
      * @param obj2 object 2 or <code>null</code>
-     * @return <code>true</code> iff both objects are null or they are both
+     * @return <code>true</code> if both objects are null or they are both
      * non-null and equal
      */
     public static boolean equals(Object obj1, Object obj2) {
