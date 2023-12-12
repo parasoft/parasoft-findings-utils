@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ObjectUtilTest {
     @Test
     public void testEquals() {
-        //Two Objects are both null
+        //Two objects are both null
         assertTrue(ObjectUtil.equals(null, null));
-        //Two Objects are equal
+        //Two objects are equal
         assertTrue(ObjectUtil.equals("String", "String"));
         //One object is null, the other is not
         assertFalse(ObjectUtil.equals(null, "String"));
@@ -20,7 +20,7 @@ public class ObjectUtilTest {
     }
 
     @Test
-    public void testhashCode() {
+    public void testHashCode() {
         Object object = new Object();
         //Object are not null
         assertEquals(object.hashCode(), ObjectUtil.hashCode(object));
