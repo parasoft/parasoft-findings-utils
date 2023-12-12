@@ -32,12 +32,12 @@ public class URLUtilTest {
     }
 
     @Test
-    public void testMakeFromPath() {
+    public void testMakeFromPath() throws MalformedURLException {
         File preparedFile = new File("src/test/resources/xml/staticanalysis/", "cpptest_pro_report_202001.xml");
         //When given string is null
         assertNull(URLUtil.makeFromPath(null));
         //When given String is not null
-        assertEquals("src\\test\\resources\\xml\\staticanalysis\\cpptest_pro_report_202001.xml", preparedFile.getPath());
+        assertEquals(preparedFile.toURI().toURL(), URLUtil.makeFromPath(preparedFile.getPath()));
     }
 
     @Test
@@ -59,10 +59,13 @@ public class URLUtilTest {
     }
 
     @Test
-    public void testToFile_whenGivenURIHasBlank() throws MalformedURLException {
-        URL wrongUrl = new URL("file://E:\\parasoft-findings-utils\\src\\test\\resources\\xml\\static analysis\\cpptest_pro_report_202001.xml");
-        File testFile = new File("src/test/resources/xml/static analysis/", "cpptest_pro_report_202001.xml");
-        assertEquals(testFile.getAbsoluteFile(), URLUtil.toFile(wrongUrl).getAbsoluteFile());
+    // ？
+    public void testToFile_incorrectUrl() throws MalformedURLException {
+        File testFile = new File("src/test/resources/xml/static  analysis/", "cpptest_pro_report_202001.xml");
+        URL urlWithEscapedSpace = testFile.toURI().toURL();
+        // urlWithUnescapedSpace can not be converted to URI
+        URL urlWithUnescapedSpace = new URL(urlWithEscapedSpace.toString().replace("%20", " "));
+        assertEquals(testFile.getAbsoluteFile(), URLUtil.toFile(urlWithUnescapedSpace).getAbsoluteFile());
     }
 
     @Test
@@ -72,7 +75,7 @@ public class URLUtilTest {
     }
 
     @Test
-    public void testGetPath_whenDecodeThrowException() throws MalformedURLException {
+    public void testGetPath_throwExceptionWhenDecode() throws MalformedURLException {
         File preparedFile = new File("src/test/resources/xml/staticanalysis/", "cpptest_pro_report_202001.xml");
         try(MockedStatic<URLDecoder> mockedStatic = Mockito.mockStatic(URLDecoder.class)) {
             mockedStatic.when(() -> URLDecoder.decode(anyString(), anyString())).thenThrow(new UnsupportedEncodingException("Expected test error"));

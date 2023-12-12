@@ -7,7 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class StringUtilTest {
     @Test
     public void testGetLineSeparator() {
-        assertEquals("\r\n", StringUtil.getLineSeparator());
+        if (ArchUtil.archIsWindows()) {
+            assertEquals("\r\n", StringUtil.getLineSeparator());
+        } else {
+            assertEquals("\n", StringUtil.getLineSeparator());
+        }
     }
 
     @Test
@@ -28,6 +32,8 @@ public class StringUtilTest {
         assertTrue(StringUtil.isEmpty(""));
         //Given string is not null or zero-length
         assertFalse(StringUtil.isEmpty("String"));
+        //Given string is spaces
+        assertFalse(StringUtil.isEmpty("  "));
     }
 
     @Test
@@ -38,6 +44,8 @@ public class StringUtilTest {
         assertFalse(StringUtil.isNonEmpty(null));
         //Given strings is zero-length
         assertFalse(StringUtil.isNonEmpty(""));
+        //Given string is spaces
+        assertFalse(StringUtil.isEmpty("  "));
     }
 
     @Test

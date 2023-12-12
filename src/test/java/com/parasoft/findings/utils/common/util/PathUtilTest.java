@@ -6,29 +6,53 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PathUtilTest {
 
-    String testPath = "D:\\Software\\Java";
+    String testedPath = "D:/Software\\Java";
 
+    /**
+     * Test {@link PathUtil#splitPath(String)}
+     */
     @Test
-    public void testSplitPath_UnixOrWin() {
-        String[] splitPath = PathUtil.splitPath(testPath);
+    public void testSplitPath_1() {
+        String[] splitPath = PathUtil.splitPath(testedPath);
         assertEquals(3, splitPath.length);
     }
 
+    /**
+     * Test {@link PathUtil#splitPath(String, String)}
+     */
     @Test
-    public void testSplitPath_normalSeparators() {
-        String[] splitPath = PathUtil.splitPath(testPath, ":");
+    public void testSplitPath_2() {
+        String[] splitPath = PathUtil.splitPath(testedPath, ":");
         assertEquals(2, splitPath.length);
     }
 
+    /**
+     * Test {@link PathUtil#splitPath(String, String)}
+     */
     @Test
     public void testSplitPath_nullSeparators() {
         try {
-            PathUtil.splitPath(testPath, null);
+            PathUtil.splitPath(testedPath, null);
         } catch (IllegalArgumentException ie) {
             assertEquals("Missing separator.", ie.getMessage());
         }
     }
 
+    /**
+     * Test {@link PathUtil#splitPath(String, String)}
+     */
+    @Test
+    public void testSplitPath_emptySeparators() {
+        try {
+            PathUtil.splitPath(testedPath, "");
+        } catch (IllegalArgumentException ie) {
+            assertEquals("Missing separator.", ie.getMessage());
+        }
+    }
+
+    /**
+     * Test {@link PathUtil#splitPath(String, String)}
+     */
     @Test
     public void testSplitPath_nullPath() {
         // If path is null
@@ -38,8 +62,8 @@ public class PathUtilTest {
 
     @Test
     public void testNormalizePath_normal() {
-        String path = PathUtil.normalizePath(testPath);
-        assertEquals("D:/Software/Java", path);
+        String path = PathUtil.normalizePath(testedPath + "//bin");
+        assertEquals("D:/Software/Java/bin", path);
     }
 
     @Test

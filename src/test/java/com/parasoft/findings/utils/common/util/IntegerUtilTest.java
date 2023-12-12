@@ -19,21 +19,21 @@ public class IntegerUtilTest {
     }
 
     @Test
-    public void testCompare_LessResult() {
+    public void testCompare_smaller() {
         // When first number is smaller than the second number
         int result = IntegerUtil.compare(1, 2);
         assertEquals(-1, result);
     }
 
     @Test
-    public void testCompare_equalResult() {
+    public void testCompare_equal() {
         // When first number is equal to the second number
         int result = IntegerUtil.compare(1, 1);
         assertEquals(0, result);
     }
 
     @Test
-    public void testCompare_largerResult() {
+    public void testCompare_greater() {
         // When first number is larger than the second number
         int result = IntegerUtil.compare(2, 1);
         assertEquals(1, result);
