@@ -1,5 +1,6 @@
 package com.parasoft.findings.utils.common.util;
 
+import com.parasoft.findings.utils.common.logging.FindingsLogger;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -11,7 +12,10 @@ import java.net.URL;
 import java.net.URLDecoder;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 public class URLUtilTest {
 
@@ -77,9 +81,14 @@ public class URLUtilTest {
     @Test
     public void testGetPath_throwExceptionWhenDecode() throws MalformedURLException {
         File preparedFile = new File("src/test/resources/xml/staticanalysis/", "cpptest_pro_report_202001.xml");
-        try(MockedStatic<URLDecoder> mockedStatic = Mockito.mockStatic(URLDecoder.class)) {
-            mockedStatic.when(() -> URLDecoder.decode(anyString(), anyString())).thenThrow(new UnsupportedEncodingException("Expected test error"));
+        try (MockedStatic<URLDecoder> mockedStaticURLDecoder = Mockito.mockStatic(URLDecoder.class);
+             MockedStatic<Logger> mockedStaticLogger = Mockito.mockStatic(Logger.class)) {
+            mockedStaticURLDecoder.when(() -> URLDecoder.decode(anyString(), anyString())).thenThrow(new UnsupportedEncodingException("Expected test error"));
+            FindingsLogger logger = mock(FindingsLogger.class);
+            mockedStaticLogger.when(Logger::getLogger).thenReturn(logger);
+
             assertEquals(preparedFile.toURI().getPath(), URLUtil.getPath(preparedFile.toURI().toURL()));
+            verify(logger, times(1)).error(eq("An exception is thrown during decode URL. The uncoded path will be returned"), any());
         }
     }
 }

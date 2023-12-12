@@ -49,4 +49,15 @@ public class CollectionUtilTest {
         boolean result = CollectionUtil.hasAtLeastNElements(emptyList, 1);
         assertFalse(result);
     }
+
+    @Test
+    public void testIsEmpty() {
+        //When given collection is null
+        assertTrue(CollectionUtil.isEmpty(null));
+        //When given collection is empty
+        assertTrue(CollectionUtil.isEmpty(emptyList));
+
+        //When given collection is not empty
+        assertFalse(CollectionUtil.isEmpty(testList));
+    }
 }
