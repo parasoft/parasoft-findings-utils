@@ -399,7 +399,7 @@ public class FindingsLoggerTest {
         verify(logger).log(messageSupplierCaptor.capture(), eq(Level.ERROR), eq(null));
         String trace = (String) messageSupplierCaptor.getValue().get(); // call createStackTrace(Object, Throwable) when call get()
         assertNotNull(trace);
-        assertTrue(trace.contains("com.parasoft.findings.utils.common.logging.FindingsLoggerTest.testCreateStackTrace_withNullObject(FindingsLoggerTest.java:398)"));
+        assertTrue(trace.contains("com.parasoft.findings.utils.common.logging.FindingsLoggerTest.testCreateStackTrace_withNullObject(FindingsLoggerTest.java:397)"));
     }
 
     @Test
@@ -413,6 +413,6 @@ public class FindingsLoggerTest {
         String trace = (String) messageSupplierCaptor.getValue().get(); // call createStackTrace(Object, Throwable) when call get()
         assertNotNull(trace);
         assertTrue(trace.contains((String)stringObject));
-        assertTrue(trace.contains("com.parasoft.findings.utils.common.logging.FindingsLoggerTest.testCreateStackTrace_withObject(FindingsLoggerTest.java:411)"));
+        assertTrue(trace.contains("com.parasoft.findings.utils.common.logging.FindingsLoggerTest.testCreateStackTrace_withObject(FindingsLoggerTest.java:410)"));
     }
 }
