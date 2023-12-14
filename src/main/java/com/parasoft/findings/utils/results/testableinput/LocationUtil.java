@@ -93,17 +93,12 @@ public final class LocationUtil {
             throw new LocationsException("Failed to get URI for stored location."); //$NON-NLS-1$
         }
         ITestableInput input = null;
-        String symbolId = storedLocation.getProperty(IXmlTagsAndAttributes.SYMBOL_ID_ATTR);
-        if (StringUtil.isNonEmpty(symbolId)) {
-            throw new RuntimeException("Need to check and refactor");
-        } else {
-            String projId = storedLocation.getProperty(IXmlTagsAndAttributes.PROJECT_ID_ATTR);
-            String project = storedLocation.getProperty(IXmlTagsAndAttributes.PROJECT_ATTR);
-            String projPath = storedLocation.getProperty(IXmlTagsAndAttributes.PROJECT_PATH_ATTR);
-            String resProjPath = storedLocation.getProperty(IXmlTagsAndAttributes.RESOURCE_PROJECT_RELATIVE_PATH_ATTR);
-            String symbols = storedLocation.getProperty(IXmlTagsAndAttributes.SYMBOLS_ATTR);
-            input = createTestableInput(uri, projId, project, projPath, resProjPath, symbols);
-        }
+        String projId = storedLocation.getProperty(IXmlTagsAndAttributes.PROJECT_ID_ATTR);
+        String project = storedLocation.getProperty(IXmlTagsAndAttributes.PROJECT_ATTR);
+        String projPath = storedLocation.getProperty(IXmlTagsAndAttributes.PROJECT_PATH_ATTR);
+        String resProjPath = storedLocation.getProperty(IXmlTagsAndAttributes.RESOURCE_PROJECT_RELATIVE_PATH_ATTR);
+        String symbols = storedLocation.getProperty(IXmlTagsAndAttributes.SYMBOLS_ATTR);
+        input = createTestableInput(uri, projId, project, projPath, resProjPath, symbols);
 
         for (String sKey : getAdditionalAttributes(storedLocation.keySet())) {
             ((IAttributedEntity) input).addAttribute(sKey, storedLocation.getProperty(sKey));
