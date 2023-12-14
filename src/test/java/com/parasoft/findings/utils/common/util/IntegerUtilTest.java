@@ -1,8 +1,13 @@
 package com.parasoft.findings.utils.common.util;
 
+import com.parasoft.findings.utils.common.logging.FindingsLogger;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 public class IntegerUtilTest {
 
@@ -14,8 +19,13 @@ public class IntegerUtilTest {
 
     @Test
     public void testParseInt_useDefaultValue() {
-        int result = IntegerUtil.parseInt("test", 2);
-        assertEquals(2, result);
+        try (MockedStatic<Logger> mockedStatic = Mockito.mockStatic(Logger.class)) {
+            FindingsLogger logger = mock(FindingsLogger.class);
+            mockedStatic.when(Logger::getLogger).thenReturn(logger);
+            int result = IntegerUtil.parseInt("test", 2);
+            verify(logger, times(1)).info("Could not parse int value from: test");
+            assertEquals(2, result);
+        }
     }
 
     @Test
