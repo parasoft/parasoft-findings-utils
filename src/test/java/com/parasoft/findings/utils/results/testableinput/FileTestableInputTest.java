@@ -23,17 +23,6 @@ public class FileTestableInputTest {
         testResults = (FileTestableInput) findingsLocationMatcher.matchLocation(pathInput, Collections.singletonList(0L), null, null, false);
     }
 
-
-    public void testGetAttribute() throws LocationsException {
-        Properties properties = new Properties();
-        properties.put(IXmlTagsAndAttributes.SOURCE_CONTROL_PATH_ATTR, "project");
-        properties.put("attributeForTest", "files");
-
-        FileTestableInput testResults = (FileTestableInput) LocationUtil.createTestableInput(properties);
-
-        assertEquals("files", (testResults).getAttribute("attributeForTest"));
-    }
-
     @Test
     public void testToString() {
         assertEquals(fileTestableInput.toString(), testResults.toString());
