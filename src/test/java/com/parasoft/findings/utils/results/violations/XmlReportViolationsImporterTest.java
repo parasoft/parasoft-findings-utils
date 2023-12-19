@@ -1,10 +1,12 @@
 package com.parasoft.findings.utils.results.violations;
 
 
+import com.parasoft.findings.utils.common.logging.FindingsLogger;
 import com.parasoft.findings.utils.results.testableinput.ProjectFileTestableInput;
 import com.parasoft.findings.utils.results.testableinput.RemoteTestableInput;
 import com.parasoft.findings.utils.results.xml.IXmlTagsAndAttributes;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class XmlReportViolationsImporterTest {
 
@@ -618,6 +621,42 @@ public class XmlReportViolationsImporterTest {
                 "Ensure that the CSS declaration is well-formed",
                 "liwbo",
                 null, "web", RemoteTestableInput.class);
+    }
+
+    @Test
+    public void testLogProperties_isSensitiveSetting_password() {
+        String expectedInfo = "Properties used in importResults {fake.password=>>hidden<<}";
+        testLogProperties("fake.password", "fake_value", expectedInfo);
+    }
+
+    @Test
+    public void testLogProperties_isSensitiveSetting_secret() {
+        String expectedInfo = "Properties used in importResults {fake.secret=>>empty<<}";
+        testLogProperties("fake.secret", "", expectedInfo);
+    }
+
+    @Test
+    public void testLogProperties_isSensitiveSetting_proxyPassword() {
+        String expectedInfo = "Properties used in importResults {fake.proxyPassword=>>empty<<}";
+        testLogProperties("fake.proxyPassword", "", expectedInfo);
+    }
+
+    private void testLogProperties(String sKey, String sValue, String expectedInfo) {
+        File reportPath = new File("src/test/resources/xml/staticanalysis/", "cpptest_pro_report_202001.xml");
+        assertTrue(reportPath.exists());
+        Properties properties = new Properties();
+        properties.setProperty(sKey, sValue);
+        XmlReportViolationsImporter underTest = new XmlReportViolationsImporter(properties);
+
+        try (MockedStatic<Logger> mockedLogger = mockStatic(Logger.class)) {
+            FindingsLogger findingsLogger = mock(FindingsLogger.class);
+            mockedLogger.when(Logger::getLogger).thenReturn(findingsLogger);
+
+            underTest.performImport(reportPath);
+
+            // Verify that the Logger.getLogger().info() method was called with the expected argument
+            verify(findingsLogger).info(expectedInfo);
+        }
     }
 
     private void validateRuleViolationAttributes(IRuleViolation ruleViolation, String filePath, SourceRange sourceRange,
