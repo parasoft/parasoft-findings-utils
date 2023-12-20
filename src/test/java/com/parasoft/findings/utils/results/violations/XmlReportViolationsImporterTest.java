@@ -11,7 +11,6 @@ import org.mockito.MockedStatic;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,12 +23,11 @@ public class XmlReportViolationsImporterTest {
         // Given
         File reportPath = new File("src/test/resources/xml/staticanalysis/", "not_existing_report.xml");
         Properties properties = new Properties();
-        properties.setProperty("fake.password", "fake-pass");
         XmlReportViolationsImporter underTest = new XmlReportViolationsImporter(properties);
         XmlReportViolations results = underTest.performImport(reportPath);
 
         // Then
-       assertNull(results);
+        assertNull(results);
     }
 
     @Test
@@ -38,26 +36,16 @@ public class XmlReportViolationsImporterTest {
         File reportPath = new File("src/test/resources/xml/staticanalysis/", "cpptest_pro_report_202001.xml");
         assertTrue(reportPath.exists());
         Properties properties = new Properties();
-        properties.setProperty("fake.password", "");
         List<IRuleViolation> violations = importRuleViolation(reportPath, properties);
 
         // Then
         assertEquals(2149, violations.size());
         RuleViolation ruleViolation = (RuleViolation)violations.get(0);
-        SourceRange sourceRange = new SourceRange(1, 0, 1, 1);
-        //Test equals(), two violations are equal
-        assertTrue(ruleViolation.equals(violations.get(0)));
-        //Test equals(), given violation is not instance of RuleViolation
-        assertFalse(ruleViolation.equals(violations.get(12)));
-        //Test equals(), given violation is instance of RuleViolation
-        assertFalse(ruleViolation.equals(violations.get(4)));
-        //Test hashCode()
-        assertEquals(650382855, ruleViolation.hashCode());
 
         validateRuleViolationAttributes(
                 ruleViolation,
                 "C:\\Workspace\\jenkins_refactoring_code_workspace\\workspace\\cicd.findings.cpptest.pro.2020.1.FlowAnalysisCpp.remote_docs\\DeadLock.cpp",
-                sourceRange,
+                new SourceRange(1, 0, 1, 1),
                 null,
                 "Add comment containing the copyright information at the begin of file 'DeadLock.cpp'",
                 3,
@@ -118,79 +106,6 @@ public class XmlReportViolationsImporterTest {
                 null,
                 "cpp");
         assertEquals(12, flowAnalysisViolation.getPathElements().length);
-
-        // Just to improve coverage for MetricsViolation
-        assertEquals(metricsViolation.hashCode(), -1291010561);
-        assertTrue(metricsViolation.toString().startsWith("Value 152 is out of acceptable range"));
-        assertTrue(metricsViolation.equals(metricsViolation));
-        assertFalse(metricsViolation.equals(dupCodeViolation));
-        MetricsViolation metricsViolation_else = new MetricsViolation(
-                                                    "METRIC.NOPLIF",
-                                                    "c++test",
-                                                    new ResultLocation(null, null),
-                                                    "Value 152 is out of acceptable range: 'lower than 50'",
-                                                    "cpp");
-        assertFalse(metricsViolation.equals(metricsViolation_else));
-
-        // Just to improve coverage for DupCodeViolation
-        assertEquals(dupCodeViolation.hashCode(), -1654358512);
-        assertTrue(dupCodeViolation.toString().startsWith("Duplicated function"));
-        assertTrue(dupCodeViolation.equals(dupCodeViolation)); // When the two objects being compared are the same
-        assertFalse(dupCodeViolation.equals(metricsViolation)); // When the two objects being compared are not the same
-        DupCodeViolation dupCodeViolation_else = (DupCodeViolation)violations.get(415);
-        assertFalse(dupCodeViolation.equals(dupCodeViolation_else)); // When the two objects being compared are not the same but have same ruleId
-        assertTrue(dupCodeViolation.equals(new DupCodeViolation(
-                dupCodeViolation.getRuleId(),
-                dupCodeViolation.getAnalyzerId(),
-                dupCodeViolation.getResultLocation(),
-                dupCodeViolation.getMessage(),
-                dupCodeViolation.getLanguageId(),
-                dupCodeViolation.getPathElements()))); // When their path elements are the same
-        assertFalse(dupCodeViolation.equals(new DupCodeViolation(
-                dupCodeViolation.getRuleId(),
-                dupCodeViolation.getAnalyzerId(),
-                dupCodeViolation.getResultLocation(),
-                dupCodeViolation.getMessage(),
-                dupCodeViolation.getLanguageId(),
-                flowAnalysisViolation.getPathElements()))); // When their path elements are not the same
-
-        // Just to improve coverage for FlowAnalysisViolation
-        assertEquals(flowAnalysisViolation.hashCode(), 1011772439);
-        assertEquals(flowAnalysisViolation.getCauseMessage(), "Usage of \"velocityArray\" in first critical section");
-        assertEquals(flowAnalysisViolation.getPointMessage(), "Usage of \"velocityArray\" in second critical section");
-        assertEquals(flowAnalysisViolation.getRuleImportantPointMessage(), null);
-        assertTrue(flowAnalysisViolation.toString().contains("FlowAnalysisViolation"));
-        assertTrue(flowAnalysisViolation.getTrackedVariablesMessages() instanceof Map);
-        assertTrue(flowAnalysisViolation.equals(flowAnalysisViolation));
-        assertFalse(flowAnalysisViolation.equals(dupCodeViolation));
-        FlowAnalysisViolation flowAnalysisViolation_else = (FlowAnalysisViolation)violations.get(566);
-        assertFalse(flowAnalysisViolation.equals(flowAnalysisViolation_else));
-
-        // Just to improve coverage for SourceRange
-        assertEquals(sourceRange.getStartLine(), 1);
-        assertEquals(sourceRange.getStartLineOffset(), 0);
-        assertEquals(sourceRange.getEndLine(), 1);
-        assertEquals(sourceRange.getEndLineOffset(), 1);
-        assertTrue(sourceRange.equals(sourceRange));
-        assertFalse(sourceRange.equals(flowAnalysisViolation));
-        SourceRange newSourceRange = new SourceRange(1, 3);
-        assertEquals(newSourceRange.getStartLine(), 1);
-        assertEquals(newSourceRange.getStartLineOffset(), 3);
-        assertEquals(newSourceRange.getEndLine(), 2);
-        assertEquals(newSourceRange.getEndLineOffset(), 0);
-
-        // Just to improve coverage for ViolationRuleUtil
-        ViolationRuleUtil.setSeverity(flowAnalysisViolation, 1);
-        assertEquals(flowAnalysisViolation.getAttribute(IXmlTagsAndAttributes.SEVERITY_ATTR), Integer.toString(1));
-        ViolationRuleUtil.setSeverity(flowAnalysisViolation, 0);
-        assertEquals(flowAnalysisViolation.getAttribute(IXmlTagsAndAttributes.SEVERITY_ATTR), Integer.toString(0));
-        ViolationRuleUtil.setSeverity(flowAnalysisViolation, 6);
-        assertEquals(flowAnalysisViolation.getAttribute(IXmlTagsAndAttributes.SEVERITY_ATTR), Integer.toString(6));
-        flowAnalysisViolation.addAttribute(IXmlTagsAndAttributes.SEVERITY_ATTR, "2");
-        assertEquals(ViolationRuleUtil.getSeverity(flowAnalysisViolation), 2);
-        flowAnalysisViolation.addAttribute(IXmlTagsAndAttributes.SEVERITY_ATTR, "1f");
-        assertEquals(ViolationRuleUtil.getSeverity(flowAnalysisViolation), -1);
-        assertEquals(ViolationRuleUtil.getSeverity(null), ViolationRuleUtil.INVALID_SEVERITY);
     }
 
     @Test

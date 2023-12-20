@@ -6,15 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PathElementAnnotationTest {
 
-    PathElementAnnotation pathElementAnnotation = new PathElementAnnotation("sMessage", "sKind");
+    PathElementAnnotation underTest = new PathElementAnnotation("Point where value is declared", "point");
 
     @Test
     public void testGetMessage() {
-        assertEquals("sMessage", pathElementAnnotation.getMessage());
+        assertEquals("Point where value is declared", underTest.getMessage());
     }
 
     @Test
     public void testGetKind() {
-        assertEquals("sKind", pathElementAnnotation.getKind());
+        assertEquals("point", underTest.getKind());
     }
 }

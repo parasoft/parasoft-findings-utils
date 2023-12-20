@@ -3,104 +3,117 @@ package com.parasoft.findings.utils.results.violations;
 import com.parasoft.findings.utils.results.testableinput.FileTestableInput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Properties;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FlowAnalysisPathElementTest {
 
-    private FlowAnalysisPathElement flowAnalysisPathElement;
+    private FlowAnalysisPathElement underTest;
     private ResultLocation locationForTest;
     private FlowAnalysisPathElement.TypeImpl typeImplForTest;
+    IFlowAnalysisPathElement mockedFlowAnalysisPathElement = Mockito.mock(IFlowAnalysisPathElement.class);
+    IFlowAnalysisPathElement[] iFlowAnalysisPathElementsForTest = {mockedFlowAnalysisPathElement};
+    List<PathElementAnnotation> pathElementAnnotationsForTest = new ArrayList<>();
+    Map<String, String> propertiesForTest = new HashMap<>();
 
     @BeforeEach
     public void prepareTestVariables() {
         locationForTest = new ResultLocation(new FileTestableInput(new File("testFile")), new SourceRange(1,2,3,0));
         typeImplForTest = new FlowAnalysisPathElement.TypeImpl("typeForTest");
+        pathElementAnnotationsForTest.add(new PathElementAnnotation("Loop condition evaluation: !exitGame (assuming true)", "condEval"));
+        propertiesForTest.put("Tracked variables", "the_record != null");
 
-        flowAnalysisPathElement = new FlowAnalysisPathElement("descriptionForTest", locationForTest,
-                new HashMap<>(), null, typeImplForTest, null, null, null, null);
+        underTest = new FlowAnalysisPathElement("descriptionForTest", locationForTest,
+                new HashMap<>(), iFlowAnalysisPathElementsForTest, typeImplForTest, "const char *", "assertion", propertiesForTest, pathElementAnnotationsForTest);
     }
 
     @Test
     public void testGetDescription() {
-        assertEquals("descriptionForTest", flowAnalysisPathElement.getDescription());
+        assertEquals("descriptionForTest", underTest.getDescription());
     }
 
     @Test
     public void testGetLocation() {
-        assertEquals(locationForTest, flowAnalysisPathElement.getLocation());
+        assertEquals(locationForTest, underTest.getLocation());
     }
 
     @Test
     public void testAddAttribute() {
-        flowAnalysisPathElement.addAttribute("attributeForTest", "test");
-        assertEquals("test", flowAnalysisPathElement.getAttribute("attributeForTest"));
+        underTest.addAttribute("attributeForTest", "test");
+        assertEquals("test", underTest.getAttribute("attributeForTest"));
     }
 
     @Test
     public void testGetChildren() {
-        assertEquals(null, flowAnalysisPathElement.getChildren());
+        assertEquals(iFlowAnalysisPathElementsForTest, underTest.getChildren());
     }
 
     @Test
     public void testGetProperties() {
-        assertEquals(new Properties(), flowAnalysisPathElement.getProperties());
+        assertEquals(propertiesForTest, underTest.getProperties());
     }
 
     @Test
     public void testGetAnnotations() {
-        assertEquals(new ArrayList<>(), flowAnalysisPathElement.getAnnotations());
+        assertEquals(pathElementAnnotationsForTest, underTest.getAnnotations());
     }
 
     @Test
     public void testGetThrownTypes() {
-        assertEquals(null, flowAnalysisPathElement.getThrownTypes());
+        assertEquals("const char *", underTest.getThrownTypes());
     }
 
     @Test
     public void testGetThrowingMethod() {
-        assertEquals(null, flowAnalysisPathElement.getThrowingMethod());
+        assertEquals("assertion", underTest.getThrowingMethod());
     }
 
     @Test
     public void testGetType() {
-        assertEquals(typeImplForTest, flowAnalysisPathElement.getType());
+        assertEquals(typeImplForTest, underTest.getType());
     }
 
     @Test
-    public void testGetHashCode() {
-        assertEquals(-731395433, flowAnalysisPathElement.hashCode());
+    public void testHashCode() {
+        assertEquals(-731395433, underTest.hashCode());
     }
 
     @Test
     public void testEquals_withSameObject() {
-        assertTrue(flowAnalysisPathElement.equals(flowAnalysisPathElement));
+        assertTrue(underTest.equals(underTest));
     }
 
     @Test
     public void testEquals_withFlowAnalysisPathElementObject() {
         FlowAnalysisPathElement newFlowAnalysisPathElement = new FlowAnalysisPathElement("descriptionForTest", locationForTest,
-                new HashMap<>(), null, typeImplForTest, null, null, null, null);
-        assertTrue(flowAnalysisPathElement.equals(newFlowAnalysisPathElement));
+                new HashMap<>(), iFlowAnalysisPathElementsForTest, typeImplForTest, "const char *", "assertion", propertiesForTest, pathElementAnnotationsForTest);
+        assertTrue(underTest.equals(newFlowAnalysisPathElement));
     }
 
     @Test
     public void testEquals_withOtherObject() {
-        assertFalse(flowAnalysisPathElement.equals("testEqualsFunction"));
+        assertFalse(underTest.equals("testEqualsFunction"));
     }
 
     @Test
-    public void testTypeImplGetHashCode() {
-        assertEquals(48958561, flowAnalysisPathElement.getType().hashCode());
+    public void testTypeImplHashCode() {
+        assertEquals(48958561, underTest.getType().hashCode());
     }
 
     @Test
     public void testTypeImplEquals_withOtherObject() {
-        assertFalse(flowAnalysisPathElement.getType().equals("testEqualsFunction"));
+        assertFalse(underTest.getType().equals("testEqualsFunction"));
+    }
+
+    @Test
+    public void testTypeImplEquals_withTypeObject() {
+        FlowAnalysisPathElement.TypeImpl differentType = new FlowAnalysisPathElement.TypeImpl("differentType");
+
+        assertTrue(underTest.getType().equals(typeImplForTest));
+        assertFalse(underTest.getType().equals(differentType));
     }
 }
