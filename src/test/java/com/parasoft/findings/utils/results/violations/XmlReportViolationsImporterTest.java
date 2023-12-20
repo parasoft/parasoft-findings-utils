@@ -27,7 +27,7 @@ public class XmlReportViolationsImporterTest {
         XmlReportViolations results = underTest.performImport(reportPath);
 
         // Then
-       assertNull(results);
+        assertNull(results);
     }
 
     @Test
