@@ -277,8 +277,6 @@ public class XmlReportReader
         if (sResultId == null) {
             if (IXmlTagsAndAttributes.CODING_STANDARDS_SECTION_TAG.equals(sMainTag)) {
                 sResultId = IResultsIdentifiersConstants.CODING_STANDARDS_RESULT_ID;
-            } else if (IXmlTagsAndAttributes.EXECUTION_SECTION_V2_TAG.equals(sMainTag)) {
-                sResultId = IResultsIdentifiersConstants.EXECUTION_VIOLATION_ID;
             } else {
                 return null;
             }

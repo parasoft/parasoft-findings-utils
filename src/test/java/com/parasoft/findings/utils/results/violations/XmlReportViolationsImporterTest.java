@@ -53,7 +53,7 @@ public class XmlReportViolationsImporterTest {
                 "Comments",
                 "COMMENT-02",
                 "Provide copyright information",
-                "devtest",
+                "username",
                 null,
                 "cpp");
 
@@ -69,7 +69,7 @@ public class XmlReportViolationsImporterTest {
                 "Metric",
                 "METRIC.NOPLIF",
                 "Physical Lines in Files",
-                "devtest",
+                "username",
                 null,
                 "cpp");
 
@@ -85,7 +85,7 @@ public class XmlReportViolationsImporterTest {
                 "Code Duplication Detection",
                 "CDD-DUPM",
                 "Avoid function duplication",
-                "devtest",
+                "username",
                 null,
                 "cpp");
         assertEquals(2, dupCodeViolation.getPathElements().length);
@@ -102,7 +102,7 @@ public class XmlReportViolationsImporterTest {
                 "Threads & Synchronization",
                 "BD-TRS-DIFCS",
                 "Variable should be used in context of single critical section",
-                "devtest",
+                "username",
                 null,
                 "cpp");
         assertEquals(12, flowAnalysisViolation.getPathElements().length);
@@ -131,7 +131,7 @@ public class XmlReportViolationsImporterTest {
                 "Comments",
                 "COMMENT-02",
                 "Provide copyright information",
-                "devtest",
+                "username",
                 null,
                 "cpp");
 
@@ -147,7 +147,7 @@ public class XmlReportViolationsImporterTest {
                 "Metric",
                 "METRIC.NOPLIF",
                 "Physical Lines in Files",
-                "devtest",
+                "username",
                 null,
                 "cpp");
 
@@ -163,7 +163,7 @@ public class XmlReportViolationsImporterTest {
                 "Code Duplication Detection",
                 "CDD-DUPM",
                 "Avoid function duplication",
-                "devtest",
+                "username",
                 null,
                 "cpp");
         assertEquals(2, dupCodeViolation.getPathElements().length);
@@ -180,7 +180,7 @@ public class XmlReportViolationsImporterTest {
                 "Threads & Synchronization",
                 "BD-TRS-DIFCS",
                 "Variable should be used in context of single critical section",
-                "devtest",
+                "username",
                 null,
                 "cpp");
         assertEquals(11, flowAnalysisViolation.getPathElements().length);
@@ -209,7 +209,7 @@ public class XmlReportViolationsImporterTest {
                 "Metrics",
                 "METRICS-31",
                 "The assertion density of the code should average to a minimum of two assertions per function",
-                "devtest",
+                "username",
                 null,
                 "cpp");
 
@@ -225,7 +225,7 @@ public class XmlReportViolationsImporterTest {
                 "Code Duplication Detection",
                 "CDD-DUPC",
                 "Avoid code duplication",
-                "devtest",
+                "username",
                 null,
                 "cpp");
         assertEquals(3, dupCodeViolation.getPathElements().length);
@@ -242,7 +242,7 @@ public class XmlReportViolationsImporterTest {
                 "AUTOSAR A0-1-1 A project shall not contain instances of non-volatile variables being given values that are not subsequently used",
                 "AUTOSAR-A0_1_1-a",
                 "Avoid unused values",
-                "devtest",
+                "username",
                 null,
                 "cpp");
         assertEquals(1, flowAnalysisViolation.getPathElements().length);
@@ -271,7 +271,7 @@ public class XmlReportViolationsImporterTest {
                 "Metrics",
                 "METRICS-31",
                 "The assertion density of the code should average to a minimum of two assertions per function",
-                "renee",
+                "username",
                 null,
                 "cpp");
 
@@ -287,7 +287,7 @@ public class XmlReportViolationsImporterTest {
                 "Metric",
                 "METRIC.NOPLIF",
                 "Physical Lines in Files",
-                "renee",
+                "username",
                 null,
                 "cpp");
 
@@ -303,7 +303,7 @@ public class XmlReportViolationsImporterTest {
                 "Code Duplication Detection",
                 "CDD-DUPS",
                 "Avoid string literal duplication",
-                "renee",
+                "username",
                 null,
                 "cpp");
         assertEquals(2, dupCodeViolation.getPathElements().length);
@@ -320,7 +320,7 @@ public class XmlReportViolationsImporterTest {
                 "AUTOSAR A5-3-2 Null pointers shall not be dereferenced",
                 "AUTOSAR-A5_3_2-a",
                 "Avoid null pointer dereferencing",
-                "renee",
+                "username",
                 null,
                 "cpp");
         assertEquals(3, flowAnalysisViolation.getPathElements().length);
@@ -349,7 +349,7 @@ public class XmlReportViolationsImporterTest {
                 "Formatting",
                 "FORMAT.MCH",
                 "Include a meaningful file header comment in every source file",
-                "devtest",
+                "username",
                 null,
                 "java");
     }
@@ -376,8 +376,35 @@ public class XmlReportViolationsImporterTest {
                 "Organization",
                 "CODSTA.ORG.UNDPN",
                 "Ensure all types have a non default package name",
-                "Roller Wang",
+                "username",
                 "533262ab518caaa481cb7902b588dc6251cb9326",
+                "java");
+    }
+
+    @Test
+    public void testPerformImport_jtest_report_202201() {
+        // Given
+        File reportPath = new File("src/test/resources/xml/sa&ut/", "jtest_report_202201.xml");
+        assertTrue(reportPath.exists());
+        Properties properties = new Properties();
+        List<IRuleViolation> violations = importRuleViolation(reportPath, properties);
+
+        // Then
+        assertEquals(84, violations.size());
+        RuleViolation ruleViolation = (RuleViolation)violations.get(0);
+        validateRuleViolationAttributes(
+                ruleViolation,
+                "D:\\Sonarqube\\sonar_integration_test_example_projects\\example_projects\\Jtest-cover\\src\\main\\java\\com\\parasoft\\bookstore\\Book.java",
+                new SourceRange(23, 74, 23, 81),
+                null,
+                "Array parameter 'authors' is not cloned before it is stored",
+                1,
+                "SECURITY.WSC",
+                "Weak Security Controls",
+                "SECURITY.WSC.CAP",
+                "Always clone array parameters which are stored to fields",
+                "username1",
+                null,
                 "java");
     }
 
@@ -406,7 +433,7 @@ public class XmlReportViolationsImporterTest {
                 "Better Readability and Maintainability",
                 "BRM.SFH",
                 "Always provide appropriate file header (copyright information, etc.)",
-                "devtest",
+                "username",
                 null,
                 "dotnet");
 
@@ -422,7 +449,7 @@ public class XmlReportViolationsImporterTest {
                 "Internationalization",
                 "CS.INTER.ITT",
                 "String literals should be internationalized",
-                "devtest",
+                "username",
                 null,
                 "dotnet");
 
@@ -438,7 +465,7 @@ public class XmlReportViolationsImporterTest {
                 "Metric",
                 "METRIC.NOBLIF",
                 "Blank Lines in Files",
-                "devtest",
+                "username",
                 null,
                 "dotnet");
 
@@ -454,7 +481,7 @@ public class XmlReportViolationsImporterTest {
                 "Code Duplication Detection",
                 "CDD.DUPS",
                 "Avoid string literal duplication",
-                "devtest",
+                "username",
                 null,
                 "dotnet");
         assertEquals(2, dupCodeViolation.getPathElements().length);
@@ -471,7 +498,7 @@ public class XmlReportViolationsImporterTest {
                 "CWE-476: NULL Pointer Dereference",
                 "CWE.476.NR",
                 "Avoid NullReferenceException",
-                "devtest",
+                "username",
                 null,
                 "dotnet");
         assertEquals(2, flowAnalysisViolation.getPathElements().length);
@@ -502,7 +529,7 @@ public class XmlReportViolationsImporterTest {
                 "Better Readability and Maintainability",
                 "BRM.SFH",
                 "Always provide appropriate file header (copyright information, etc.)",
-                "CD-RLIU",
+                "username",
                 null,
                 "dotnet");
 
@@ -518,7 +545,7 @@ public class XmlReportViolationsImporterTest {
                 "Metric",
                 "METRIC.NOBLIF",
                 "Blank Lines in Files",
-                "CD-RLIU",
+                "username",
                 null,
                 "dotnet");
 
@@ -534,7 +561,7 @@ public class XmlReportViolationsImporterTest {
                 "Code Duplication Detection",
                 "CDD.DUPC",
                 "Avoid code duplication",
-                "CD-RLIU",
+                "username",
                 null,
                 "dotnet");
         assertEquals(2, dupCodeViolation.getPathElements().length);
@@ -551,7 +578,7 @@ public class XmlReportViolationsImporterTest {
                 "Exceptions",
                 "BD.EXCEPT.NR",
                 "Avoid NullReferenceException",
-                "CD-RLIU",
+                "username",
                 null,
                 "dotnet");
         assertEquals(2, flowAnalysisViolation.getPathElements().length);
@@ -592,7 +619,7 @@ public class XmlReportViolationsImporterTest {
                 "Interoperability",
                 "INTEROP.WSI",
                 "Check WS-Interoperability",
-                "liwbo",
+                "username",
                 null, "web", RemoteTestableInput.class);
     }
 
@@ -619,7 +646,7 @@ public class XmlReportViolationsImporterTest {
                 "CSS",
                 "INVC.CSS.WF",
                 "Ensure that the CSS declaration is well-formed",
-                "liwbo",
+                "username",
                 null, "web", RemoteTestableInput.class);
     }
 
