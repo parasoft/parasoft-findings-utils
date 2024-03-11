@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class LocationsReaderTest {
-    String uri = "file://DESKTOP-0Q6E4JP/C:/Workspace/jenkins_original_code_workspace/workspace/cicd.findings.cpptest.std.Timer.remote_docs/stdinout.c";
+    String uri = "file://machine-name/C:/Workspace/jenkins_original_code_workspace/workspace/cicd.findings.cpptest.std.Timer.remote_docs/stdinout.c";
     String localName = "";
 
     @Test

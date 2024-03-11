@@ -47,9 +47,6 @@ public final class XmlReportViolationsImporter {
             Logger.getLogger().warn("Report file is not existing: " + file.getAbsolutePath()); //$NON-NLS-1$
             return null;
         }
-        if (_properties.isEmpty()) {
-            Logger.getLogger().warn("Empty properties"); //$NON-NLS-1$
-        }
         logProperties();
 
         FileImportPreferences prefs = new FileImportPreferences(file);
