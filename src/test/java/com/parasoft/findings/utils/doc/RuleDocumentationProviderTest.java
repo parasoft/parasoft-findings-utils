@@ -105,8 +105,10 @@ public class RuleDocumentationProviderTest {
         RuleDocumentationProvider underTest = createRDPWithAvailableClientDtpDocService();
 
         String dtpUrl = this.dtpUrl.endsWith("/") ? this.dtpUrl : this.dtpUrl + "/";
-        String ruleContent = underTest.getDtpRuleDocContent(dtpUrl + "grs/dtp/rulesdoc/com.parasoft.xtest.cpp.analyzer.static.pattern/10.6.2/zh_CN/APSC_DV-000160-a.html");
+        String ruleContent = underTest.getDtpRuleDocContent(dtpUrl + "grs/dtp/rulesdoc/com.parasoft.xtest.cpp.analyzer.static.pattern/10.6.3/zh_CN/APSC_DV-000160-a.html");
 
+        // If the test fails, check if the rule content is still available at the specified URL,
+        // you may need to change the version number(10.6.3) in the URL, since different DTP version uses different value.
         assertNotEquals("", ruleContent);
         assertTrue(ruleContent.toUpperCase().contains("<HTML>") && ruleContent.contains("[APSC_DV-000160-a]"));
     }
@@ -129,7 +131,7 @@ public class RuleDocumentationProviderTest {
 
         String dtpUrl = this.dtpUrl.endsWith("/") ? this.dtpUrl : this.dtpUrl + "/";
         // Url pattern is not "${dtpUrl}/grs/dtp/rulesdoc"
-        String ruleContent = underTest.getDtpRuleDocContent(dtpUrl + "incorrect/pattern/com.parasoft.xtest.cpp.analyzer.static.pattern/10.6.2/zh_CN/APSC_DV-000160-a.html");
+        String ruleContent = underTest.getDtpRuleDocContent(dtpUrl + "incorrect/pattern/com.parasoft.xtest.cpp.analyzer.static.pattern/10.6.3/zh_CN/APSC_DV-000160-a.html");
 
         assertEquals("", ruleContent);
     }
@@ -140,7 +142,7 @@ public class RuleDocumentationProviderTest {
         RuleDocumentationProvider underTest = createRDPWithAvailableClientDtpDocService();
 
         // Url pattern is not "${dtpUrl}/grs/dtp/rulesdoc"
-        String ruleContent = underTest.getDtpRuleDocContent("https://incorrectDtpUrl/grs/dtp/rulesdoc/com.parasoft.xtest.cpp.analyzer.static.pattern/10.6.2/zh_CN/APSC_DV-000160-a.html");
+        String ruleContent = underTest.getDtpRuleDocContent("https://incorrectDtpUrl/grs/dtp/rulesdoc/com.parasoft.xtest.cpp.analyzer.static.pattern/10.6.3/zh_CN/APSC_DV-000160-a.html");
 
         assertEquals("", ruleContent);
     }
@@ -152,7 +154,7 @@ public class RuleDocumentationProviderTest {
 
         String dtpUrl = this.dtpUrl.endsWith("/") ? this.dtpUrl : this.dtpUrl + "/";
         // Url with spaces
-        String ruleContent = underTest.getDtpRuleDocContent(dtpUrl + "grs/dtp/rulesdoc/      com.parasoft.xtest.cpp.analyzer.static.pattern/10.6.2/zh_CN/APSC_DV-000160-a.html");
+        String ruleContent = underTest.getDtpRuleDocContent(dtpUrl + "grs/dtp/rulesdoc/      com.parasoft.xtest.cpp.analyzer.static.pattern/10.6.3/zh_CN/APSC_DV-000160-a.html");
         assertEquals("", ruleContent);
     }
 
