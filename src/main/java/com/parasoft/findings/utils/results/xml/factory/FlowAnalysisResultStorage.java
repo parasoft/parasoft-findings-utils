@@ -107,8 +107,7 @@ final class FlowAnalysisResultStorage
             String sRuleImportantPointMessage = getString(IXmlTagsAndAttributes.FA_TAG_RULE_RIPMESSAGE_V2);
 
             String sPackage = getString(IXmlTagsAndAttributes.PACKAGE_ATTR);
-            return new FlowAnalysisViolation(sRuleId, sAnalyzerId, sLanguageId, location, sErrorMessage, sPackage, sCauseMessage,
-                    sRuleImportantPointMessage, sPointMessage, trackedVariablesMessages, aDescriptors);
+            return new FlowAnalysisViolation(sRuleId, sAnalyzerId, sLanguageId, location, sErrorMessage, sPackage, aDescriptors);
         }
 
         @Override
@@ -119,7 +118,7 @@ final class FlowAnalysisResultStorage
         @Override
         @SuppressWarnings("deprecation")
         protected IPathElement createViolElemDesc(ResultLocation location, String sElemDescription, List<IPathElement> childDescriptors,
-                                                  Map<String, String> properties, Map<String, String> attributesMap, List<PathElementAnnotation> annotations) {
+                                                  Map<String, String> attributesMap, List<IPathElementAnnotation> annotations) {
             final String sType = attributesMap.remove(IXmlTagsAndAttributes.VIOLATION_ELEMENT_TYPE_V2_TAG);
             if (StringUtil.isEmpty(sType)) {
                 throw new IllegalArgumentException("Illegal value for " + IXmlTagsAndAttributes.VIOLATION_ELEMENT_TYPE_V2_TAG + " attribute: " + sType);
@@ -136,7 +135,7 @@ final class FlowAnalysisResultStorage
                 }
             }
             return new FlowAnalysisPathElement(sElemDescription, location, attributesMap, aChildDescriptors,
-                    new FlowAnalysisPathElement.TypeImpl(sType), sThrownTypes, sThrowingMethod, properties, annotations);
+                    new FlowAnalysisPathElement.TypeImpl(sType), sThrownTypes, sThrowingMethod, annotations);
         }
 
         /**

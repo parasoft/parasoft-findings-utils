@@ -18,7 +18,7 @@ package com.parasoft.findings.utils.results.violations;
 /**
  * Simple implementation of path element annotation.
  */
-public class PathElementAnnotation {
+public class PathElementAnnotation implements IPathElementAnnotation{
     private final String _sMessage;
 
     private final String _sKind;

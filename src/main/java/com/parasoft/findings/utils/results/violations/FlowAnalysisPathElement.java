@@ -39,22 +39,12 @@ public class FlowAnalysisPathElement
 
     private final String _sThrowingMethod;
 
-    private final List<PathElementAnnotation> _annotations;
-
-    @Deprecated
-    private final Map<String, String> _properties;
+    private final List<IPathElementAnnotation> _annotations;
 
     private final Type _type;
 
-    /**
-     * @deprecated reason this constructor is deprecated </br>
-     * {will be removed in 10.6.x version} </br>
-     * as properties will not be supported (annotations instead)
-     */
-    @Deprecated
     public FlowAnalysisPathElement(String sDescription, ResultLocation location, Map<String, String> attributes,
-                                    IFlowAnalysisPathElement[] aChildren, Type type, String sThrownTypes, String sThrowingMethod, Map<String, String> properties,
-                                    List<PathElementAnnotation> annotations) {
+                                    IFlowAnalysisPathElement[] aChildren, Type type, String sThrownTypes, String sThrowingMethod, List<IPathElementAnnotation> annotations) {
         _sDescription = sDescription;
         _location = location;
         _attributes = (attributes == null) ? new LinkedHashMap<String, String>() : attributes;
@@ -62,8 +52,7 @@ public class FlowAnalysisPathElement
         _type = type;
         _sThrownTypes = sThrownTypes;
         _sThrowingMethod = sThrowingMethod;
-        _properties = (properties == null) ? new LinkedHashMap<String, String>() : properties;
-        _annotations = (annotations == null) ? new ArrayList<PathElementAnnotation>() : annotations;
+        _annotations = (annotations == null) ? new ArrayList<IPathElementAnnotation>() : annotations;
     }
 
     public String getDescription() {
@@ -86,12 +75,7 @@ public class FlowAnalysisPathElement
         return _aChildren;
     }
 
-    @Deprecated
-    public Map<String, String> getProperties() {
-        return _properties;
-    }
-
-    public List<PathElementAnnotation> getAnnotations() {
+    public List<IPathElementAnnotation> getAnnotations() {
         return _annotations;
     }
 

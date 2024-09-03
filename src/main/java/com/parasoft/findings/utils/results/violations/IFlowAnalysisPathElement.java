@@ -34,25 +34,7 @@ public interface IFlowAnalysisPathElement
      *
      * @return list of annotations
      */
-    List<PathElementAnnotation> getAnnotations();
-
-    /**
-     * Gets additional descriptor's properties that may be useful to the end-user.
-     * <p>
-     * Properties are pairs of strings where key is the name of the property and
-     * value is its value. Property name is guaranteed to be prepared for the end
-     * user (it is already i18ned, for example).
-     *
-     * @return The properties mappings.
-     * @post $result != null
-     * <p>
-     * /**
-     * @deprecated reason this method is deprecated </br>
-     * {will be removed in 10.6.x version} </br>
-     * as properties will not be supported (annotations instead)
-     */
-    @Deprecated
-    Map<String, String> getProperties();
+    List<IPathElementAnnotation> getAnnotations();
 
     /**
      * @return list of thrown type, <code>null</code> if nothing is thrown
