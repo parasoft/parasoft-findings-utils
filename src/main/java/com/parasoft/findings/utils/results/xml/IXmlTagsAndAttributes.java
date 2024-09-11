@@ -90,7 +90,6 @@ public interface IXmlTagsAndAttributes {
     String FLOW_ANALYSIS_VIOLATION_V2_TAG = "FlowViol"; //$NON-NLS-1$
     String FA_TAG_RULE_SAFMESSAGE_V2 = "ruleSAFMsg"; //$NON-NLS-1$
     String FA_TAG_RULE_SCSCMESSAGE_V2 = "ruleSCSCMsg"; //$NON-NLS-1$
-    String FA_TAG_RULE_RIPMESSAGE_V2 = "ruleRIPMsg"; //$NON-NLS-1$
     String SEVERITY_ATTR = "severity"; //$NON-NLS-1$
     String RULE_CATEGORY_ATTR = "rule.category"; //$NON-NLS-1$
     String RULE_SUBCATEGORY_ATTR = "rule.subcategory"; //$NON-NLS-1$

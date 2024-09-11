@@ -17,36 +17,21 @@
 package com.parasoft.findings.utils.results.violations;
 
 import java.util.Arrays;
-import java.util.Map;
 
 public class FlowAnalysisViolation
         extends AbstractCodingStandardsViolation
         implements IFlowAnalysisViolation {
     private final String _sRuleId;
 
-    private final String _sRuleImportantPointMessage;
-
-    @Deprecated
-    private final Map<String, String> _trackedVariablesMessages;
-
     private final IFlowAnalysisPathElement[] _aElementDescriptors;
 
-    /**
-     * @deprecated reason this constructor is deprecated </br>
-     * {will be removed in 10.6.x version} </br>
-     * as trackedVariablesMessages will not be supported
-     */
-    @Deprecated
     public FlowAnalysisViolation(String sRuleId, String sAnalyzerId, String sLanguageId,
                                  ResultLocation resultLocation,
-                                 String sMessage, String sPackage, String sRuleImportantPointMessage,
-                                 Map<String, String> trackedVariablesMessages,
+                                 String sMessage, String sPackage,
                                  IFlowAnalysisPathElement[] aElementDescriptors) {
         super(sAnalyzerId, sLanguageId, resultLocation, sMessage);
 
         _sRuleId = sRuleId;
-        _sRuleImportantPointMessage = sRuleImportantPointMessage;
-        _trackedVariablesMessages = trackedVariablesMessages;
         _aElementDescriptors = aElementDescriptors;
         setPackage(sPackage);
     }
@@ -58,15 +43,6 @@ public class FlowAnalysisViolation
 
     public IFlowAnalysisPathElement[] getPathElements() {
         return _aElementDescriptors;
-    }
-
-    public String getRuleImportantPointMessage() {
-        return _sRuleImportantPointMessage;
-    }
-
-    @Deprecated
-    public Map<String, String> getTrackedVariablesMessages() {
-        return _trackedVariablesMessages;
     }
 
     @Override

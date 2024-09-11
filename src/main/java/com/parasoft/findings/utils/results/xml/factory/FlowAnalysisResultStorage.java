@@ -91,7 +91,6 @@ final class FlowAnalysisResultStorage
         }
 
         @Override
-        @SuppressWarnings("deprecation")
         protected IViolation createViolation(Map map, String sAnalyzerId, String sLanguageId, ResultLocation location) {
             List<IPathElement> descriptors = getDescriptors();
             IFlowAnalysisPathElement[] aDescriptors = (descriptors == null) ? new IFlowAnalysisPathElement[0]
@@ -99,14 +98,11 @@ final class FlowAnalysisResultStorage
 
             String sRuleId = getObligatoryString(IXmlTagsAndAttributes.RULE_ATTR);
 
-            Map<String, String> trackedVariablesMessages = getProperties();
-
             String sErrorMessage = getObligatoryString(IXmlTagsAndAttributes.MESSAGE_V2_ATTR);
-            String sRuleImportantPointMessage = getString(IXmlTagsAndAttributes.FA_TAG_RULE_RIPMESSAGE_V2);
 
             String sPackage = getString(IXmlTagsAndAttributes.PACKAGE_ATTR);
             return new FlowAnalysisViolation(sRuleId, sAnalyzerId, sLanguageId, location, sErrorMessage, sPackage,
-                    sRuleImportantPointMessage, trackedVariablesMessages, aDescriptors);
+                    aDescriptors);
         }
 
         @Override
