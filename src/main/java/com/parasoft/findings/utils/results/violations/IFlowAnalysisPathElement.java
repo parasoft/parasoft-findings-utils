@@ -20,8 +20,11 @@ import java.util.List;
 
 public interface IFlowAnalysisPathElement
         extends IPathElement {
+    char CAUSE = 'C';
+    char IMPORTANT_ELEMENT = '!';
     char POINT = 'P';
     char RULE = 'I';
+    char THROWING_CHAR = 'E';
 
     IFlowAnalysisPathElement[] getChildren();
 
