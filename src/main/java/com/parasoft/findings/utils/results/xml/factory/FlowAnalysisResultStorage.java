@@ -99,12 +99,10 @@ final class FlowAnalysisResultStorage
             String sRuleId = getObligatoryString(IXmlTagsAndAttributes.RULE_ATTR);
 
             String sErrorMessage = getObligatoryString(IXmlTagsAndAttributes.MESSAGE_V2_ATTR);
-            String sCauseMessage = getObligatoryString(IXmlTagsAndAttributes.FA_TAG_RULE_SCSCMESSAGE_V2);
-            String sPointMessage = getObligatoryString(IXmlTagsAndAttributes.FA_TAG_RULE_SAFMESSAGE_V2);
 
             String sPackage = getString(IXmlTagsAndAttributes.PACKAGE_ATTR);
-            return new FlowAnalysisViolation(sRuleId, sAnalyzerId, sLanguageId, location, sErrorMessage, sPackage, sCauseMessage,
-                    sPointMessage, aDescriptors);
+            return new FlowAnalysisViolation(sRuleId, sAnalyzerId, sLanguageId, location, sErrorMessage, sPackage,
+                    aDescriptors);
         }
 
         @Override
@@ -113,9 +111,8 @@ final class FlowAnalysisResultStorage
         }
 
         @Override
-        @SuppressWarnings("deprecation")
         protected IPathElement createViolElemDesc(ResultLocation location, String sElemDescription, List<IPathElement> childDescriptors,
-                                                  Map<String, String> properties, Map<String, String> attributesMap, List<PathElementAnnotation> annotations) {
+                                                  Map<String, String> attributesMap, List<PathElementAnnotation> annotations) {
             final String sType = attributesMap.remove(IXmlTagsAndAttributes.VIOLATION_ELEMENT_TYPE_V2_TAG);
             if (StringUtil.isEmpty(sType)) {
                 throw new IllegalArgumentException("Illegal value for " + IXmlTagsAndAttributes.VIOLATION_ELEMENT_TYPE_V2_TAG + " attribute: " + sType);
@@ -132,7 +129,7 @@ final class FlowAnalysisResultStorage
                 }
             }
             return new FlowAnalysisPathElement(sElemDescription, location, attributesMap, aChildDescriptors,
-                    new FlowAnalysisPathElement.TypeImpl(sType), sThrownTypes, sThrowingMethod, properties, annotations);
+                    new FlowAnalysisPathElement.TypeImpl(sType), sThrownTypes, sThrowingMethod, annotations);
         }
 
         /**

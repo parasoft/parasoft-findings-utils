@@ -23,21 +23,15 @@ public class FlowAnalysisViolation
         implements IFlowAnalysisViolation {
     private final String _sRuleId;
 
-    private final String _sCauseMessage;
-    private final String _sPointMessage;
-
     private final IFlowAnalysisPathElement[] _aElementDescriptors;
 
     public FlowAnalysisViolation(String sRuleId, String sAnalyzerId, String sLanguageId,
                                  ResultLocation resultLocation,
-                                 String sMessage, String sPackage, String sCauseMessage,
-                                 String sPointMessage,
+                                 String sMessage, String sPackage,
                                  IFlowAnalysisPathElement[] aElementDescriptors) {
         super(sAnalyzerId, sLanguageId, resultLocation, sMessage);
 
         _sRuleId = sRuleId;
-        _sCauseMessage = sCauseMessage;
-        _sPointMessage = sPointMessage;
         _aElementDescriptors = aElementDescriptors;
         setPackage(sPackage);
     }
@@ -49,14 +43,6 @@ public class FlowAnalysisViolation
 
     public IFlowAnalysisPathElement[] getPathElements() {
         return _aElementDescriptors;
-    }
-
-    public String getCauseMessage() {
-        return _sCauseMessage;
-    }
-
-    public String getPointMessage() {
-        return _sPointMessage;
     }
 
     @Override

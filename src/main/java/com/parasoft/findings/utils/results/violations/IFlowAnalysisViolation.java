@@ -26,21 +26,4 @@ public interface IFlowAnalysisViolation
      * @post $result.length > 0
      */
     IFlowAnalysisPathElement[] getPathElements();
-
-    /**
-     * @return Message describing violation cause.
-     * @post $result != null
-     * @deprecated As 10.4.1 has annotations instead
-     */
-    @Deprecated
-    String getCauseMessage();
-
-    /**
-     * @return Message describing violation point.
-     * @post $result != null
-     * @deprecated As 10.4.1 has annotations instead
-     */
-    @Deprecated
-    String getPointMessage();
-
 }
