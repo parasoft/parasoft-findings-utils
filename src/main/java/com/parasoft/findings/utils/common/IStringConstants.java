@@ -23,11 +23,6 @@ import com.parasoft.findings.utils.common.util.StringUtil;
  */
 public interface IStringConstants {
     /**
-     * The String ": "
-     */
-    String COLON_SP = ": "; //$NON-NLS-1$
-
-    /**
      * The comma (,) character.
      */
     String CHAR_COMMA = ","; //$NON-NLS-1$
