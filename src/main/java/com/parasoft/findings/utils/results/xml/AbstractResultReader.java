@@ -19,11 +19,7 @@ import java.util.*;
 
 import com.parasoft.findings.utils.common.util.XMLUtil;
 import com.parasoft.findings.utils.results.location.IResultLocationsReader;
-import com.parasoft.findings.utils.results.violations.LocationsException;
-import com.parasoft.findings.utils.results.violations.PathElementAnnotation;
-import com.parasoft.findings.utils.results.violations.ResultLocation;
-import com.parasoft.findings.utils.results.violations.SourceRange;
-import com.parasoft.findings.utils.results.violations.IPathElement;
+import com.parasoft.findings.utils.results.violations.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -183,9 +179,8 @@ public abstract class AbstractResultReader
                 }
                 String sSourcelessElemDesc = descriptorAttributes.get(IXmlTagsAndAttributes.SOURCELESS_ELEM_DESC);
                 List<IPathElement> children = (List<IPathElement>) descriptorData.get(IXmlTagsAndAttributes.VIOLATION_ELEMENT_DESC_V2_TAG);
-                LinkedHashMap<String, String> properties = (LinkedHashMap<String, String>) descriptorData.get(IXmlTagsAndAttributes.PROPERTIES_V2_TAG);
                 List<PathElementAnnotation> annotations = (List<PathElementAnnotation>) descriptorData.get(IXmlTagsAndAttributes.ANNOTATIONS_TAG);
-                IPathElement curDesc = createViolElemDesc(location, sSourcelessElemDesc, children, properties, descriptorAttributes, annotations);
+                IPathElement curDesc = createViolElemDesc(location, sSourcelessElemDesc, children, descriptorAttributes, annotations);
                 if (curDesc != null) {
                     List<IPathElement> descriptors = _violElemDescStack.getLast();
                     descriptors.add(curDesc);
@@ -316,7 +311,7 @@ public abstract class AbstractResultReader
     }
 
     protected IPathElement createViolElemDesc(ResultLocation sourceLocation, String sSourcelessElemDesc,
-                                              List<IPathElement> children, Map<String, String> curProperties, Map<String, String> attributesMap, List<PathElementAnnotation> annotations)
+                                              List<IPathElement> children, Map<String, String> attributesMap, List<PathElementAnnotation> annotations)
             throws SAXException {
         throw new UnsupportedOperationException("Illegal call."); //$NON-NLS-1$
     }

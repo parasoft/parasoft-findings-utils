@@ -19,15 +19,12 @@ package com.parasoft.findings.utils.results.violations;
 import java.util.Arrays;
 import java.util.Map;
 
-@SuppressWarnings("deprecation")
 public class FlowAnalysisViolation
         extends AbstractCodingStandardsViolation
         implements IFlowAnalysisViolation {
     private final String _sRuleId;
 
-    private final String _sCauseMessage;
     private final String _sRuleImportantPointMessage;
-    private final String _sPointMessage;
 
     @Deprecated
     private final Map<String, String> _trackedVariablesMessages;
@@ -42,16 +39,13 @@ public class FlowAnalysisViolation
     @Deprecated
     public FlowAnalysisViolation(String sRuleId, String sAnalyzerId, String sLanguageId,
                                  ResultLocation resultLocation,
-                                 String sMessage, String sPackage, String sCauseMessage, String sRuleImportantPointMessage,
-                                 String sPointMessage,
+                                 String sMessage, String sPackage, String sRuleImportantPointMessage,
                                  Map<String, String> trackedVariablesMessages,
                                  IFlowAnalysisPathElement[] aElementDescriptors) {
         super(sAnalyzerId, sLanguageId, resultLocation, sMessage);
 
         _sRuleId = sRuleId;
-        _sCauseMessage = sCauseMessage;
         _sRuleImportantPointMessage = sRuleImportantPointMessage;
-        _sPointMessage = sPointMessage;
         _trackedVariablesMessages = trackedVariablesMessages;
         _aElementDescriptors = aElementDescriptors;
         setPackage(sPackage);
@@ -66,16 +60,8 @@ public class FlowAnalysisViolation
         return _aElementDescriptors;
     }
 
-    public String getCauseMessage() {
-        return _sCauseMessage;
-    }
-
     public String getRuleImportantPointMessage() {
         return _sRuleImportantPointMessage;
-    }
-
-    public String getPointMessage() {
-        return _sPointMessage;
     }
 
     @Deprecated

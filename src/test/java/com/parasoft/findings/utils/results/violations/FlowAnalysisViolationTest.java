@@ -26,15 +26,13 @@ public class FlowAnalysisViolationTest {
         ResultLocation resultLocation = this.resultLocation;
         String message = "Violation message";
         String sPackage = "com.example";
-        String causeMessage = "Cause message";
         String ruleImportantPointMessage = "Important point message";
-        String pointMessage = "Point message";
         Map<String, String> trackedVariablesMessages = new HashMap<>();
         IFlowAnalysisPathElement[] elementDescriptors = new IFlowAnalysisPathElement[0];
 
         FlowAnalysisViolation violation = new FlowAnalysisViolation(
                 ruleId, analyzerId, languageId, resultLocation, message, sPackage,
-                causeMessage, ruleImportantPointMessage, pointMessage,
+                ruleImportantPointMessage,
                 trackedVariablesMessages, elementDescriptors);
 
         assertEquals(ruleId, violation.getRuleId());
@@ -42,9 +40,7 @@ public class FlowAnalysisViolationTest {
         assertEquals(languageId, violation.getLanguageId());
         assertEquals(resultLocation, violation.getResultLocation());
         assertEquals(message, violation.getMessage());
-        assertEquals(causeMessage, violation.getCauseMessage());
         assertEquals(ruleImportantPointMessage, violation.getRuleImportantPointMessage());
-        assertEquals(pointMessage, violation.getPointMessage());
         assertEquals(trackedVariablesMessages, violation.getTrackedVariablesMessages());
         assertEquals(elementDescriptors, violation.getPathElements());
     }
@@ -53,12 +49,10 @@ public class FlowAnalysisViolationTest {
     public void testHashCode() {
         FlowAnalysisViolation viol1 = new FlowAnalysisViolation(
                 "RULE001", "ANALYZER001", "JAVA", this.resultLocation, "Message",
-                "com.example", "Cause", "Important point", "Point",
-                new HashMap<>(), new IFlowAnalysisPathElement[0]);
+                "com.example", "Important point", new HashMap<>(), new IFlowAnalysisPathElement[0]);
         FlowAnalysisViolation viol_sameAsViol1 = new FlowAnalysisViolation(
                 "RULE001", "ANALYZER001", "JAVA", this.resultLocation, "Message",
-                "com.example", "Cause", "Important point", "Point",
-                new HashMap<>(), new IFlowAnalysisPathElement[0]);
+                "com.example", "Important point", new HashMap<>(), new IFlowAnalysisPathElement[0]);
 
         assertEquals(viol_sameAsViol1.hashCode(), viol1.hashCode());
     }
@@ -67,23 +61,23 @@ public class FlowAnalysisViolationTest {
     public void testEquals() {
         FlowAnalysisViolation viol1 = new FlowAnalysisViolation(
                 "RULE001", "ANALYZER001", "JAVA", this.resultLocation, "Message",
-                "com.example", "Cause", "Important point", "Point",
+                "com.example", "Important point",
                 new HashMap<>(), new IFlowAnalysisPathElement[0]);
         FlowAnalysisViolation viol_samePropsAsViol1 = new FlowAnalysisViolation(
                 "RULE001", "ANALYZER001", "JAVA", this.resultLocation, "Message",
-                "com.example", "Cause", "Important point", "Point",
+                "com.example", "Important point",
                 new HashMap<>(), new IFlowAnalysisPathElement[0]);
         FlowAnalysisViolation viol_diffRuleIdWithViol1 = new FlowAnalysisViolation(
                 "RULE002", "ANALYZER001", "JAVA", this.resultLocation, "Message",
-                "com.example", "Cause", "Important point", "Point",
+                "com.example",  "Important point",
                 new HashMap<>(), new IFlowAnalysisPathElement[0]);
         FlowAnalysisViolation viol_diffAnalyzerIdWithViol1 = new FlowAnalysisViolation(
                 "RULE001", "ANALYZER002", "JAVA", this.resultLocation, "Message",
-                "com.example", "Cause", "Important point", "Point",
+                "com.example",  "Important point",
                 new HashMap<>(), new IFlowAnalysisPathElement[0]);
         FlowAnalysisViolation viol_diffPathElementWithViol1 = new FlowAnalysisViolation(
                 "RULE001", "ANALYZER001", "JAVA", this.resultLocation, "Message",
-                "com.example", "Cause", "Important point", "Point",
+                "com.example",  "Important point",
                 new HashMap<>(), new IFlowAnalysisPathElement[1]);
 
         assertTrue(viol1.equals(viol1)); // Same object

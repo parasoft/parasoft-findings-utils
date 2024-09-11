@@ -18,14 +18,8 @@ package com.parasoft.findings.utils.results.xml.factory;
 
 import java.util.*;
 
-import com.parasoft.findings.utils.results.violations.DupCodePathElement;
-import com.parasoft.findings.utils.results.violations.DupCodeViolation;
-import com.parasoft.findings.utils.results.violations.SourceRange;
+import com.parasoft.findings.utils.results.violations.*;
 import com.parasoft.findings.utils.results.xml.*;
-import com.parasoft.findings.utils.results.violations.IPathElement;
-import com.parasoft.findings.utils.results.violations.IViolation;
-import com.parasoft.findings.utils.results.violations.PathElementAnnotation;
-import com.parasoft.findings.utils.results.violations.ResultLocation;
 import com.parasoft.findings.utils.common.util.XMLUtil;
 
 /**
@@ -113,7 +107,7 @@ class DupcodeViolationStorage
 
         @Override
         protected IPathElement createViolElemDesc(ResultLocation location, String sElemDescription,
-                                                  List<IPathElement> childDescriptors, Map<String, String> properties, Map<String, String> attributesMap,
+                                                  List<IPathElement> childDescriptors, Map<String, String> attributesMap,
                                                   List<PathElementAnnotation> annotations) {
             String sSuppressed = attributesMap.get(IXmlTagsAndAttributes.SUPPRESSED_ATTR);
             if (Boolean.parseBoolean(sSuppressed)) {

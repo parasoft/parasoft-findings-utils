@@ -18,17 +18,15 @@ public class FlowAnalysisPathElementTest {
     IFlowAnalysisPathElement mockedFlowAnalysisPathElement = Mockito.mock(IFlowAnalysisPathElement.class);
     IFlowAnalysisPathElement[] iFlowAnalysisPathElementsForTest = {mockedFlowAnalysisPathElement};
     List<PathElementAnnotation> pathElementAnnotationsForTest = new ArrayList<>();
-    Map<String, String> propertiesForTest = new HashMap<>();
 
     @BeforeEach
     public void prepareTestVariables() {
         locationForTest = new ResultLocation(new FileTestableInput(new File("testFile")), new SourceRange(1,2,3,0));
         typeImplForTest = new FlowAnalysisPathElement.TypeImpl("typeForTest");
         pathElementAnnotationsForTest.add(new PathElementAnnotation("Loop condition evaluation: !exitGame (assuming true)", "condEval"));
-        propertiesForTest.put("Tracked variables", "the_record != null");
 
         underTest = new FlowAnalysisPathElement("descriptionForTest", locationForTest,
-                new HashMap<>(), iFlowAnalysisPathElementsForTest, typeImplForTest, "const char *", "assertion", propertiesForTest, pathElementAnnotationsForTest);
+                new HashMap<>(), iFlowAnalysisPathElementsForTest, typeImplForTest, "const char *", "assertion", pathElementAnnotationsForTest);
     }
 
     @Test
@@ -50,11 +48,6 @@ public class FlowAnalysisPathElementTest {
     @Test
     public void testGetChildren() {
         assertEquals(iFlowAnalysisPathElementsForTest, underTest.getChildren());
-    }
-
-    @Test
-    public void testGetProperties() {
-        assertEquals(propertiesForTest, underTest.getProperties());
     }
 
     @Test
@@ -90,7 +83,7 @@ public class FlowAnalysisPathElementTest {
     @Test
     public void testEquals_withFlowAnalysisPathElementObject() {
         FlowAnalysisPathElement newFlowAnalysisPathElement = new FlowAnalysisPathElement("descriptionForTest", locationForTest,
-                new HashMap<>(), iFlowAnalysisPathElementsForTest, typeImplForTest, "const char *", "assertion", propertiesForTest, pathElementAnnotationsForTest);
+                new HashMap<>(), iFlowAnalysisPathElementsForTest, typeImplForTest, "const char *", "assertion", pathElementAnnotationsForTest);
         assertTrue(underTest.equals(newFlowAnalysisPathElement));
     }
 
