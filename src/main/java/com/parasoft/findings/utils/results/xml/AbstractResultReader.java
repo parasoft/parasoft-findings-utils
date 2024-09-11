@@ -306,8 +306,7 @@ public abstract class AbstractResultReader
     }
 
     protected IPathElement createViolElemDesc(ResultLocation sourceLocation, String sSourcelessElemDesc,
-                                              List<IPathElement> children, Map<String, String> attributesMap, List<PathElementAnnotation> annotations)
-            throws SAXException {
+                                              List<IPathElement> children, Map<String, String> attributesMap, List<PathElementAnnotation> annotations) {
         throw new UnsupportedOperationException("Illegal call."); //$NON-NLS-1$
     }
 

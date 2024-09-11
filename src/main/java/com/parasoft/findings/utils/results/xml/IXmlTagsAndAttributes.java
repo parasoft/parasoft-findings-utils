@@ -5,7 +5,6 @@ public interface IXmlTagsAndAttributes {
     String VERSIONS_TAG = "VersionInfos"; //$NON-NLS-1$
     String SCOPE_SECTION_TAG = "Scope"; //$NON-NLS-1$
     String CODING_STANDARDS_SECTION_TAG = "CodingStandards"; //$NON-NLS-1$
-    String EXECUTION_SECTION_V2_TAG = "Exec"; //$NON-NLS-1$
     String LIST_POSTFIX = "List"; //$NON-NLS-1$
     String PROPERTY_V2_TAG = "Prop"; //$NON-NLS-1$
     String PROPERTY_VALUE_V2_ATTR = "val"; //$NON-NLS-1$
@@ -22,7 +21,6 @@ public interface IXmlTagsAndAttributes {
     String RESOURCE_PROJECT_RELATIVE_PATH_ATTR = "resProjPath"; //$NON-NLS-1$
     String URI_ATTR = "uri"; //$NON-NLS-1$
     String PROJECT_PATH_ATTR = "projPath"; //$NON-NLS-1$
-    String SYMBOL_ID_ATTR = "symId"; //$NON-NLS-1$
     String SYMBOLS_ATTR = "sym"; //$NON-NLS-1$
     String LOC_ATTR = "loc"; //$NON-NLS-1$
     String LOCATION_HASH_ATTR = "locHash"; //$NON-NLS-1$
@@ -88,8 +86,6 @@ public interface IXmlTagsAndAttributes {
     String TOOL_ATTR = "tool"; //$NON-NLS-1$
     String ANALYZER_ATTR = "analyzer"; //$NON-NLS-1$
     String FLOW_ANALYSIS_VIOLATION_V2_TAG = "FlowViol"; //$NON-NLS-1$
-    String FA_TAG_RULE_SAFMESSAGE_V2 = "ruleSAFMsg"; //$NON-NLS-1$
-    String FA_TAG_RULE_SCSCMESSAGE_V2 = "ruleSCSCMsg"; //$NON-NLS-1$
     String SEVERITY_ATTR = "severity"; //$NON-NLS-1$
     String RULE_CATEGORY_ATTR = "rule.category"; //$NON-NLS-1$
     String RULE_SUBCATEGORY_ATTR = "rule.subcategory"; //$NON-NLS-1$
