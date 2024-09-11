@@ -310,11 +310,6 @@ public abstract class AbstractResultReader
         return (List<IPathElement>) _resultData.get(IXmlTagsAndAttributes.VIOLATION_ELEMENT_DESC_V2_TAG);
     }
 
-    @SuppressWarnings("unchecked")
-    protected Map<String, String> getProperties() {
-        return (Map<String, String>) _resultData.get(IXmlTagsAndAttributes.PROPERTIES_V2_TAG);
-    }
-
     protected IPathElement createViolElemDesc(ResultLocation sourceLocation, String sSourcelessElemDesc,
                                               List<IPathElement> children, Map<String, String> curProperties, Map<String, String> attributesMap, List<PathElementAnnotation> annotations)
             throws SAXException {

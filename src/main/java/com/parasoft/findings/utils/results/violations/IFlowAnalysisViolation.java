@@ -16,8 +16,6 @@
 
 package com.parasoft.findings.utils.results.violations;
 
-import java.util.Map;
-
 public interface IFlowAnalysisViolation
         extends IRuleViolation {
     /**
@@ -38,26 +36,11 @@ public interface IFlowAnalysisViolation
     String getCauseMessage();
 
     /**
-     * @return Message describing violation cause.
-     * @post $result != null
-     * @deprecated As 10.4.1 has annotations instead
-     */
-    @Deprecated
-    String getRuleImportantPointMessage();
-
-    /**
      * @return Message describing violation point.
      * @post $result != null
      * @deprecated As 10.4.1 has annotations instead
      */
     @Deprecated
     String getPointMessage();
-
-    /**
-     * @return {@link Map} of tracked variables messages.
-     * @deprecated
-     */
-    @Deprecated
-    Map<String, String> getTrackedVariablesMessages();
 
 }
