@@ -61,7 +61,7 @@ public class RulesRestClientTest {
     @Test
     public void testCreate_incorrectDtpUrl() {
         Properties settings = new Properties();
-        settings.put(DTP_URL, "https://incorrectDtpUrl");
+        settings.put(DTP_URL, "http://incorrectDtpUrl");
 
         try {
             RulesRestClient.create(settings);
