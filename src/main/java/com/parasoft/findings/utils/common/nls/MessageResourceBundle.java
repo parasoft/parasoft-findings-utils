@@ -175,7 +175,7 @@ public final class MessageResourceBundle {
      * Class which sub-classes java.util.Properties and uses the #put method to
      * set field values rather than storing the values in the table.
      */
-    private static class MessagesProperties
+    private static class MessagesProperties // parasoft-suppress OWASP2021.A8.OROM "We are using the default serialization mechanism when reading or writing objects that implement the Serializable interface and do no further customization."
             extends MessageBundleProperties {
         private static final long serialVersionUID = 1L;
 
