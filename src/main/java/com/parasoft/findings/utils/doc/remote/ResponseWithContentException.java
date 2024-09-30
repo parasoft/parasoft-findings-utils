@@ -24,7 +24,7 @@ import org.apache.http.client.HttpResponseException;
 /**
  * Signals a non 2xx HTTP response.
  */
-public final class ResponseWithContentException // parasoft-suppress OWASP2021.A8.OROM "We are using the default serialization mechanism when reading or writing objects that implement the Serializable interface and do no further customization."
+public final class ResponseWithContentException // parasoft-suppress OWASP2021.A8.OROM "Using default serialization mechanism."
         extends HttpResponseException {
 
     private static final long serialVersionUID = -419207194615475081L;
