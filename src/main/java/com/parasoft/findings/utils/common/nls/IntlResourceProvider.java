@@ -81,7 +81,7 @@ public class IntlResourceProvider {
                 if (result != null) {
                     return result;
                 }
-            } catch (IOException e) {
+            } catch (IOException e) { // parasoft-suppress OWASP2021.A9.LGE "This is expected. Reason: The logger in error function is an acceptable logger"
                 Logger.getLogger().error(e);
             }
         }

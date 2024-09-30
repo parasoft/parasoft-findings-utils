@@ -297,7 +297,7 @@ public final class FileUtil {
         }
         try {
             is.close();
-        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
+        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable" // parasoft-suppress OWASP2021.A9.LGE "This is expected. Reason: The IOException is acceptable"
             // do nothing
         }
     }
@@ -313,12 +313,12 @@ public final class FileUtil {
         }
         try {
             os.flush();
-        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
+        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable" // parasoft-suppress OWASP2021.A9.LGE "This is expected. Reason: The IOException is acceptable"
             // do nothing
         }
         try {
             os.close();
-        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
+        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable" // parasoft-suppress OWASP2021.A9.LGE "This is expected. Reason: The IOException is acceptable"
             // do nothing
         }
     }

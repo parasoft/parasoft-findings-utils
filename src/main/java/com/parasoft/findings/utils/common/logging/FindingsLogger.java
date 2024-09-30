@@ -72,7 +72,7 @@ public final class FindingsLogger {
         if (FACTORY != null) {
             try {
                 handler = FACTORY.getHandler(sName);
-            } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed"
+            } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed" // parasoft-suppress OWASP2021.A9.LGE "This is expected. Reason: Unable to obtain error handler in factory"
                 // error in factory - cannot obtain handler
             }
         }
@@ -307,7 +307,7 @@ public final class FindingsLogger {
     private void tryLog(Runnable logMethod) {
         try {
             logMethod.run();
-        } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed"
+        } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed" // parasoft-suppress OWASP2021.A9.LGE "This is expected. Reason: Unable to obtain error handler in factory"
             // error in handler - logging failed
         }
     }
@@ -397,7 +397,7 @@ public final class FindingsLogger {
             do {
                 try {
                     sLine = lineReader.readLine();
-                } catch (IOException ioe) {
+                } catch (IOException ioe) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during creating stack trace don't cause the build to fail."
                     error("Cannot create stack trace.", ioe); //$NON-NLS-1$
                     break;
                 }
@@ -417,7 +417,7 @@ public final class FindingsLogger {
             if (lineReader != null) {
                 try {
                     lineReader.close();
-                } catch (IOException ioe) {
+                } catch (IOException ioe) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during creating stack trace don't cause the build to fail."
                     error("Cannot create stack trace.", ioe); //$NON-NLS-1$
                 }
                 lineReader = null;

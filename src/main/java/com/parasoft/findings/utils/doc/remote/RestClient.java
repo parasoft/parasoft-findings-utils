@@ -159,7 +159,7 @@ public class RestClient {
             builder.setPath(sPath);
             return builder.build();
 
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during encode path don't cause the build to fail."
             Logger.getLogger().error("Cannot encode path " + sPath + " using non encoded version.", e); //$NON-NLS-1$ //$NON-NLS-2$
         }
 

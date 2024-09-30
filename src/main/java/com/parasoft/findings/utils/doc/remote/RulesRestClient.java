@@ -125,7 +125,8 @@ public final class RulesRestClient
             JacksonObjectImpl result = new JacksonObjectImpl(text);
             return new RuleInfo(result.getString(RULE_ID_ATTR), result.getString(ANALYZER_ID_ATTR), result.getString(ANALYZER_VERSION_ATTR),
                     result.getString(DOCS_URL_ATTR));
-        } catch (Exception e) {
+        } catch (Exception e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during getting rule information don't cause the build to fail."
+            Logger.getLogger().error("An exception is thrown during getting rule information.", e);
             return null;
         }
     }
@@ -142,7 +143,8 @@ public final class RulesRestClient
         try {
             URI uri = new URI(docUrl);
             return getString(uri);
-        } catch (Exception e) {
+        } catch (Exception e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during getting rule content don't cause the build to fail."
+            Logger.getLogger().error("An exception is thrown during getting rule content.", e);
             return IStringConstants.EMPTY;
         }
     }

@@ -52,7 +52,7 @@ public final class IntegerUtil {
         }
         try {
             return Integer.parseInt(sValue);
-        } catch (Exception exc) {
+        } catch (Exception exc) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during parsing int value don't cause the build to fail."
             Logger.getLogger().info("Could not parse int value from: " + sValue); //$NON-NLS-1$
         }
         return defaultValue;

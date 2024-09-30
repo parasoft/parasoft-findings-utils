@@ -55,7 +55,7 @@ public final class XMLUtil {
                 // which can return an inconsistent implementation depending on the context.
                 _saxParserFactory = SAXParserFactory.newInstance(
                         "com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl", XMLUtil.class.getClassLoader()); //$NON-NLS-1$
-            } catch (FactoryConfigurationError err) {
+            } catch (FactoryConfigurationError err) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during getting SAX parser factory don't cause the build to fail."
                 Logger.getLogger().error("Failed to get an instance of com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl." //$NON-NLS-1$
                         + " Falling back to default SAXParserFactory implementation."); //$NON-NLS-1$
                 _saxParserFactory = SAXParserFactory.newInstance();
@@ -96,7 +96,7 @@ public final class XMLUtil {
         // limit entity expansion to prevent billion laughs
         try {
             reader.setProperty("http://www.oracle.com/xml/jaxp/properties/entityExpansionLimit", 100000); //$NON-NLS-1$
-        } catch (SAXException e) {
+        } catch (SAXException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during configuring reader processing don't cause the build to fail."
             Logger.getLogger().warn(e);
         }
 
@@ -105,7 +105,7 @@ public final class XMLUtil {
             try {
                 reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true); //$NON-NLS-1$
                 reader.setEntityResolver(new EmptyEntityResolver());
-            } catch (SAXException e) {
+            } catch (SAXException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during configuring reader processing don't cause the build to fail."
                 Logger.getLogger().warn(e);
             }
         }
@@ -116,7 +116,7 @@ public final class XMLUtil {
                 reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false); //$NON-NLS-1$
                 reader.setFeature("http://xml.org/sax/features/external-general-entities", false); //$NON-NLS-1$
                 reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false); //$NON-NLS-1$
-            } catch (SAXException e) {
+            } catch (SAXException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during configuring reader processing don't cause the build to fail."
                 Logger.getLogger().warn(e);
             }
         }
@@ -142,7 +142,7 @@ public final class XMLUtil {
             if (sVal != null) {
                 return Integer.parseInt(sVal);
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during getting int value of an attribute don't cause the build to fail."
             Logger.getLogger().error(e);
         }
         return defaultValue;

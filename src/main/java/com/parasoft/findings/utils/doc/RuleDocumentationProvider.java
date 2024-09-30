@@ -27,15 +27,15 @@ public class RuleDocumentationProvider {
         try {
             rulesRestClient = RulesRestClient.create(_settings);
             _clientStatus = ClientStatus.AVAILABLE;
-        } catch (DtpUrlException e) {
+        } catch (DtpUrlException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during getting rest client of rules processing don't cause the build to fail."
             Logger.getLogger().info("Null or empty dtp.url value is specified.");  //$NON-NLS-1$
             rulesRestClient = null;
             _clientStatus = ClientStatus.DTP_URL_NOT_SPECIFIED;
-        } catch (NotSupportedDtpVersionException e) {
+        } catch (NotSupportedDtpVersionException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during getting rest client of rules processing don't cause the build to fail."
             Logger.getLogger().warn("Unable to retrieve the documentation for the rule from DTP. It is highly possible that the current version of DTP is older than the 2023.1 which is not supported.");  //$NON-NLS-1$
             rulesRestClient = null;
             _clientStatus = ClientStatus.NOT_SUPPORTED_VERSION;
-        } catch (Exception e) {
+        } catch (Exception e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during getting rest client of rules processing don't cause the build to fail."
             Logger.getLogger().warn("DTP server is not available: " + _settings.getProperty(DTP_URL)); //$NON-NLS-1$
             rulesRestClient = null;
             _clientStatus = ClientStatus.NOT_AVAILABLE;

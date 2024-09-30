@@ -99,7 +99,7 @@ public final class MessageResourceBundle {
         for (InputStream input : resources) {
             try {
                 properties.load(input);
-            } catch (IOException ioe) {
+            } catch (IOException ioe) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during loading resources don't cause the build to fail."
                 Logger.getLogger().error("Error loading " + input, ioe); //$NON-NLS-1$
             } finally {
                 IntlUtil.close(input);
@@ -146,7 +146,7 @@ public final class MessageResourceBundle {
                     makeAccessible(field);
                 }
                 field.set(null, value);
-            } catch (Exception exc) {
+            } catch (Exception exc) {  // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during setting message value don't cause the build to fail."
                 Logger.getLogger().error("Error in setting message value for: " + field.getName(), exc); //$NON-NLS-1$
             }
         }
@@ -219,7 +219,7 @@ public final class MessageResourceBundle {
                     makeAccessible(field);
                 }
                 field.set(null, value);
-            } catch (Exception exc) {
+            } catch (Exception exc) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during setting message value don't cause the build to fail."
                 Logger.getLogger().error("Error in setting message value.", exc); //$NON-NLS-1$
             }
             return null;

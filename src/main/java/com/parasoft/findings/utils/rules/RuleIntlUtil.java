@@ -61,8 +61,8 @@ public class RuleIntlUtil
                 try {
                     return new URL(structureUrl.getProtocol(), structureUrl.getHost(),
                         structureUrl.getPort(), sIntlFilename).openStream();
-                } catch (IOException e) {
-                    // ignore exception
+                } catch (IOException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during init internationalized strings file processing don't cause the build to fail."
+                    Logger.getLogger().error("An exception is thrown during init internationalized strings file process.", e);
                     return null;
                 }
             }
@@ -103,8 +103,8 @@ public class RuleIntlUtil
         try {
             props.load(is);
             return true;
-        } catch (IOException x) {
-            // ignore exception
+        } catch (IOException x) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during init internationalized strings file don't cause the build to fail."
+            Logger.getLogger().error("An exception is thrown during init internationalized strings file. False will be returned.", x);
             return false;
         } finally {
             IOUtils.close(is);
