@@ -69,6 +69,51 @@ public final class Level // parasoft-suppress OWASP2021.A8.OROM "Using default s
         _sLevelName = sLevelName;
     }
 
+    /**
+     * Find level defined by given level name if not exist return default level.
+     *
+     * @param sLevelName the level name.
+     * @param defaultLevel the default level.
+     * @return the level defined by name or default one.
+     *
+     * @pre sLevelName != null
+     * @pre sLevelName.trim().length() > 0
+     * @pre defaultLevel != null
+     * @post $result != null
+     */
+    public static Level toLevel(String sLevelName, Level defaultLevel)
+    {
+        if (sLevelName == null) {
+            return defaultLevel;
+        }
+
+        switch (sLevelName) {
+            case OFF_LEVEL_LABEL:
+                return OFF;
+            case TRACE_LEVEL_LABEL:
+                return TRACE;
+            case TIME_LEVEL_LABEL:
+                return TIME;
+            case DEBUG_LEVEL_LABEL:
+                return DEBUG;
+            case INFO_LEVEL_LABEL:
+                return INFO;
+            case WARN_LEVEL_LABEL:
+                return WARN;
+            case ERROR_LEVEL_LABEL:
+                return ERROR;
+            case FATAL_LEVEL_LABEL:
+                return FATAL;
+            case ALL_LEVEL_LABEL:
+                return ALL;
+            default:
+                return defaultLevel;
+        }
+    }
+
+    private Object readResolve() { // parasoft-suppress OWASP2021.A8.RRSC "The following toLevel method always returns a Level instance, which implements Serializable."
+        return toLevel(_sLevelName, this);
+    }
 
     /**
      * OFF level label

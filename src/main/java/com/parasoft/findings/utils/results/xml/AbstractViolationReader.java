@@ -286,7 +286,7 @@ public abstract class AbstractViolationReader
         }
         try {
             return Long.parseLong(sValue);
-        } catch (Exception exc) {
+        } catch (Exception exc) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure exceptions during long value parsing don't cause the process to fail."
             Logger.getLogger().info("Could not parse long value from: " + sValue); //$NON-NLS-1$
         }
         return defaultValue;
