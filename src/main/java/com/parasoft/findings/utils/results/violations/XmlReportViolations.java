@@ -28,9 +28,9 @@ public class XmlReportViolations implements Iterator<IViolation> {
             SAXParser parser = XMLUtil.createSAXParser();
             parser.parse(is, _reportReader);
             _violationsIter = _reportReader.getImportedViolations().iterator();
-        } catch (ParserConfigurationException | SAXException ex) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during parsing XML report violations don't cause the build to fail."
+        } catch (ParserConfigurationException | SAXException ex) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during XML report violations parsing don't cause the process to fail."
             Logger.getLogger().error(ex);
-        } catch (IOException ex) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during parsing XML report violations don't cause the build to fail."
+        } catch (IOException ex) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during XML report violations parsing don't cause the process to fail."
             Logger.getLogger().error(ex);
         } finally {
             IOUtils.close(is);

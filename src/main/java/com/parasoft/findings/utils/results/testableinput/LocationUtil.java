@@ -43,7 +43,7 @@ public final class LocationUtil {
         }
         try {
             return new URI(sUri);
-        } catch (URISyntaxException urise) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during parsing location URI don't cause the build to fail."
+        } catch (URISyntaxException urise) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during location URI parsing don't cause the process to fail."
             Logger.getLogger().warn("Failed to parse location URI."); //$NON-NLS-1$
         }
         return null;
@@ -67,7 +67,7 @@ public final class LocationUtil {
         try {
             URI uri = removeHost(new URI(location));
             return new File(uri).toURI();
-        } catch (URISyntaxException | IllegalArgumentException use) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during getting generic file URI don't cause the build to fail."
+        } catch (URISyntaxException | IllegalArgumentException use) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during generic file URI obtaining don't cause the process to fail."
             Logger.getLogger().error("An exception is thrown during getting generic file URI. The URI that are not processed will be returned", use);
             return new File(location).toURI();
         }
@@ -76,7 +76,7 @@ public final class LocationUtil {
     public static URI toFileURI(URI uri) {
         try {
             return removeHost(uri);
-        } catch (URISyntaxException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during converting to file URI don't cause the build to fail."
+        } catch (URISyntaxException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during file URI converting don't cause the process to fail."
             Logger.getLogger().errorTrace(e);
         }
         return null;

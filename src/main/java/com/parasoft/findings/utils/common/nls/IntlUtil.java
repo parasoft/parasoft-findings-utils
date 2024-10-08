@@ -134,7 +134,7 @@ public final class IntlUtil {
         }
         try {
             is.close();
-        } catch (IOException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during closing input stream don't cause the build to fail."
+        } catch (IOException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during input stream closing don't cause the process to fail."
             Logger.getLogger().error(e);
         }
     }

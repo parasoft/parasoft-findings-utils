@@ -208,7 +208,7 @@ public class RuleDescriptionParser
                     try {
                         int severity = Integer.parseInt(attributes.getValue(IRuleConstants.SEVERITY_ATTR));
                         rule.setSeverity(severity);
-                    } catch (NumberFormatException x) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during parsing severity value don't cause the build to fail."
+                    } catch (NumberFormatException x) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during severity value parsing don't cause the process to fail."
                         Logger.getLogger().warn(x);
                     }
                 } else {

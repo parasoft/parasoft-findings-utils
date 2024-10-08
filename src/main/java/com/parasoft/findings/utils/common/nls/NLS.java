@@ -103,7 +103,7 @@ public abstract class NLS {
         try {
             MessageFormat formatter = new MessageFormat(sPattern);
             sResult = formatter.format(aArgs);
-        } catch (IllegalArgumentException iae) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during getting formatted value don't cause the build to fail."
+        } catch (IllegalArgumentException iae) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during formatted value obtaining don't cause the process to fail."
             Logger.getLogger().warn(iae);
             return IStringConstants.EMPTY;
         }

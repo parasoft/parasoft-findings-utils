@@ -37,7 +37,7 @@ public class ClasspathResourceLoader
         path = validatePath(path);
         try {
             return _classloader.getResourceAsStream(path);
-        } catch (NullPointerException e) { // XT-37381 // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during getting resource processing don't cause the build to fail."
+        } catch (NullPointerException e) { // XT-37381 // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during resource obtaining don't cause the process to fail."
             Logger.getLogger().warn("NPE while trying to get resource " + path, e); //$NON-NLS-1$
             return null;
         }
