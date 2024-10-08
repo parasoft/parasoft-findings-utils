@@ -287,7 +287,7 @@ public final class FileUtil {
     }
 
     /**
-     * Method close output stream
+     * Method close input stream
      * @param is input stream which need to be closed
      */
     private static void close(InputStream is)
@@ -297,7 +297,7 @@ public final class FileUtil {
         }
         try {
             is.close();
-        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable" // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during output stream closing don't cause the process to fail."
+        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable" // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during input stream closing don't cause the process to fail."
             Logger.getLogger().error("An exception is thrown during closing output stream.", exc);
         }
     }
