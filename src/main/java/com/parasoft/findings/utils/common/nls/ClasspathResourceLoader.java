@@ -54,7 +54,7 @@ public class ClasspathResourceLoader
     // Resolve the OWASP2021.A3.CDBV violation and normalize the parameters
     private String canonicalize(String prevalidatedStr) {
         if (prevalidatedStr != null) {
-            return new String(prevalidatedStr.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            return prevalidatedStr.trim();
         }
         return null;
     }
