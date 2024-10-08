@@ -35,7 +35,7 @@ public class RuleDocumentationProvider {
             Logger.getLogger().warn("Unable to retrieve the documentation for the rule from DTP. It is highly possible that the current version of DTP is older than the 2023.1 which is not supported.");  //$NON-NLS-1$
             rulesRestClient = null;
             _clientStatus = ClientStatus.NOT_SUPPORTED_VERSION;
-        } catch (Exception e) {
+        } catch (Exception e) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure exceptions during rules rest client fetching don't cause the process to fail."
             Logger.getLogger().warn("DTP server is not available: " + _settings.getProperty(DTP_URL)); //$NON-NLS-1$
             rulesRestClient = null;
             _clientStatus = ClientStatus.NOT_AVAILABLE;
