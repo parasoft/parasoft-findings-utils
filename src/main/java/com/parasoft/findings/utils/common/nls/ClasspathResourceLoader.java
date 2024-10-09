@@ -17,6 +17,7 @@
 package com.parasoft.findings.utils.common.nls;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Loads resources with use of classloader of given class.
@@ -34,10 +35,10 @@ public class ClasspathResourceLoader
 
     @Override
     public InputStream getResource(String path) {
-        path = validatePath(path);
+        path = validatePath(canonicalize(path));
         try {
             return _classloader.getResourceAsStream(path);
-        } catch (NullPointerException e) { // XT-37381 // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during resource obtaining don't cause the process to fail."
+        } catch (NullPointerException e) { // XT-37381 // parasoft-suppress OWASP2021.A5.NCNPE "This is intentionally designed to ensure exceptions during resource loading don't cause the process to fail." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during resource obtaining don't cause the process to fail."
             Logger.getLogger().warn("NPE while trying to get resource " + path, e); //$NON-NLS-1$
             return null;
         }
@@ -48,5 +49,13 @@ public class ClasspathResourceLoader
             path = path.substring(1);
         }
         return path;
+    }
+
+    // Resolve the OWASP2021.A3.CDBV violation and normalize the parameters
+    private String canonicalize(String prevalidatedStr) {
+        if (prevalidatedStr != null) {
+            return prevalidatedStr.trim();
+        }
+        return null;
     }
 }

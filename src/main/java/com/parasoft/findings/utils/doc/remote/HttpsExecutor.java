@@ -87,7 +87,7 @@ public final class HttpsExecutor {
 
         SSLConnectionSocketFactory ssl = null;
         try {
-            SSLContext sslContext = SSLContext.getInstance(SSLConnectionSocketFactory.TLS);
+            SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
             sslContext.init(null, new TrustManager[]{trustAllManager}, null);
 
             ssl = new SSLConnectionSocketFactory(sslContext, SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);

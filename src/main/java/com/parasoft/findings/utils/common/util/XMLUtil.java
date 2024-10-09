@@ -96,7 +96,7 @@ public final class XMLUtil {
         // limit entity expansion to prevent billion laughs
         try {
             reader.setProperty("http://www.oracle.com/xml/jaxp/properties/entityExpansionLimit", 100000); //$NON-NLS-1$
-        } catch (SAXException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during reader processing configuring don't cause the process to fail."
+        } catch (SAXException e) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure the SAX exceptions during reader configuration don't cause the process to fail." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during reader processing configuring don't cause the process to fail."
             Logger.getLogger().warn(e);
         }
 
@@ -105,7 +105,7 @@ public final class XMLUtil {
             try {
                 reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true); //$NON-NLS-1$
                 reader.setEntityResolver(new EmptyEntityResolver());
-            } catch (SAXException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during configuring reader processing don't cause the process to fail."
+            } catch (SAXException e) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure the SAX exceptions during reader configuration don't cause the process to fail." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during configuring reader processing don't cause the process to fail."
                 Logger.getLogger().warn(e);
             }
         }
@@ -116,7 +116,7 @@ public final class XMLUtil {
                 reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false); //$NON-NLS-1$
                 reader.setFeature("http://xml.org/sax/features/external-general-entities", false); //$NON-NLS-1$
                 reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false); //$NON-NLS-1$
-            } catch (SAXException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during reader processing configuring don't cause the process to fail."
+            } catch (SAXException e) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure the SAX exceptions during reader configuration don't cause the process to fail." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during reader processing configuring don't cause the process to fail."
                 Logger.getLogger().warn(e);
             }
         }

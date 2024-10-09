@@ -43,7 +43,7 @@ public final class RuleParserUtil
             saxParse(in, handler, options);
         } catch (FileNotFoundException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during parsing rule creating don't cause the process to fail."
             Logger.getLogger().warn("File not found under given url " + file); //$NON-NLS-1$
-        } catch (Exception e) {
+        } catch (Exception e) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to wrap exceptions with IOException."
             Logger.getLogger().error(e);
             throw new IOException("Error while parsing document: " + e.getMessage(), e); //$NON-NLS-1$
         } finally {
@@ -75,7 +75,7 @@ public final class RuleParserUtil
         XMLReader reader = null;
         try {
             reader = XMLUtil.createXMLReader(options.disableDTD, options.disableExternalEntities);
-        } catch (Exception e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during sax factory reader creating don't cause the process to fail."
+        } catch (Exception e) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure exceptions during sax factory reader fetching don't cause the process to fail." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during sax factory reader creating don't cause the process to fail."
             Logger.getLogger().error("Error while getting sax factory reader", e); //$NON-NLS-1$
         }
 

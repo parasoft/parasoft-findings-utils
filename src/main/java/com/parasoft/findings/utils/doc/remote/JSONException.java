@@ -16,7 +16,7 @@
 
 package com.parasoft.findings.utils.doc.remote;
 
-public class JSONException extends RuntimeException {
+public class JSONException extends RuntimeException { // parasoft-suppress OWASP2021.A8.OROM "Using default serialization mechanism."
     private static final long serialVersionUID = 0L;
     private Throwable cause;
 

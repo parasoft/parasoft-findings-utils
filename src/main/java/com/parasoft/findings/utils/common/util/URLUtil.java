@@ -114,7 +114,7 @@ public final class URLUtil {
     public static String getPath(URL url) {
         try {
             return URLDecoder.decode(url.getFile(), StandardCharsets.UTF_8.name());
-        } catch (Throwable thr) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during URL decoding don't cause the process to fail."
+        } catch (Throwable thr) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during URL decoding don't cause the process to fail."
             Logger.getLogger().error("An exception is thrown during decode URL. The uncoded path will be returned", thr); //$NON-NLS-1$
             return url.getFile();
         }

@@ -146,7 +146,7 @@ public final class MessageResourceBundle {
                     makeAccessible(field);
                 }
                 field.set(null, value);
-            } catch (Exception exc) {  // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during message value setting don't cause the process to fail."
+            } catch (Exception exc) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure exceptions during missing finding don't cause the process to fail." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during message value setting don't cause the process to fail."
                 Logger.getLogger().error("Error in setting message value for: " + field.getName(), exc); //$NON-NLS-1$
             }
         }
@@ -175,7 +175,7 @@ public final class MessageResourceBundle {
      * Class which sub-classes java.util.Properties and uses the #put method to
      * set field values rather than storing the values in the table.
      */
-    private static class MessagesProperties
+    private static class MessagesProperties // parasoft-suppress OWASP2021.A8.OROM "Using default serialization mechanism."
             extends MessageBundleProperties {
         private static final long serialVersionUID = 1L;
 
@@ -219,7 +219,7 @@ public final class MessageResourceBundle {
                     makeAccessible(field);
                 }
                 field.set(null, value);
-            } catch (Exception exc) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during message value setting don't cause the process to fail."
+            } catch (Exception exc) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure exceptions during message value setting don't cause the process to fail." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during message value setting don't cause the process to fail."
                 Logger.getLogger().error("Error in setting message value.", exc); //$NON-NLS-1$
             }
             return null;
@@ -234,6 +234,8 @@ public final class MessageResourceBundle {
      */
     public static class MessageBundleProperties
             extends Properties {
+        private static final long serialVersionUID = -7333013719731974205L;
+
         public MessageBundleProperties() {
             super();
         }

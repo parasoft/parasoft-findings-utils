@@ -72,7 +72,7 @@ public final class FindingsLogger {
         if (FACTORY != null) {
             try {
                 handler = FACTORY.getHandler(sName);
-            } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed" // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during handler obtaining don't cause the process to fail."
+            } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed" // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress SECURITY.UEHL.LGE "Reviewed" // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during handler obtaining don't cause the process to fail."
                 // error in factory - cannot obtain handler
             }
         }
@@ -307,9 +307,9 @@ public final class FindingsLogger {
     private void tryLog(Runnable logMethod) {
         try {
             logMethod.run();
-        } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed" // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during logging don't cause the process to fail."
-            // error in handler - logging failed
+        } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed" // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during logging don't cause the process to fail."
             error(thr);
+            // error in handler - logging failed
         }
     }
 
