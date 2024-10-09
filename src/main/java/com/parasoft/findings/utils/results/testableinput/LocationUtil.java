@@ -68,7 +68,7 @@ public final class LocationUtil {
             URI uri = removeHost(new URI(location));
             return new File(uri).toURI();
         } catch (URISyntaxException | IllegalArgumentException use) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during generic file URI obtaining don't cause the process to fail."
-            Logger.getLogger().error("An exception is thrown during getting generic file URI. The URI that are not processed will be returned", use);
+            Logger.getLogger().error("Failed to get generic file URI. The URI that are not processed will be returned", use);
             return new File(location).toURI();
         }
     }

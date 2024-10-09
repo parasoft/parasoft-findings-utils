@@ -53,7 +53,7 @@ public final class URLUtil {
                     null);
             return uri.toURL();
         } catch (MalformedURLException | URISyntaxException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during URL converting don't cause the process to fail."
-            Logger.getLogger().error("An exception is thrown during converting a string representing an URL or a file path into a URL object", e);
+            Logger.getLogger().error("Failed to convert a string representing an URL or a file path into a URL object", e);
         }
         if (!sUrl.contains(URL_SEPARATOR)) {
             return makeFromPath(sUrl);
@@ -74,7 +74,7 @@ public final class URLUtil {
             URI uri = file.toURI();
             return uri.toURL();
         } catch (MalformedURLException mue) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during URL creating don't cause the process to fail."
-            Logger.getLogger().error("An exception is thrown during making the URL representation of given local path.", mue);
+            Logger.getLogger().error("Failed to make the URL representation of given local path.", mue);
             return null;
         }
     }
@@ -106,7 +106,7 @@ public final class URLUtil {
         try {
             return new File(url.toURI());
         } catch (URISyntaxException use) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during file converting don't cause the process to fail."
-            Logger.getLogger().error("An exception is thrown during converting to corresponding file. The file with decoded URL path will be returned", use);
+            Logger.getLogger().error("Failed to convert to corresponding file. The file with decoded URL path will be returned", use);
             return new File(getPath(url));
         }
     }
