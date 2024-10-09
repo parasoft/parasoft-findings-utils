@@ -59,7 +59,7 @@ public final class RuleParserUtil
             return;
         }
 
-        XMLReader reader = createReader(options); // parasoft-suppress OWASP2021.A5.DXXE "The XML reader is correctly configured in createReader() method."
+        XMLReader reader = createReader(options);
 
         reader.setContentHandler(handler);
         reader.setDTDHandler(handler);
