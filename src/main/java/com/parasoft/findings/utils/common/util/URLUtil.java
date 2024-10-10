@@ -52,10 +52,8 @@ public final class URLUtil {
                     null,
                     null);
             return uri.toURL();
-        } catch (MalformedURLException e) {
-            // ignore exception
-        } catch (URISyntaxException e) {
-            // ignore exception
+        } catch (MalformedURLException | URISyntaxException e) {
+            Logger.getLogger().error("Failed to convert a string representing an URL or a file path into a URL object", e);
         }
         if (!sUrl.contains(URL_SEPARATOR)) {
             return makeFromPath(sUrl);
@@ -76,7 +74,7 @@ public final class URLUtil {
             URI uri = file.toURI();
             return uri.toURL();
         } catch (MalformedURLException mue) {
-            // ignore exception
+            Logger.getLogger().error("Failed to make the URL representation of given local path.", mue);
             return null;
         }
     }
@@ -108,6 +106,7 @@ public final class URLUtil {
         try {
             return new File(url.toURI());
         } catch (URISyntaxException use) {
+            Logger.getLogger().error("Failed to convert to corresponding file. The file with decoded URL path will be returned", use);
             return new File(getPath(url));
         }
     }

@@ -28,9 +28,7 @@ public class XmlReportViolations implements Iterator<IViolation> {
             SAXParser parser = XMLUtil.createSAXParser();
             parser.parse(is, _reportReader);
             _violationsIter = _reportReader.getImportedViolations().iterator();
-        } catch (ParserConfigurationException | SAXException ex) {
-            Logger.getLogger().error(ex);
-        } catch (IOException ex) {
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger().error(ex);
         } finally {
             IOUtils.close(is);

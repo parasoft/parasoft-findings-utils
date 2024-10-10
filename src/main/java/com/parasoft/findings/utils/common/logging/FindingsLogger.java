@@ -16,6 +16,9 @@
 
 package com.parasoft.findings.utils.common.logging;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.*;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
@@ -24,6 +27,7 @@ import java.util.logging.Logger;
  * The main logger, which redirect logging messages to connected logging system.
  */
 public final class FindingsLogger {
+    private static final Log log = LogFactory.getLog(FindingsLogger.class);
     /**
      * The logger handler factory.
      */
@@ -72,7 +76,7 @@ public final class FindingsLogger {
         if (FACTORY != null) {
             try {
                 handler = FACTORY.getHandler(sName);
-            } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed" // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
+            } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed" // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during handler obtaining don't cause the process to fail."
                 // error in factory - cannot obtain handler
             }
         }

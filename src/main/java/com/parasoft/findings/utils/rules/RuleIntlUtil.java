@@ -62,7 +62,7 @@ public class RuleIntlUtil
                     return new URL(structureUrl.getProtocol(), structureUrl.getHost(),
                         structureUrl.getPort(), sIntlFilename).openStream();
                 } catch (IOException e) {
-                    // ignore exception
+                    Logger.getLogger().error("Failed to init internationalized strings file process.", e);
                     return null;
                 }
             }
@@ -104,7 +104,7 @@ public class RuleIntlUtil
             props.load(is);
             return true;
         } catch (IOException x) {
-            // ignore exception
+            Logger.getLogger().error("Failed to init internationalized strings file. False will be returned.", x);
             return false;
         } finally {
             IOUtils.close(is);
