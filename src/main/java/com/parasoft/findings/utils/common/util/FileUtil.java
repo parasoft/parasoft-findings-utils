@@ -297,7 +297,7 @@ public final class FileUtil {
         }
         try {
             is.close();
-        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable" // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during input stream closing don't cause the process to fail."
+        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
             Logger.getLogger().error("Failed to close the output stream.", exc);
         }
     }
@@ -313,12 +313,12 @@ public final class FileUtil {
         }
         try {
             os.flush();
-        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable" // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during output stream closing don't cause the process to fail."
+        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
             Logger.getLogger().error("Failed to close the output stream.", exc);
         }
         try {
             os.close();
-        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable" // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during output stream closing don't cause the process to fail."
+        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
             Logger.getLogger().error("Failed to close the output stream.", exc);
         }
     }

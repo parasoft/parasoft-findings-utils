@@ -133,7 +133,7 @@ public class ViolationsReader
         if (_currentReader != null) {
             try {
                 _currentReader.startElement(sUri, sLocalName, sQName, attributes);
-            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during violations reading don't cause the process to fail."
+            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
                 Logger.getLogger().warn(t);
                 _currentReader = null;
                 _sCurrentViolationTag = null;
@@ -184,7 +184,7 @@ public class ViolationsReader
         if (_currentReader != null) {
             try {
                 _currentReader.endElement(sUri, sLocalName, sQName);
-            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during violations reading don't cause the process to fail."
+            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
                 Logger.getLogger().warn(t);
                 _currentReader = null;
                 _sCurrentViolationTag = null;
@@ -194,7 +194,7 @@ public class ViolationsReader
             if (_currentReader != null) {
                 try {
                     addViolation();
-                } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during violations reading don't cause the process to fail."
+                } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
                     Logger.getLogger().warn(t);
                 }
                 _currentReader = null;
@@ -225,7 +225,7 @@ public class ViolationsReader
         if (_currentReader != null) {
             try {
                 _currentReader.startPrefixMapping(sPrefix, sUri);
-            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during violations reading don't cause the process to fail."
+            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
                 Logger.getLogger().warn(t);
                 _currentReader = null;
                 _sCurrentViolationTag = null;
@@ -238,7 +238,7 @@ public class ViolationsReader
         if (_currentReader != null) {
             try {
                 _currentReader.endPrefixMapping(sPrefix);
-            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during violations reading don't cause the process to fail."
+            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
                 Logger.getLogger().warn(t);
                 _currentReader = null;
                 _sCurrentViolationTag = null;
@@ -252,7 +252,7 @@ public class ViolationsReader
         if (_currentReader != null) {
             try {
                 _currentReader.characters(aChars, start, length);
-            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during violations reading don't cause the process to fail."
+            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
                 Logger.getLogger().warn(t);
                 _currentReader = null;
                 _sCurrentViolationTag = null;
@@ -265,7 +265,7 @@ public class ViolationsReader
         if (_currentReader != null) {
             try {
                 _currentReader.ignorableWhitespace(aChars, start, length);
-            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during violations reading don't cause the process to fail."
+            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
                 Logger.getLogger().warn(t);
                 _currentReader = null;
                 _sCurrentViolationTag = null;
@@ -278,7 +278,7 @@ public class ViolationsReader
         if (_currentReader != null) {
             try {
                 _currentReader.processingInstruction(sTarget, sData);
-            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during violations reading don't cause the process to fail."
+            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
                 Logger.getLogger().warn(t);
                 _currentReader = null;
                 _sCurrentViolationTag = null;
@@ -291,7 +291,7 @@ public class ViolationsReader
         if (_currentReader != null) {
             try {
                 _currentReader.skippedEntity(sName);
-            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during violations reading don't cause the process to fail."
+            } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
                 Logger.getLogger().warn(t);
                 _currentReader = null;
                 _sCurrentViolationTag = null;
@@ -310,7 +310,7 @@ public class ViolationsReader
         IResult result = null;
         try {
             result = _currentReader.getReadResult();
-        } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during violations adding don't cause the process to fail."
+        } catch (Throwable t) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
             Logger.getLogger().error(t);
         }
         if (result == null) {

@@ -52,7 +52,7 @@ public class ResponseContent {
         byte[] ab = asBytes();
         try {
             return new String(ab, charset.name());
-        } catch (UnsupportedEncodingException ex) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during response content processing don't cause the process to fail."
+        } catch (UnsupportedEncodingException ex) {
             Logger.getLogger().error("Failed to convert to a String content. The empty string will be returned", ex);
             return new String(ab);
         }

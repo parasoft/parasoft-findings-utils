@@ -126,7 +126,7 @@ public final class RulesRestClient
             JacksonObjectImpl result = new JacksonObjectImpl(text);
             return new RuleInfo(result.getString(RULE_ID_ATTR), result.getString(ANALYZER_ID_ATTR), result.getString(ANALYZER_VERSION_ATTR),
                     result.getString(DOCS_URL_ATTR));
-        } catch (Exception e) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure exceptions during rule information fetching don't cause the process to fail." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during rule information obtaining don't cause the process to fail."
+        } catch (Exception e) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure exceptions during rule information fetching don't cause the process to fail."
             Logger.getLogger().warn("Failed to load rule info from DTP: " + e.getMessage()); //$NON-NLS-1$
             return null;
         }
@@ -144,7 +144,7 @@ public final class RulesRestClient
         try {
             URI uri = new URI(docUrl);
             return getString(uri);
-        } catch (Exception e) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure exceptions during rule content fetching don't cause the process to fail." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during rule content obtaining don't cause the process to fail."
+        } catch (Exception e) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure exceptions during rule content fetching don't cause the process to fail."
             Logger.getLogger().warn("Failed to load rule content from DTP: " + e.getMessage()); //$NON-NLS-1$
             return IStringConstants.EMPTY;
         }

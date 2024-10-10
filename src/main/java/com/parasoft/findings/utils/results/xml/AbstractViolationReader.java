@@ -91,7 +91,7 @@ public abstract class AbstractViolationReader
         ResultLocation location = null;
         try {
             location = getLocation();
-        } catch (LocationsException le) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during violation location obtaining don't cause the process to fail."
+        } catch (LocationsException le) {
             Logger.getLogger().warn("Failed to read violation's location."); //$NON-NLS-1$
         }
         if (location == null) {
@@ -218,7 +218,7 @@ public abstract class AbstractViolationReader
             }
             ITestableInputLocationMatcher locationMatcher = locReader.getLocationMatcher();
             input = locationMatcher.matchLocation(input, Collections.singletonList(hash), null, null, false);
-        } catch (LocationsException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during legacy location obtaining don't cause the process to fail."
+        } catch (LocationsException e) {
             Logger.getLogger().warn(e.getMessage());
         }
         if (input == null) {
@@ -286,7 +286,7 @@ public abstract class AbstractViolationReader
         }
         try {
             return Long.parseLong(sValue);
-        } catch (Exception exc) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure exceptions during long value parsing don't cause the process to fail." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during long value parsing don't cause the process to fail."
+        } catch (Exception exc) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to ensure exceptions during long value parsing don't cause the process to fail."
             Logger.getLogger().info("Could not parse long value from: " + sValue); //$NON-NLS-1$
         }
         return defaultValue;

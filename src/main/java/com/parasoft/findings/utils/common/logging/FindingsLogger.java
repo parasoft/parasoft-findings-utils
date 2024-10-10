@@ -16,6 +16,9 @@
 
 package com.parasoft.findings.utils.common.logging;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.*;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
@@ -24,6 +27,7 @@ import java.util.logging.Logger;
  * The main logger, which redirect logging messages to connected logging system.
  */
 public final class FindingsLogger {
+    private static final Log log = LogFactory.getLog(FindingsLogger.class);
     /**
      * The logger handler factory.
      */
@@ -307,7 +311,7 @@ public final class FindingsLogger {
     private void tryLog(Runnable logMethod) {
         try {
             logMethod.run();
-        } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed" // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during logging don't cause the process to fail."
+        } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed" // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
             error(thr);
             // error in handler - logging failed
         }
@@ -398,7 +402,7 @@ public final class FindingsLogger {
             do {
                 try {
                     sLine = lineReader.readLine();
-                } catch (IOException ioe) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during stack trace creating don't cause the process to fail."
+                } catch (IOException ioe) {
                     error("Cannot create stack trace.", ioe); //$NON-NLS-1$
                     break;
                 }
@@ -418,7 +422,7 @@ public final class FindingsLogger {
             if (lineReader != null) {
                 try {
                     lineReader.close();
-                } catch (IOException ioe) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during stack trace creating don't cause the process to fail."
+                } catch (IOException ioe) {
                     error("Cannot create stack trace.", ioe); //$NON-NLS-1$
                 }
                 lineReader = null;

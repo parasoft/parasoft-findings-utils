@@ -61,7 +61,7 @@ final public class ViolationRuleUtil {
         if ((sSeverity != null) && (sSeverity.trim().length() > 0)) {
             try {
                 severity = Integer.parseInt(sSeverity);
-            } catch (NumberFormatException nfe) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during Integer severity value obtaining don't cause the process to fail."
+            } catch (NumberFormatException nfe) {
                 Logger.getLogger().warn("Integer severity value expected but got: " + sSeverity); //$NON-NLS-1$
             }
         }

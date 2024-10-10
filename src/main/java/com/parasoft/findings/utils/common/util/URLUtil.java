@@ -52,7 +52,7 @@ public final class URLUtil {
                     null,
                     null);
             return uri.toURL();
-        } catch (MalformedURLException | URISyntaxException e) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during URL converting don't cause the process to fail."
+        } catch (MalformedURLException | URISyntaxException e) {
             Logger.getLogger().error("Failed to convert a string representing an URL or a file path into a URL object", e);
         }
         if (!sUrl.contains(URL_SEPARATOR)) {
@@ -73,7 +73,7 @@ public final class URLUtil {
             File file = new File(path);
             URI uri = file.toURI();
             return uri.toURL();
-        } catch (MalformedURLException mue) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during URL creating don't cause the process to fail."
+        } catch (MalformedURLException mue) {
             Logger.getLogger().error("Failed to make the URL representation of given local path.", mue);
             return null;
         }
@@ -105,7 +105,7 @@ public final class URLUtil {
     public static File toFile(URL url) {
         try {
             return new File(url.toURI());
-        } catch (URISyntaxException use) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during file converting don't cause the process to fail."
+        } catch (URISyntaxException use) {
             Logger.getLogger().error("Failed to convert to corresponding file. The file with decoded URL path will be returned", use);
             return new File(getPath(url));
         }
@@ -114,7 +114,7 @@ public final class URLUtil {
     public static String getPath(URL url) {
         try {
             return URLDecoder.decode(url.getFile(), StandardCharsets.UTF_8.name());
-        } catch (Throwable thr) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during URL decoding don't cause the process to fail."
+        } catch (Throwable thr) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
             Logger.getLogger().error("An exception is thrown during decode URL. The uncoded path will be returned", thr); //$NON-NLS-1$
             return url.getFile();
         }

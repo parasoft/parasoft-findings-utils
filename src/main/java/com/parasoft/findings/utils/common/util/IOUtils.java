@@ -45,7 +45,7 @@ public final class IOUtils {
             if (in != null) {
                 in.close();
             }
-        } catch (IOException ioe) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during input stream closing don't cause the process to fail."
+        } catch (IOException ioe) {
             Logger.getLogger().error("Error while closing input stream.", ioe); //$NON-NLS-1$
         }
     }
@@ -62,7 +62,7 @@ public final class IOUtils {
             if (out != null) {
                 out.close();
             }
-        } catch (IOException ex) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during output stream closing don't cause the process to fail."
+        } catch (IOException ex) {
             Logger.getLogger().error("Error while closing output stream", ex); //$NON-NLS-1$
         }
     }
@@ -79,7 +79,7 @@ public final class IOUtils {
             if (in != null) {
                 in.close();
             }
-        } catch (IOException ex) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during input stream closing don't cause the process to fail."
+        } catch (IOException ex) {
             Logger.getLogger().error("Error while closing input stream.", ex); //$NON-NLS-1$
         }
     }
@@ -96,7 +96,7 @@ public final class IOUtils {
             if (out != null) {
                 out.close();
             }
-        } catch (IOException ex) { // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to ensure exceptions during output stream closing don't cause the process to fail."
+        } catch (IOException ex) {
             Logger.getLogger().error("Error while closing output stream.", ex); //$NON-NLS-1$
         }
     }
