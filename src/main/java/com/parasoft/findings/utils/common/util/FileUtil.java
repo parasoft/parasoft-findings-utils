@@ -298,7 +298,7 @@ public final class FileUtil {
         try {
             is.close();
         } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
-            Logger.getLogger().error("Failed to close the output stream.", exc);
+            Logger.getLogger().debug(exc.getMessage());
         }
     }
 
@@ -314,12 +314,12 @@ public final class FileUtil {
         try {
             os.flush();
         } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
-            Logger.getLogger().error("Failed to close the output stream.", exc);
+            Logger.getLogger().debug(exc.getMessage());
         }
         try {
             os.close();
         } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
-            Logger.getLogger().error("Failed to close the output stream.", exc);
+            Logger.getLogger().debug(exc.getMessage());
         }
     }
 }

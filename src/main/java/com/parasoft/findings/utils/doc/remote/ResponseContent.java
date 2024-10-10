@@ -53,7 +53,7 @@ public class ResponseContent {
         try {
             return new String(ab, charset.name());
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger().error("Failed to convert to a String content. The empty string will be returned", ex);
+            Logger.getLogger().debug(ex.getMessage());
             return new String(ab);
         }
     }
