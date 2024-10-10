@@ -36,12 +36,12 @@ public class ClasspathResourceLoader
     @Override
     public InputStream getResource(String path) {
         path = validatePath(canonicalize(path));
-        try {
-            return _classloader.getResourceAsStream(path);
-        } catch (NullPointerException e) { // XT-37381 // parasoft-suppress OWASP2021.A5.NCNPE "This is intentionally designed to ensure exceptions during resource loading don't cause the process to fail."
-            Logger.getLogger().warn("NPE while trying to get resource " + path, e); //$NON-NLS-1$
+
+        if (path == null) {
+            Logger.getLogger().warn("The resource path cannot be null.");
             return null;
         }
+        return _classloader.getResourceAsStream(path);
     }
 
     private String validatePath(String path) {
