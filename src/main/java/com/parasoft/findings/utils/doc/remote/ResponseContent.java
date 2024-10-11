@@ -53,7 +53,7 @@ public class ResponseContent {
         try {
             return new String(ab, charset.name());
         } catch (UnsupportedEncodingException ex) {
-            // ignore exception
+            Logger.getLogger().debug(ex.getMessage());
             return new String(ab);
         }
     }

@@ -287,7 +287,7 @@ public final class FileUtil {
     }
 
     /**
-     * Method close output stream
+     * Method close input stream
      * @param is input stream which need to be closed
      */
     private static void close(InputStream is)
@@ -298,7 +298,7 @@ public final class FileUtil {
         try {
             is.close();
         } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
-            // do nothing
+            Logger.getLogger().debug(exc.getMessage());
         }
     }
 
@@ -314,12 +314,12 @@ public final class FileUtil {
         try {
             os.flush();
         } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
-            // do nothing
+            Logger.getLogger().debug(exc.getMessage());
         }
         try {
             os.close();
         } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
-            // do nothing
+            Logger.getLogger().debug(exc.getMessage());
         }
     }
 }

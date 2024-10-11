@@ -62,7 +62,7 @@ public class RuleIntlUtil
                     return new URL(structureUrl.getProtocol(), structureUrl.getHost(),
                         structureUrl.getPort(), sIntlFilename).openStream();
                 } catch (IOException e) {
-                    // ignore exception
+                    Logger.getLogger().debug(e.getMessage());
                     return null;
                 }
             }
@@ -104,7 +104,7 @@ public class RuleIntlUtil
             props.load(is);
             return true;
         } catch (IOException x) {
-            // ignore exception
+            Logger.getLogger().debug(x.getMessage());
             return false;
         } finally {
             IOUtils.close(is);

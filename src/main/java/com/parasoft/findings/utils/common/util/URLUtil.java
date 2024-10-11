@@ -52,10 +52,8 @@ public final class URLUtil {
                     null,
                     null);
             return uri.toURL();
-        } catch (MalformedURLException e) {
-            // ignore exception
-        } catch (URISyntaxException e) {
-            // ignore exception
+        } catch (MalformedURLException | URISyntaxException e) {
+            Logger.getLogger().debug(e.getMessage());
         }
         if (!sUrl.contains(URL_SEPARATOR)) {
             return makeFromPath(sUrl);
@@ -76,7 +74,7 @@ public final class URLUtil {
             URI uri = file.toURI();
             return uri.toURL();
         } catch (MalformedURLException mue) {
-            // ignore exception
+            Logger.getLogger().debug(mue.getMessage());
             return null;
         }
     }
@@ -108,6 +106,7 @@ public final class URLUtil {
         try {
             return new File(url.toURI());
         } catch (URISyntaxException use) {
+            Logger.getLogger().debug(use.getMessage());
             return new File(getPath(url));
         }
     }

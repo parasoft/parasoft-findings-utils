@@ -59,7 +59,7 @@ public final class RuleParserUtil
             return;
         }
 
-        XMLReader reader = createReader(options);
+        XMLReader reader = createReader(options); // parasoft-suppress OWASP2021.A5.DXXE "The XXE injection has been set to disabled in the method com.parasoft.findings.utils.common.util.XMLUtil#configureReader() to protect org.xml.sax.XMLReader from an XXE attack."
 
         reader.setContentHandler(handler);
         reader.setDTDHandler(handler);
@@ -101,7 +101,7 @@ public final class RuleParserUtil
 
     public static final class RuleParsingOptions
     {
-        public boolean disableDTD = false;
+        public boolean disableDTD = true;
         public boolean disableExternalEntities = true;
 
         @Override

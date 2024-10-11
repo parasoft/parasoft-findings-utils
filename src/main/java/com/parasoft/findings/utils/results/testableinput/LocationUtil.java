@@ -68,6 +68,7 @@ public final class LocationUtil {
             URI uri = removeHost(new URI(location));
             return new File(uri).toURI();
         } catch (URISyntaxException | IllegalArgumentException use) {
+            Logger.getLogger().debug(use.getMessage());
             return new File(location).toURI();
         }
     }
