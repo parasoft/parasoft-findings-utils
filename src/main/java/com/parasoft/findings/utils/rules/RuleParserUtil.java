@@ -101,7 +101,7 @@ public final class RuleParserUtil
 
     public static final class RuleParsingOptions
     {
-        public boolean disableDTD = false;
+        public boolean disableDTD = true;
         public boolean disableExternalEntities = true;
 
         @Override
