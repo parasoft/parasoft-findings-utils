@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RuleDocumentationProviderTest {
 
     private final String dtpUrl = System.getProperty("testDtpUrl"); // Use the same key as in maven-surefire-plugin configuration.
+    private final String xtestVersion = System.getProperty("testXtestVersion");
 
     @Test
     @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
@@ -105,10 +106,11 @@ public class RuleDocumentationProviderTest {
         RuleDocumentationProvider underTest = createRDPWithAvailableClientDtpDocService();
 
         String dtpUrl = this.dtpUrl.endsWith("/") ? this.dtpUrl : this.dtpUrl + "/";
-        String ruleContent = underTest.getDtpRuleDocContent(dtpUrl + "grs/dtp/rulesdoc/com.parasoft.xtest.cpp.analyzer.static.pattern/10.7.0/zh_CN/APSC_DV-000160-a.html");
+        assertNotNull(xtestVersion, "System property 'testXtestVersion' is not specified");
+        String ruleContent = underTest.getDtpRuleDocContent(dtpUrl + "grs/dtp/rulesdoc/com.parasoft.xtest.cpp.analyzer.static.pattern/" + xtestVersion + "/zh_CN/APSC_DV-000160-a.html");
 
         // If the test fails, check if the rule content is still available at the specified URL,
-        // you may need to change the version number(10.7.0) in the URL, since different DTP version uses different value.
+        // you may need to change the "testXtestVersion" system property, since different DTP version uses different value.
         assertNotEquals("", ruleContent);
         assertTrue(ruleContent.toUpperCase().contains("<HTML>") && ruleContent.contains("[APSC_DV-000160-a]"));
     }
