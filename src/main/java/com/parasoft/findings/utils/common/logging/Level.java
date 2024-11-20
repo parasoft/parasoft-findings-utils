@@ -21,7 +21,7 @@ import java.io.Serializable;
 /**
  * This class introduces a new Findings levels like TIME, TRACE etc...
  */
-public final class Level // parasoft-suppress OWASP2021.A8.OROM "Using default serialization mechanism."
+public final class Level
         implements Serializable {
     /**
      * Automatically generated variable: serialVersionUID

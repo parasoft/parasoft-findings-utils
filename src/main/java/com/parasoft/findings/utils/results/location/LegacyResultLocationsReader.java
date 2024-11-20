@@ -68,7 +68,7 @@ public class LegacyResultLocationsReader extends DefaultHandler implements IResu
     }
 
     public Properties getStoredLocation(String loc) {
-        return _locations.get(loc); // parasoft-suppress BD.OPT.INEFMAP "Reviewed, not modifying public methods to obtain iterable elements."
+        return _locations.get(loc);
     }
 
     public ResultLocation getResultLocation(String loc, SourceRange sourceRange, boolean bAcceptModified)

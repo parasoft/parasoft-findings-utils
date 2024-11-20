@@ -36,7 +36,7 @@ public class StaticXmlStorage {
     }
 
     public IViolationsSAXReader getViolationsReader(ResultVersionsManager versionsManager, FileImportPreferences importPreferences) {
-        List<IViolationXmlStorage> storagesList = new ArrayList<IViolationXmlStorage>(); // parasoft-suppress CDD.DUPC "acceptable"
+        List<IViolationXmlStorage> storagesList = new ArrayList<IViolationXmlStorage>();
         List<String> tagsList = new ArrayList<String>();
         collectCompatibleStorages(versionsManager, tagsList, storagesList);
 

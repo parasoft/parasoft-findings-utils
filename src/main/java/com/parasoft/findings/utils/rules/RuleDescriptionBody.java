@@ -67,7 +67,7 @@ public class RuleDescriptionBody
 
         public void addAttribute(String sName, String sValue)
         {
-            if (_attributes == null) { // parasoft-suppress TRS.ILI "Verified"
+            if (_attributes == null) {
                 _attributes = new HashMap<String, String>();
             }
             _attributes.put(sName, sValue);
@@ -75,7 +75,7 @@ public class RuleDescriptionBody
 
         public void addChild(BodyElement element)
         {
-            if (_children == null) { // parasoft-suppress TRS.ILI "Verified"
+            if (_children == null) {
                 _children = new ArrayList<BodyElement>();
             }
             _children.add(element);

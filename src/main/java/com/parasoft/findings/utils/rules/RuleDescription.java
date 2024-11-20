@@ -101,7 +101,7 @@ public class RuleDescription
 
     protected void addAttribute(String sName, String sValue)
     {
-        if (_attributes == null) { // parasoft-suppress TRS.ILI "Verified"
+        if (_attributes == null) {
             _attributes = new HashMap<String, String>();
         }
         _attributes.put(sName, sValue);

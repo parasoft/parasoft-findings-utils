@@ -72,7 +72,7 @@ public final class FindingsLogger {
         if (FACTORY != null) {
             try {
                 handler = FACTORY.getHandler(sName);
-            } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed" // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate. The current method is a static method and other non-static log methods cannot be called, so the log messages are not printed here."
+            } catch (Throwable thr) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate." // parasoft-suppress OWASP2021.A9.LGE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate. The current method is a static method and other non-static log methods cannot be called, so the log messages are not printed here."
                 // error in factory - cannot obtain handler
             }
         }
@@ -307,7 +307,7 @@ public final class FindingsLogger {
     private void tryLog(Runnable logMethod) {
         try {
             logMethod.run();
-        } catch (Throwable thr) { // parasoft-suppress SECURITY.UEHL.LGE "Reviewed" // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
+        } catch (Throwable thr) { // parasoft-suppress OWASP2021.A5.NCE "This is intentionally designed to prevent exceptions from bubbling up and causing the program to terminate."
             error(thr);
             // error in handler - logging failed
         }
@@ -383,7 +383,7 @@ public final class FindingsLogger {
         }
 
         StringWriter writer = new StringWriter();
-        throwable.printStackTrace(new PrintWriter(writer, true)); // parasoft-suppress MISC.ACPST "Required to prepare logging info."
+        throwable.printStackTrace(new PrintWriter(writer, true));
 
         StringReader reader = null;
         LineNumberReader lineReader = null;

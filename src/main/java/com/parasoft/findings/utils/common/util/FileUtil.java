@@ -94,7 +94,7 @@ public final class FileUtil {
      */
     public static void readFile(File file, List<String> lines)
             throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file)); // parasoft-suppress INTER.SEO "Want to use default encoding"
+        BufferedReader reader = new BufferedReader(new FileReader(file));
         try {
             String sLine = reader.readLine();
             while (sLine != null) {
@@ -250,7 +250,7 @@ public final class FileUtil {
             byte[] aBuffer = new byte[BUFFER_SIZE];
 
             int numOfBytes = 0;
-            while ((numOfBytes = bufferedIn.read(aBuffer)) != -1) { // parasoft-suppress OPT.CEL "reviewed"
+            while ((numOfBytes = bufferedIn.read(aBuffer)) != -1) {
                 bufferedOut.write(aBuffer, 0, numOfBytes);
             }
 
@@ -297,7 +297,7 @@ public final class FileUtil {
         }
         try {
             is.close();
-        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
+        } catch (IOException exc) {
             Logger.getLogger().debug(exc.getMessage());
         }
     }
@@ -313,12 +313,12 @@ public final class FileUtil {
         }
         try {
             os.flush();
-        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
+        } catch (IOException exc) {
             Logger.getLogger().debug(exc.getMessage());
         }
         try {
             os.close();
-        } catch (IOException exc) { // parasoft-suppress SECURITY.UEHL.LGE "acceptable"
+        } catch (IOException exc) {
             Logger.getLogger().debug(exc.getMessage());
         }
     }

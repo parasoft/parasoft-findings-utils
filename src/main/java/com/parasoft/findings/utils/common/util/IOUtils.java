@@ -167,7 +167,7 @@ public final class IOUtils {
             byte[] aBuffer = new byte[bufferSize];
 
             int numOfBytes = 0;
-            while ((numOfBytes = bufferedSource.read(aBuffer)) != -1) { // parasoft-suppress OPT.CEL "reviewed"
+            while ((numOfBytes = bufferedSource.read(aBuffer)) != -1) {
                 bufferedDestination.write(aBuffer, 0, numOfBytes);
             }
 
