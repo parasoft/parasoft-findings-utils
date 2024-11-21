@@ -29,7 +29,7 @@ public interface IRuleConstants
     String COLUMN_TAG = "column"; //$NON-NLS-1$
     String ROW_TAG = "row"; //$NON-NLS-1$
     String MSG_TAG = "msg"; //$NON-NLS-1$
-    String ID_ATTR = "id"; //$NON-NLS-1$  // parasoft-suppress CDD.DUPS "reviewed"
+    String ID_ATTR = "id"; //$NON-NLS-1$
     String NAME_ATTR = "name"; //$NON-NLS-1$
     String DESCRIPTION_ATTR = "description"; //$NON-NLS-1$
     String SEVERITY_ATTR = "severity"; //$NON-NLS-1$

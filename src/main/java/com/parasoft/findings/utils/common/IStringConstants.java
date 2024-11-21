@@ -35,7 +35,7 @@ public interface IStringConstants {
     /**
      * The line feed (\n) character.
      */
-    String CHAR_LINEFEED = "\n"; //$NON-NLS-1$ // parasoft-suppress PORT.LNSP "constant value"
+    String CHAR_LINEFEED = "\n"; //$NON-NLS-1$
 
     /**
      * The empty string.

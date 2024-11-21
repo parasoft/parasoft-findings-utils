@@ -52,10 +52,10 @@ public interface IFlowAnalysisPathElement
      * Below the line we have got method and interfaces that should be to get code compilable before fully re-factoring it.
      * There could be also methods that could be moved above the line if we assume that there are important.
      */
-    interface Type // parasoft-suppress JAVADOC.PJDC "Temporary api for internal purpose."
+    interface Type
     {
-        String getIdentifier(); // parasoft-suppress JAVADOC.PJDM "Temporary api for internal purpose."
+        String getIdentifier();
     }
 
-    Type getType(); // parasoft-suppress JAVADOC.PJDM "Temporary api for internal purpose."
+    Type getType();
 }

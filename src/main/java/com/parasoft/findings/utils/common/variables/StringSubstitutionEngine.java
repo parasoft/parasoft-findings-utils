@@ -67,7 +67,7 @@ public class StringSubstitutionEngine {
         substitute(sExpression, bReportUndefinedVariables, bResolveVariables);
         List<Set<String>> resolvedVariableSets = new ArrayList<Set<String>>();
         while (_bSubstitutions) {
-            Set<String> resolved = substitute(_sbResultBuffer.toString(), bReportUndefinedVariables, true);  // parasoft-suppress OPT.LIOL "Revised"
+            Set<String> resolved = substitute(_sbResultBuffer.toString(), bReportUndefinedVariables, true);
 
             for (int i = resolvedVariableSets.size() - 1; i >= 0; i--) {
                 Set<String> prevSet = resolvedVariableSets.get(i);

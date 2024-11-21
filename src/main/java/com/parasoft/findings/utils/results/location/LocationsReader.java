@@ -84,7 +84,7 @@ public class LocationsReader extends DefaultHandler {
     }
 
     public Properties getStoredLocation(String sLocRef) {
-        return _locations.get(sLocRef); // parasoft-suppress BD.OPT.INEFMAP "Reviewed, not modifying public methods to obtain iterable elements."
+        return _locations.get(sLocRef);
     }
 
     private static final String ILLEGAL_TAG_MESSAGE = "Tag with illegal name spotted:";  //$NON-NLS-1$
