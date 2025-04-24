@@ -24,7 +24,7 @@ import com.parasoft.findings.utils.common.IStringConstants;
 import com.parasoft.findings.utils.common.util.StringUtil;
 import com.parasoft.findings.utils.common.util.URLUtil;
 import com.parasoft.findings.utils.common.util.FileUtil;
-import com.parasoft.findings.utils.doc.remote.DtpException;
+import com.parasoft.findings.utils.common.util.ZipFileUtil;
 import com.parasoft.findings.utils.doc.remote.RulesRestClient;
 import com.parasoft.findings.utils.doc.remote.RulesRestClient.RuleInfo;
 
@@ -108,6 +108,11 @@ class RuleDocumentationHelper {
         File docsExactMatch = getRuleFile(docRoot, _sRuleId);
         if (docsExactMatch.isFile()) {
             return docsExactMatch.getAbsolutePath();
+        }
+
+        String docZipFilePath = ZipFileUtil.getDocZipFileInDir(docRoot.getAbsolutePath());
+        if (docZipFilePath != null) {
+            return docZipFilePath;
         }
 
         return guessRuleFile(docRoot, _sRuleId);

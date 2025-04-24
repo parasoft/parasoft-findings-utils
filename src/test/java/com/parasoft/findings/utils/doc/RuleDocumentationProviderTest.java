@@ -101,6 +101,16 @@ public class RuleDocumentationProviderTest {
     }
 
     @Test
+    public void testGetCompressedRuleDocLocation_normal() {
+        Properties properties = new Properties();
+        properties.setProperty("report.rules", new File("src/test/resources/ruledoc/compressedRuleDoc").getAbsolutePath());
+
+        RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
+        String localRuleDocLocation = underTest.getRuleDocLocation(null, "APSC_DV-000160-a");
+        assertEquals(new File("src/test/resources/ruledoc/compressedRuleDoc/doc.zip").getAbsolutePath(), localRuleDocLocation);
+    }
+
+    @Test
     @EnabledIf(value = "hasTestDtpUrlSystemProperty", disabledReason = "No testDtpUrl system property")
     public void getRemoteRuleContent_normal() {
         RuleDocumentationProvider underTest = createRDPWithAvailableClientDtpDocService();
