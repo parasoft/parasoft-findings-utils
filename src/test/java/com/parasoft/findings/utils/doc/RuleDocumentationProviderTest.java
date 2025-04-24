@@ -101,13 +101,13 @@ public class RuleDocumentationProviderTest {
     }
 
     @Test
-    public void testGetCompressedRuleDocLocation_normal() {
+    public void testGetCompressedRuleDocLocationFromLocalDir() {
         Properties properties = new Properties();
         properties.setProperty("report.rules", new File("src/test/resources/ruledoc/compressedRuleDoc").getAbsolutePath());
 
         RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
         String localRuleDocLocation = underTest.getRuleDocLocation(null, "APSC_DV-000160-a");
-        assertEquals(new File("src/test/resources/ruledoc/compressedRuleDoc/doc.zip").getAbsolutePath(), localRuleDocLocation);
+        assertEquals("doc/APSC_DV-000160-a.html", localRuleDocLocation);
     }
 
     @Test

@@ -110,9 +110,10 @@ class RuleDocumentationHelper {
             return docsExactMatch.getAbsolutePath();
         }
 
-        String docZipFilePath = ZipFileUtil.getDocZipFileInDir(docRoot.getAbsolutePath());
+        String docZipFilePath = guessRuleDocZipFile(docRoot.getAbsolutePath());
         if (docZipFilePath != null) {
-            return docZipFilePath;
+            ZipFileUtil.setDocZipFilePath(docZipFilePath);
+            return ZipFileUtil.getRuleDocFileLocationInZip(docZipFilePath, _sRuleId);
         }
 
         return guessRuleFile(docRoot, _sRuleId);
@@ -152,4 +153,20 @@ class RuleDocumentationHelper {
         return sCandidateFiles[0].getAbsolutePath();
     }
 
+    /**
+     * Try to locate the rule document zip file in the given root directory
+     *
+     * @param rootPath root directory path
+     * @return the absolute path of rule document zip file
+     */
+    public static String guessRuleDocZipFile(String rootPath) {
+        String[] zipNames = {"doc.zip", "docs.zip"};
+        for (String name : zipNames) {
+            File zipFile = new File(rootPath, name);
+            if (zipFile.exists()) {
+                return zipFile.getAbsolutePath();
+            }
+        }
+        return null;
+    }
 }
