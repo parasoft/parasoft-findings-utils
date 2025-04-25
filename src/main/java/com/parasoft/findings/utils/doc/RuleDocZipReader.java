@@ -1,19 +1,18 @@
-package com.parasoft.findings.utils.common.util;
+package com.parasoft.findings.utils.doc;
 
 import com.parasoft.findings.utils.common.IStringConstants;
+import com.parasoft.findings.utils.common.util.FileUtil;
 
 import java.io.*;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-public final class ZipFileUtil {
-    private static String ruleDocZipFilePath;
+public class RuleDocZipReader {
+    private final String ruleDocZipFilePath;
 
-    /**
-     * Private constructor to prevent instantiation.
-     */
-    private ZipFileUtil() {
+    public RuleDocZipReader(String ruleDocZipFilePath) {
+        this.ruleDocZipFilePath = ruleDocZipFilePath;
     }
 
     /**
@@ -24,11 +23,16 @@ public final class ZipFileUtil {
      * @return file contents
      * @throws IOException
      */
-    public static String readRuleDocFileInZip(String filePathInZip, String sEncoding) throws IOException {
-        try (ZipFile zipFile = new ZipFile(ruleDocZipFilePath)){
+    public String readRuleDocFileInZip(String filePathInZip, String sEncoding) throws IOException {
+        try (ZipFile zipFile = new ZipFile(this.ruleDocZipFilePath)) {
             ZipEntry entry = zipFile.getEntry(filePathInZip);
             if (entry == null) {
+                Logger.getLogger().warn(filePathInZip + " could not be found in zip file: " + filePathInZip);
                 return IStringConstants.EMPTY;
+            }
+
+            if (sEncoding == null || sEncoding.trim().isEmpty()) {
+                sEncoding = "UTF-8";
             }
 
             try (InputStream inputStream = zipFile.getInputStream(entry);
@@ -42,17 +46,16 @@ public final class ZipFileUtil {
     /**
      * Get the rule doc file location in the specified zip file
      *
-     * @param zipFilePath the absolute path of the zip file
-     * @param ruleId      rule id
+     * @param ruleId  rule file name
      * @return the rule file path in the specified zip file
      */
-    public static String getRuleDocFileLocationInZip(String zipFilePath, String ruleId) {
+    public String getRuleDocFileLocationInZip(String ruleId) {
         List<String> baseDirs = new ArrayList<>(Arrays.asList("doc", "docs"));
         Map<String, String> languageSubdirMap = new HashMap<>();
         languageSubdirMap.put(Locale.CHINESE.getLanguage(), "zh_CN/");
         languageSubdirMap.put(Locale.JAPANESE.getLanguage(), "ja/");
 
-        try (ZipFile zipFile = new ZipFile(zipFilePath)) {
+        try (ZipFile zipFile = new ZipFile(this.ruleDocZipFilePath)) {
             // Find the rule doc directory (doc or docs) in the zip
             String ruleDocDir = baseDirs.stream()
                     .map(zipFile::getEntry)
@@ -61,18 +64,19 @@ public final class ZipFileUtil {
                     .map(ZipEntry::getName)
                     .orElse(IStringConstants.EMPTY);
 
+            if (ruleDocDir.isEmpty()) {
+               Logger.getLogger().warn("Rule document directory could not be found in zip file: " + this.ruleDocZipFilePath);
+               return ruleDocDir;
+            }
+
             // Find the localization directory based on language environment
             String localeLanguage = Locale.getDefault().getLanguage();
             String localizationDir = languageSubdirMap.getOrDefault(localeLanguage, "");
             return ruleDocDir + localizationDir + ruleId + ".html";
         } catch (IOException e) {
             // Zip file path errors or permission issues
-            Logger.getLogger().error(e.getMessage());
+            Logger.getLogger().error("Error while reading rule doc file in: " + e.getMessage(), e);
             return null;
         }
-    }
-
-    public static void setDocZipFilePath(String ruleDocZipFilePath) {
-        ZipFileUtil.ruleDocZipFilePath = ruleDocZipFilePath;
     }
 }

@@ -24,7 +24,6 @@ import com.parasoft.findings.utils.common.IStringConstants;
 import com.parasoft.findings.utils.common.util.StringUtil;
 import com.parasoft.findings.utils.common.util.URLUtil;
 import com.parasoft.findings.utils.common.util.FileUtil;
-import com.parasoft.findings.utils.common.util.ZipFileUtil;
 import com.parasoft.findings.utils.doc.remote.RulesRestClient;
 import com.parasoft.findings.utils.doc.remote.RulesRestClient.RuleInfo;
 
@@ -110,13 +109,18 @@ class RuleDocumentationHelper {
             return docsExactMatch.getAbsolutePath();
         }
 
-        String docZipFilePath = guessRuleDocZipFile(docRoot.getAbsolutePath());
-        if (docZipFilePath != null) {
-            ZipFileUtil.setDocZipFilePath(docZipFilePath);
-            return ZipFileUtil.getRuleDocFileLocationInZip(docZipFilePath, _sRuleId);
+        File guessedExactMatch = new File(guessRuleFile(docRoot, _sRuleId));
+        if (guessedExactMatch.isFile()) {
+            return guessedExactMatch.getAbsolutePath();
         }
 
-        return guessRuleFile(docRoot, _sRuleId);
+        File guessedZipFile = new File(guessRuleDocZipFile(docRoot.getAbsolutePath()));
+        if (guessedZipFile.isFile()) {
+            RuleDocZipReader ruleDocZipReader = new RuleDocZipReader(guessedZipFile.getAbsolutePath());
+            return ruleDocZipReader.getRuleDocFileLocationInZip(_sRuleId);
+        }
+
+        return guessedZipFile.getAbsolutePath();
     }
 
     /**
@@ -157,7 +161,7 @@ class RuleDocumentationHelper {
      * Try to locate the rule document zip file in the given root directory
      *
      * @param rootPath root directory path
-     * @return the absolute path of rule document zip file
+     * @return existing zip file or null if none could be guessed
      */
     public static String guessRuleDocZipFile(String rootPath) {
         String[] zipNames = {"doc.zip", "docs.zip"};
@@ -167,6 +171,6 @@ class RuleDocumentationHelper {
                 return zipFile.getAbsolutePath();
             }
         }
-        return null;
+        return rootPath;
     }
 }
