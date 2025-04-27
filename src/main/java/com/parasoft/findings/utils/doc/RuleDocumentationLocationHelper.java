@@ -17,17 +17,23 @@
 package com.parasoft.findings.utils.doc;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import com.parasoft.findings.utils.common.IStringConstants;
 import com.parasoft.findings.utils.common.util.StringUtil;
 import com.parasoft.findings.utils.common.util.URLUtil;
-import com.parasoft.findings.utils.common.util.FileUtil;
 import com.parasoft.findings.utils.doc.remote.RulesRestClient;
 import com.parasoft.findings.utils.doc.remote.RulesRestClient.RuleInfo;
 
-class RuleDocumentationHelper {
+class RuleDocumentationLocationHelper {
     private final String _sRuleId;
     private final String _sAnalyzerId;
     private final Properties _settings;
@@ -39,7 +45,7 @@ class RuleDocumentationHelper {
      * @param client
      * @pre sRuleId != null
      */
-    public RuleDocumentationHelper(String sRuleId, String sAnalyzerId, RulesRestClient client, Properties settings) {
+    public RuleDocumentationLocationHelper(String sRuleId, String sAnalyzerId, RulesRestClient client, Properties settings) {
         _sRuleId = sRuleId;
         _sAnalyzerId = sAnalyzerId;
         _settings = settings;
@@ -100,77 +106,59 @@ class RuleDocumentationHelper {
     private String createCustomLocalLoc(URL url) {
         File docRoot = URLUtil.toFile(url);
         if (!docRoot.exists()) {
-            Logger.getLogger().debug("Custom doc dir does not exist, cannot use: " + docRoot.getAbsolutePath()); //$NON-NLS-1$
+            Logger.getLogger().debug("Custom doc location does not exist, cannot use: " + docRoot.getAbsolutePath()); //$NON-NLS-1$
             return null;
         }
 
-        File docsExactMatch = getRuleFile(docRoot, _sRuleId);
-        if (docsExactMatch.isFile()) {
-            return docsExactMatch.getAbsolutePath();
+        if (docRoot.isDirectory()) {
+            return getRuleFileFromFolder(docRoot, _sRuleId);
+        } else if(docRoot.isFile() && docRoot.getName().endsWith(IStringConstants.ZIP_EXT)) {
+            return getRuleFileFromZip(docRoot, _sRuleId);
+        } else {
+            Logger.getLogger().debug("Invalid custom doc location: " + docRoot.getAbsolutePath()); //$NON-NLS-1$
         }
-
-        File guessedExactMatch = new File(guessRuleFile(docRoot, _sRuleId));
-        if (guessedExactMatch.isFile()) {
-            return guessedExactMatch.getAbsolutePath();
-        }
-
-        File guessedZipFile = new File(guessRuleDocZipFile(docRoot.getAbsolutePath()));
-        if (guessedZipFile.isFile()) {
-            RuleDocZipReader ruleDocZipReader = new RuleDocZipReader(guessedZipFile.getAbsolutePath());
-            return ruleDocZipReader.getRuleDocFileLocationInZip(_sRuleId);
-        }
-
-        return guessedZipFile.getAbsolutePath();
+        return null;
     }
 
-    /**
-     * @param root
-     * @param sRuleId
-     * @return
-     * @pre root != null
-     * @pre sRuleId != null
-     * @post $result != null
-     */
-    public File getRuleFile(File root, String sRuleId) {
-        return new File(root, sRuleId + IStringConstants.HTML_EXT);
+    private String getRuleFileFromFolder(File root, String sRuleId) {
+        File doc = new File(root, sRuleId + IStringConstants.HTML_EXT);
+        if (doc.exists() && doc.isFile()) {
+            return doc.getAbsolutePath();
+        }
+        return null;
     }
 
-    /**
-     * Try to locate rule docs file in given root dir, using rule id as foundation for the name of the file
-     *
-     * @param root
-     * @param sRuleId
-     * @return existing file or null if none could be guessed
-     * @pre root != null
-     * @pre sRuleId != null
-     */
-    public String guessRuleFile(File root, String sRuleId) {
-        File guessedExactMatch = new File(root, sRuleId);
-        if (guessedExactMatch.isFile()) {
-            return guessedExactMatch.getAbsolutePath();
-        }
-        File[] sCandidateFiles = FileUtil.listFilesByName(root, sRuleId);
-        if (sCandidateFiles.length != 1) {
-            return root.getAbsolutePath();
-        }
+    private String getRuleFileFromZip(File root, String sRuleId) {
+        Map<String, String> languageSubdirMap = new HashMap<>();
+        languageSubdirMap.put(Locale.CHINESE.getLanguage(), "zh_CN/");
+        languageSubdirMap.put(Locale.JAPANESE.getLanguage(), "ja/");
 
-        return sCandidateFiles[0].getAbsolutePath();
-    }
-
-    /**
-     * Try to locate the rule document zip file in the given root directory
-     *
-     * @param rootPath root directory path
-     * @return existing zip file or null if none could be guessed
-     */
-    public static String guessRuleDocZipFile(String rootPath) {
-        String[] zipNames = {"doc.zip", "docs.zip"};
-        for (String name : zipNames) {
-            File zipFile = new File(rootPath, name);
-            if (zipFile.exists()) {
-                return zipFile.getAbsolutePath();
+        try (ZipFile zipFile = new ZipFile(root)) {
+            String internalDocDir = null;
+            if (zipFile.getEntry("doc") != null) {
+                internalDocDir = "doc/";
+            } else if (zipFile.getEntry("docs") != null) {
+                internalDocDir = "docs/";
             }
+            if (internalDocDir == null) {
+                Logger.getLogger().error("Invalid doc zip file: " + root); //$NON-NLS-1$
+                return null;
+            }
+
+            // Find the localization directory based on language environment
+            String localizationDir = languageSubdirMap.getOrDefault(Locale.getDefault().getLanguage(), "");
+            String internalRuleDocPath = internalDocDir + localizationDir + sRuleId + ".html";
+            ZipEntry entry = zipFile.getEntry(internalRuleDocPath);
+            if (entry != null) {
+                URI ruleDocZipUri = root.toURI();
+                return "jar:" + ruleDocZipUri + "!/" + entry.getName();
+            }
+            return null;
+        } catch (IOException e) {
+            // Zip file path errors or permission issues
+            Logger.getLogger().error("Error while getting rule doc location in: " + e.getMessage(), e); //$NON-NLS-1$
+            return null;
         }
-        return rootPath;
     }
+
 }
