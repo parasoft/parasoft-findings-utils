@@ -108,40 +108,37 @@ class RuleDocumentationLocationHelper {
 
     private String createCustomLocalLoc(URL url) {
         File docRoot = URLUtil.toFile(url);
-        Path docRootPath = getDocLocation(docRoot);
-        if (docRootPath == null) {
+        File realDocRoot = checkDocRootLocation(docRoot);
+        if (realDocRoot == null) {
             Logger.getLogger().debug("Custom doc location does not exist, cannot use: " + docRoot.getAbsolutePath()); //$NON-NLS-1$
             return null;
         }
 
-        docRoot = docRootPath.toFile();
-        if (docRoot.isDirectory()) {
-            return getRuleFileFromFolder(docRoot, _sRuleId);
-        } else if(docRoot.isFile() && docRoot.getName().endsWith(IStringConstants.ZIP_EXT)) {
-            return getRuleFileFromZip(docRoot, _sRuleId);
+        if (realDocRoot.isDirectory()) {
+            return getRuleFileFromFolder(realDocRoot, _sRuleId);
+        } else if(realDocRoot.isFile() && realDocRoot.getName().endsWith(IStringConstants.ZIP_EXT)) {
+            return getRuleFileFromZip(realDocRoot, _sRuleId);
         } else {
-            Logger.getLogger().debug("Invalid custom doc location: " + docRoot.getAbsolutePath()); //$NON-NLS-1$
+            Logger.getLogger().debug("Invalid custom doc location: " + realDocRoot.getAbsolutePath()); //$NON-NLS-1$
         }
         return null;
     }
 
-    private Path getDocLocation(File root) {
-        // this is for backward compatibility
-        // if root is a directory, then by default we expect a zip file with documentation in parent directory (or parent of parent for a localized case).
-        // in this case, the file will be extracted to parasoft temp directory
-        if ((root.isFile() && root.getName().endsWith(IStringConstants.ZIP_EXT)) || (root.isDirectory())) {
-            return root.toPath();
-        }
-        if (!root.exists()) {
-            Path zip = Paths.get(root.toPath() + IStringConstants.ZIP_EXT);
-            if (!Files.exists(zip)) {
-                zip = Paths.get(root.toPath().getParent() + IStringConstants.ZIP_EXT);
+    private File checkDocRootLocation(File root) {
+        if (root.exists()) {
+            if (root.isFile() && root.getName().endsWith(IStringConstants.ZIP_EXT)) { // When root is <tool_installation>/rules/doc.zip
+                return root;
+            }
+            if (root.isDirectory()) { // When root is <tool_installation>/rules/doc
+                return root;
+            }
+        } else {
+            File zip = new File(root.toPath() + IStringConstants.ZIP_EXT); // When root is <tool_installation>/rules/doc, the zip is <tool_installation>/rules/doc.zip
+            if (!zip.exists()) {
+                zip = new File(root.toPath().getParent() + IStringConstants.ZIP_EXT); // When root is <tool_installation>/rules/doc/zh_CN, the zip is <tool_installation>/rules/doc.zip
             }
 
-            if (Files.exists(zip)) {
-                return zip;
-            }
-            return root.toPath();
+            return zip.exists() ? zip : null;
         }
         return null;
     }
