@@ -56,4 +56,9 @@ public interface IStringConstants {
      * The string "UTF-8".
      */
     String UTF_8 = "UTF-8"; //$NON-NLS-1$
+
+    /**
+     * The string "zip".
+     */
+    String ZIP_EXT = ".zip"; //$NON-NLS-1$
 }

@@ -1,10 +1,31 @@
+/*
+ * Copyright 2023 Parasoft Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.parasoft.findings.utils.doc;
 
 import com.parasoft.findings.utils.common.IStringConstants;
+import com.parasoft.findings.utils.common.util.FileUtil;
+import com.parasoft.findings.utils.common.util.StringUtil;
+import com.parasoft.findings.utils.common.util.URLUtil;
 import com.parasoft.findings.utils.doc.remote.DtpUrlException;
 import com.parasoft.findings.utils.doc.remote.NotSupportedDtpVersionException;
 import com.parasoft.findings.utils.doc.remote.RulesRestClient;
 
+import java.io.*;
+import java.net.URL;
 import java.util.Properties;
 
 import static com.parasoft.findings.utils.doc.remote.RulesRestClient.DTP_URL;
@@ -49,20 +70,105 @@ public class RuleDocumentationProvider {
      * @return url of rule docs or null
      */
     public String getRuleDocLocation(String analyzer, String ruleId) {
-        RuleDocumentationHelper ruleDocHelper = new RuleDocumentationHelper(ruleId, analyzer, _rulesRestClient, _settings);
+        RuleDocumentationLocationHelper ruleDocHelper = new RuleDocumentationLocationHelper(ruleId, analyzer, _rulesRestClient, _settings);
         return ruleDocHelper.getRuleDocLocation();
     }
 
     /**
-     * @param docUrl the value should get from {@link #getRuleDocLocation(String, String)}
-     * @return rule doc content of URL, empty string if client is not available or URL does not from {@link #getRuleDocLocation(String, String)}
+     * Get the rule doc content from the given location.</br>
+     * It supports retrieving the doc from DTP, zip file or folder depending on the location type detected by the ruleDocLocation parameter.</br>
+     * @param ruleDocLocation the value should get from {@link #getRuleDocLocation(String, String)}<br/>
+     *                        Examples: <br/>
+     *                          - jar:file:/path/to/doc.zip!/doc/zh_CN/ruleId.html <br/>
+     *                          - file:/path/to/doc/ruleId.html <br/>
+     *                          - http://hostname:port/grs/dtp/rulesdoc/ruleId.html <br/>
+     * @return rule doc content, empty string if the location is not found.
+     *
      */
-    public String getDtpRuleDocContent(String docUrl) {
+    public String getRuleDocContent(String ruleDocLocation) {
+        String contents = IStringConstants.EMPTY;
+        if (StringUtil.isNonEmpty(ruleDocLocation)) {
+            switch (getRuleDocLocationType(ruleDocLocation)) {
+                case ZIP:
+                    contents = getRuleDocContentFromZip(ruleDocLocation);
+                    break;
+                case DTP:
+                    contents = getRuleDocContentFromDtp(ruleDocLocation);
+                    break;
+                case FOLDER:
+                    contents = getRuleDocContentFromFolder(ruleDocLocation);
+                    break;
+                default:
+                    contents = IStringConstants.EMPTY;
+            }
+        }
+        return contents;
+    }
+
+    RuleDocLocationType getRuleDocLocationType(String ruleDocLocation) {
+        if (ruleDocLocation == null) {
+            return RuleDocLocationType.UNKNOWN;
+        }
+        if (ruleDocLocation.startsWith("jar:")) {
+            return RuleDocLocationType.ZIP;
+        }
+        if (ruleDocLocation.startsWith("http")) {
+            return RuleDocLocationType.DTP;
+        }
+        if (URLUtil.getLocalFile(URLUtil.toURL(ruleDocLocation)) != null) {
+            return RuleDocLocationType.FOLDER;
+        }
+        return RuleDocLocationType.UNKNOWN;
+    }
+
+    /**
+     * @param docUrl the value should get from {@link #getRuleDocLocation(String, String)}
+     * @return rule doc content of URL, empty string if client is not available or URL is not from {@link #getRuleDocLocation(String, String)}
+     */
+    String getRuleDocContentFromDtp(String docUrl) {
         if (_clientStatus != ClientStatus.AVAILABLE) {
             Logger.getLogger().warn(_clientStatus.toString());
             return IStringConstants.EMPTY;
         }
         return _rulesRestClient.getRuleContent(docUrl);
+    }
+
+    /**
+     * @param docLocationInZip the value should get from {@link #getRuleDocLocation(String, String)}
+     * @return rule doc content in zip file, empty string if the location is not found or the location is not from {@link #getRuleDocLocation(String, String)}
+     */
+    String getRuleDocContentFromZip(String docLocationInZip) {
+        if (docLocationInZip != null) {
+            try {
+                URL url = new URL(docLocationInZip);
+                try (InputStream is = url.openStream();
+                     InputStreamReader isr = new InputStreamReader(is, IStringConstants.UTF_8);
+                     BufferedReader reader = new BufferedReader(isr)) {
+                    return FileUtil.readFile(reader);
+                }
+            } catch (IOException e) {
+                Logger.getLogger().error("Error while getting rule doc file: " + e.getMessage(), e); //$NON-NLS-1$
+            }
+        }
+        return IStringConstants.EMPTY;
+    }
+
+    /**
+     * @param docLocationInFolder the value should get from {@link #getRuleDocLocation(String, String)}
+     * @return rule doc content in folder, empty string if the location is not found or the location is not from {@link #getRuleDocLocation(String, String)}
+     */
+    String getRuleDocContentFromFolder(String docLocationInFolder) {
+        File localFile = URLUtil.getLocalFile(URLUtil.toURL(docLocationInFolder));
+        if (localFile != null) {
+            try {
+                return FileUtil.readFile(localFile, IStringConstants.UTF_8);
+            } catch (IOException e) {
+                Logger.getLogger().error(e);
+            }
+        } else {
+            Logger.getLogger().error("Failed to determine local file for rule doc location: " + docLocationInFolder); //$NON-NLS-1$
+        }
+        return IStringConstants.EMPTY;
     }
 
     public ClientStatus getDtpDocServiceStatus() {
@@ -86,4 +192,12 @@ public class RuleDocumentationProvider {
             return description;
         }
     }
+
+    public enum RuleDocLocationType {
+        DTP,
+        ZIP,
+        FOLDER,
+        UNKNOWN
+    }
+
 }
