@@ -110,12 +110,22 @@ public class RuleDocumentationProviderTest {
     }
 
     @Test
-    public void testGetRuleDocLocation_fromLocalDir_noDoc() {
+    public void testGetRuleDocLocation_fromLocalDir_incorrectRuleId() {
         Properties properties = new Properties();
         properties.setProperty("report.rules", new File("src/test/resources/ruledoc").getAbsolutePath());
 
         RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
         String localRuleDocLocation = underTest.getRuleDocLocation(null, "APSC_DV-000160-b");
+        assertNull(localRuleDocLocation);
+    }
+
+    @Test
+    public void testGetRuleDocLocation_fromLocalDir_noDoc() {
+        Properties properties = new Properties();
+        properties.setProperty("report.rules", new File("src/test/resources/ruledoc/zh_CN").getAbsolutePath());
+
+        RuleDocumentationProvider underTest = new RuleDocumentationProvider(properties);
+        String localRuleDocLocation = underTest.getRuleDocLocation(null, "APSC_DV-000160-a");
         assertNull(localRuleDocLocation);
     }
 
@@ -135,6 +145,15 @@ public class RuleDocumentationProviderTest {
         ruleDocFileLocation = underTest.getRuleDocLocation(null,"APSC_DV-000160-a");
 
         expectedDocLocationInZip = "jar:" + this.docsZipFilePath.toURI() + "!/" + "docs/APSC_DV-000160-a.html";
+        assertEquals(expectedDocLocationInZip, ruleDocFileLocation);
+
+        // if root is a directory, by default using a zip file in parent directory or parent of parent for a localized case
+        properties = new Properties();
+        properties.setProperty("report.rules", "src/test/resources/ruledoc/compressedRuleDoc/doc/zh_CN");
+        underTest = new RuleDocumentationProvider(properties);
+        ruleDocFileLocation = underTest.getRuleDocLocation(null,"APSC_DV-000160-a");
+
+        expectedDocLocationInZip = "jar:" + this.docZipFilePath.toURI() + "!/" + "doc/APSC_DV-000160-a.html";
         assertEquals(expectedDocLocationInZip, ruleDocFileLocation);
     }
 
@@ -203,7 +222,6 @@ public class RuleDocumentationProviderTest {
         assertTrue(ruleContent.toUpperCase().contains("<HTML>") && ruleContent.contains("[APSC_DV-000160-a]"));
 
         ruleContent = ruleDocumentationProvider.getRuleDocContent(new File("src/test/resources/ruledoc", "APSC_DV-000160-a.html").getAbsolutePath());
-
         assertTrue(ruleContent.toUpperCase().contains("<HTML>") && ruleContent.contains("[APSC_DV-000160-a]"));
     }
 
@@ -261,7 +279,7 @@ public class RuleDocumentationProviderTest {
         RuleDocumentationProvider ruleDocumentationProvider = new RuleDocumentationProvider(properties);
         RuleDocumentationProvider.RuleDocLocationType result = ruleDocumentationProvider.getRuleDocLocationType(null);
 
-        assertSame(result, RuleDocumentationProvider.RuleDocLocationType.UNKNOWN);
+        assertSame(RuleDocumentationProvider.RuleDocLocationType.UNKNOWN, result);
     }
 
     @Test

@@ -20,6 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -105,17 +108,40 @@ class RuleDocumentationLocationHelper {
 
     private String createCustomLocalLoc(URL url) {
         File docRoot = URLUtil.toFile(url);
-        if (!docRoot.exists()) {
+        Path docRootPath = getDocLocation(docRoot);
+        if (docRootPath == null) {
             Logger.getLogger().debug("Custom doc location does not exist, cannot use: " + docRoot.getAbsolutePath()); //$NON-NLS-1$
             return null;
         }
 
+        docRoot = docRootPath.toFile();
         if (docRoot.isDirectory()) {
             return getRuleFileFromFolder(docRoot, _sRuleId);
         } else if(docRoot.isFile() && docRoot.getName().endsWith(IStringConstants.ZIP_EXT)) {
             return getRuleFileFromZip(docRoot, _sRuleId);
         } else {
             Logger.getLogger().debug("Invalid custom doc location: " + docRoot.getAbsolutePath()); //$NON-NLS-1$
+        }
+        return null;
+    }
+
+    private Path getDocLocation(File root) {
+        // this is for backward compatibility
+        // if root is a directory, then by default we expect a zip file with documentation in parent directory (or parent of parent for a localized case).
+        // in this case, the file will be extracted to parasoft temp directory
+        if ((root.isFile() && root.getName().endsWith(IStringConstants.ZIP_EXT)) || (root.isDirectory())) {
+            return root.toPath();
+        }
+        if (!root.exists()) {
+            Path zip = Paths.get(root.toPath() + IStringConstants.ZIP_EXT);
+            if (!Files.exists(zip)) {
+                zip = Paths.get(root.toPath().getParent() + IStringConstants.ZIP_EXT);
+            }
+
+            if (Files.exists(zip)) {
+                return zip;
+            }
+            return root.toPath();
         }
         return null;
     }
