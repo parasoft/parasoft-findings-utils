@@ -4,7 +4,7 @@
 
     <groupId>com.parasoft</groupId>
     <artifactId>parasoft-findings-utils</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.4</version>
     <packaging>jar</packaging>
 
     <name>Parasoft Findings Utils</name>
@@ -40,7 +40,7 @@
         <url>https://github.com/parasoft/parasoft-findings-utils</url>
         <connection>scm:git:https://github.com/parasoft/parasoft-findings-utils.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/parasoft/parasoft-findings-utils.git</developerConnection>
-        <tag>master</tag>
+        <tag>v1.0.4</tag>
     </scm>
 
     <distributionManagement>
