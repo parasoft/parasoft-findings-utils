@@ -19,7 +19,6 @@ package com.parasoft.findings.utils.results.violations;
 import com.parasoft.findings.utils.results.testableinput.FindingsLocationMatcher;
 import com.parasoft.findings.utils.results.testableinput.ITestableInputLocationMatcher;
 import com.parasoft.findings.utils.results.xml.XmlReportReader;
-import com.parasoft.findings.utils.common.logging.FindingsLogger;
 import com.parasoft.findings.utils.results.xml.FileImportPreferences;
 
 import java.io.File;
@@ -55,14 +54,7 @@ public final class XmlReportViolationsImporter {
     }
 
     private XmlReportViolations importViolations(FileImportPreferences preferences, ITestableInputLocationMatcher locationMatcher) {
-        String sImportType = preferences.getImportType();
-
-        if (FileImportPreferences.REPORT_IMPORT.equals(sImportType)) {
-            return importData(preferences, locationMatcher);
-        }
-
-        Logger.getLogger().warn("Quality Tasks import failed. Unrecognized import type identifier: " + sImportType); //$NON-NLS-1$
-        return null;
+        return importData(preferences, locationMatcher);
     }
 
     private XmlReportViolations importData(FileImportPreferences preferences,
