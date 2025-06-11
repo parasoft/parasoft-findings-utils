@@ -21,8 +21,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class FileImportPreferences {
-    public static final String REPORT_IMPORT = "report.import"; //$NON-NLS-1$
-
     private final URL _url;
 
     public FileImportPreferences(URL url) {
@@ -39,10 +37,6 @@ public class FileImportPreferences {
         } catch (MalformedURLException e) {
             throw new IllegalArgumentException(e);
         }
-    }
-
-    public String getImportType() {
-        return FileImportPreferences.REPORT_IMPORT;
     }
 
     public URL getReportURL() {
