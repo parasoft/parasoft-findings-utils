@@ -66,7 +66,7 @@
         <maven-surefire-plugin.version>3.2.2</maven-surefire-plugin.version>
         <httpclient.version>4.5.13</httpclient.version>
         <fluent-hc.version>4.5.13</fluent-hc.version>
-        <jackson-databind.version>2.15.1</jackson-databind.version>
+        <jackson-databind.version>2.22.4</jackson-databind.version>
         <junit-jupiter.version>5.9.2</junit-jupiter.version>
         <mockito-inline.version>5.2.0</mockito-inline.version>
         <!--suppress UnresolvedMavenProperty -->
